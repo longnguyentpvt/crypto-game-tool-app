@@ -1,0 +1,847 @@
+@import "config";
+@import "~bootstrap/scss/bootstrap";
+@import "~react-perfect-scrollbar/dist/css/styles.css";
+
+.f-oxanium {
+  font-family: 'Oxanium', cursive !important;
+}
+
+.f-chakra {
+  font-family: 'Chakra', sans-serif !important;
+}
+
+strong {
+  font-weight: inherit;
+}
+
+.text-inherit {
+  color: inherit !important;
+}
+
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+  margin-bottom: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.pt-6 {
+  padding-top: 3.4rem !important;
+}
+
+.pb-6 {
+  padding-bottom: 3.4rem !important;
+}
+
+.pt-7 {
+  padding-top: 3.8em !important;
+}
+
+.pb-7 {
+  padding-bottom: 3.8rem !important;
+}
+
+.pt-8 {
+  padding-top: 4rem !important;
+}
+
+.pb-8 {
+  padding-bottom: 4rem !important;
+}
+
+.pt-9 {
+  padding-top: 4.2rem !important;
+}
+
+.pb-9 {
+  padding-bottom: 4.2rem !important;
+}
+
+.pt-10 {
+  padding-top: 4.5rem !important;
+}
+
+.pb-10 {
+  padding-bottom: 4.5rem !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+@mixin h3 {
+  @extend .h3;
+}
+
+%h3 {
+  @include h3;
+}
+
+//.h3 {
+//  line-height: $line-height-base;
+//}
+//
+.h4,
+.h5,
+.h6 {
+  line-height: $line-height-base * 1.03;
+}
+
+//.h7 {
+//  font-size: $h7-font-size;
+//  line-height: $line-height-base;
+//}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.btn {
+  outline: none !important;
+  box-shadow: none !important;
+
+  &:hover {
+    [class^="svg-stroke-"] {
+      stroke: #FFFFFF;
+    }
+
+    [class^="svg-fill-"] {
+      fill: #FFFFFF;
+    }
+  }
+}
+
+.btn-game {
+  border: none;
+  background: url(/assets/images/main-button-background.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: left top;
+  padding: 0;
+  width: 175px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.card.shadow.hover:hover {
+  box-shadow: 0 0.5rem 1.3rem rgba(56, 62, 86, 0.3) !important;
+}
+
+.vertical-block {
+  display: table;
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+
+  .block-element {
+    display: table-cell;
+
+    &.center-element {
+      vertical-align: middle;
+    }
+
+    &.top-element {
+      vertical-align: top;
+    }
+
+    &.bottom-element {
+      vertical-align: bottom;
+    }
+  }
+}
+
+img,
+svg {
+  width: 100%;
+}
+
+.sy-svg-icon {
+  @each $color, $value in $theme-colors {
+    .svg-fill-#{$color} {
+      fill: $value;
+    }
+    .svg-stroke-#{$color} {
+      stroke: $value;
+    }
+  }
+}
+
+.modal {
+  background-color: rgba($black, .6);
+
+  button.close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+.modal.show .modal-dialog {
+  @include transform(translate(0, 0));
+}
+
+.large-status-modal {
+  .modal-body {
+    padding: 4rem 2rem;
+  }
+
+  .status {
+    .status-ico {
+      width: 80px;
+    }
+  }
+}
+
+.form-check-input {
+  border: solid 1px $white;
+}
+
+.form-switch .form-check-input {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23FFF'/%3e%3c/svg%3e");
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+@each $breakpoint-name in map-keys($grid-breakpoints) {
+  .grid-#{$breakpoint-name}-up {
+    @include media-breakpoint-up($breakpoint-name) {
+      margin: -24px;
+
+      > * {
+        padding: 24px;
+      }
+    }
+  }
+
+  .grid-#{$breakpoint-name}-down {
+    @include media-breakpoint-down($breakpoint-name) {
+      margin: -24px;
+
+      > * {
+        padding: 24px;
+      }
+    }
+  }
+
+  .grid-small-#{$breakpoint-name}-up {
+    @include media-breakpoint-up($breakpoint-name) {
+      margin: -12px;
+
+      > * {
+        padding: 12px;
+      }
+    }
+  }
+
+  .grid-small-#{$breakpoint-name}-down {
+    @include media-breakpoint-down($breakpoint-name) {
+      margin: -12px;
+
+      > * {
+        padding: 12px;
+      }
+    }
+  }
+
+  .grid-ex-small-#{$breakpoint-name}-up {
+    @include media-breakpoint-up($breakpoint-name) {
+      margin: -6px;
+
+      > * {
+        padding: 6px;
+      }
+    }
+  }
+
+  .grid-ex-small-#{$breakpoint-name}-down {
+    @include media-breakpoint-down($breakpoint-name) {
+      margin: -6px;
+
+      > * {
+        padding: 6px;
+      }
+    }
+  }
+}
+
+body {
+  background: url("/assets/images/page-bg.jpg") repeat;
+}
+
+.border-background-content {
+  max-width: 900px;
+
+  .content-background {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+
+    .bg-head {
+      width: 100%;
+      padding-bottom: 11.5%;
+      background: url("/assets/images/game-border-top.png");
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      background-position: left top;
+    }
+
+    .bg-bottom {
+      width: 100%;
+      padding-bottom: 11.7%;
+      background: url("/assets/images/game-border-bottom.png");
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      background-position: left top;
+    }
+
+    .bg-body {
+      width: 100%;
+      background: url("/assets/images/game-border-body.png");
+      background-size: 100% auto;
+      background-repeat: repeat;
+      background-position: left top;
+    }
+  }
+
+  .content-body {
+    position: relative;
+    z-index: 1;
+    padding: 7% 6% 10.5%;
+  }
+
+  .content-border {
+    overflow: hidden;
+  }
+
+  .border-heading {
+    position: absolute;
+    z-index: 1;
+    bottom: 16px;
+    left: 20px;
+  }
+}
+
+.game-list-circle {
+  .circle-icon {
+    width: 18px;
+    height: 18px;
+    background-image: url(/assets/images/list-item-circle-icon.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-top: -1px;
+  }
+}
+
+#elemon-market-app {
+  .left-filter-bar {
+    top: 64px;
+    bottom: 0;
+    height: 40vh;
+
+    .logo-img {
+      img {
+        height: 50px;
+      }
+    }
+
+    .header-heading {
+      .sub {
+        font-size: 0.8rem;
+      }
+    }
+
+    .filter-section {
+      margin-bottom: 24px;
+
+      .section-title {
+        font-size: 1.2em;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0px;
+      }
+    }
+
+    .class-filter-section {
+      .form-check-input {
+        margin-top: 4px;
+      }
+
+      .option-img {
+        width: 22px;
+      }
+
+      .option-name {
+        padding-left: 6px;
+      }
+    }
+
+    .aura-section {
+      .form-check-input {
+        margin-top: 0.4em;
+      }
+
+      .form-check-label {
+        img {
+          height: 22px;
+        }
+      }
+    }
+
+    .body-filter-section {
+      .form-select {
+        background-image: url(https://app.elemon.io/assets/images/icon_hp.png);
+        background-size: 20px;
+        background-position: right 0.2rem center;
+        padding-right: 1.5rem;
+      }
+    }
+
+    .purity-filter-section {
+      .form-check {
+        .form-check-input {
+          margin-top: 7px;
+        }
+
+        img {
+          height: 30px;
+        }
+      }
+    }
+
+
+  }
+
+  .right-result {
+    .market-pet-list {
+      padding-bottom: 60px;
+    }
+
+    .paging-bottom {
+      position: fixed;
+      bottom: 0;
+      width: 956px;
+      background-color: #283344;
+
+      .paging-bottom-content {
+        height: 60px;
+      }
+
+      .pagination {
+        .ctrl {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    .left-filter-bar {
+      position: fixed;
+      width: 340px;
+      height: auto;
+    }
+
+    .right-result {
+      padding-left: 340px;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .left-filter-bar {
+      .ps__rail-y {
+        opacity: 0.6 !important;
+      }
+    }
+  }
+
+  .elemon-nft-card {
+    border-radius: 4px;
+    background: linear-gradient(to top, #049ec4 0, rgba(32, 93, 133, .93) 48.59%, rgba(33, 61, 94, 0) 100%);
+
+    .nft-img {
+      .nft-aura {
+        background-repeat: no-repeat;
+        background-size: 120% auto;
+        background-position: center -5%;
+      }
+
+      .nft-star {
+        text-align: center;
+        height: 15px;
+
+        img {
+          height: 100%;
+          width: auto;
+        }
+      }
+
+      .img {
+        width: 80px;
+        height: 90px;
+        background-size: 160% auto;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .img-prop {
+      text-align: center;
+
+      img {
+        height: 26px;
+        width: auto;
+      }
+
+      &.rarity-prop {
+        margin-left: -8px;
+        margin-right: -8px;
+
+        img {
+          height: 38px;
+        }
+      }
+    }
+
+    .level-prop {
+      .level-circle {
+        width: 28px;
+        height: 28px;
+        text-align: center;
+        line-height: 28px;
+      }
+    }
+
+    .pow-prop,
+    .price-prop {
+      img {
+        width: 22px;
+      }
+    }
+
+    .skill-prop {
+      img {
+        width: 20px;
+        border-radius: 50%;
+      }
+    }
+
+    .body-stat {
+      .img {
+        margin: 0 -2px;
+
+        img {
+          width: 32px;
+        }
+      }
+
+      .stat-info {
+        font-size: 0.9em;
+      }
+    }
+
+    .pricing-detail {
+      font-size: 0.8em;
+    }
+  }
+}
+
+#main-app {
+  header {
+    height: 64px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    border-bottom: solid 4px $primary;
+    background: linear-gradient(0deg, rgba($primary,.5) -.6%, rgba($primary, 0));
+    -webkit-backdrop-filter: blur(32px);
+    backdrop-filter: blur(32px);
+    z-index: 10;
+
+    .main-logo {
+      img {
+        width: 36px;
+      }
+    }
+
+    .center-menu {
+      .menu-mobile-icon {
+        width: 18px;
+      }
+
+      .menu-list {
+        display: none;
+        left: 0;
+        right: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.6);
+        height: 100vh;
+
+        .menu-list-bar {
+          background-color: $body-bg;
+          height: 100%;
+          max-width: 350px;
+          width: 90%;
+          margin-right: auto;
+          padding: 1em 0;
+        }
+
+        .menu-item {
+          padding-top: 1em;
+          padding-bottom: 1em;
+
+          .circle-icon {
+            opacity: 0;
+            width: 18px;
+            height: 18px;
+            background-image: url(/assets/images/list-item-circle-icon.png);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            margin-top: -1px;
+          }
+
+          a {
+            color: #FFF;
+
+            &:hover {
+              color: $green !important;
+            }
+          }
+
+          &.active {
+            .circle-icon {
+              opacity: 1;
+            }
+
+            a {
+              color: $light-green;
+            }
+          }
+        }
+
+        .menu-heading {
+          .close-btn {
+            width: 18px;
+          }
+        }
+
+        &.active {
+          display: block;
+        }
+
+        @include media-breakpoint-up(xl) {
+          position: static !important;
+          background: transparent;
+          height: auto;
+          display: block !important;
+
+          .menu-heading {
+            display: none;
+          }
+
+          .menu-list-bar {
+            background-color: transparent;
+            height: auto;
+            max-width: none;
+            width: auto;
+            margin: 0;
+            padding: 0;
+          }
+
+          .menu-item {
+            padding-top: 0;
+            padding-bottom: 0;
+          }
+        }
+      }
+
+    }
+  }
+
+  .main-app-body {
+    padding-top: 64px;
+  }
+
+  .body-section {
+    .section-heading {
+      font-size: 2.3rem;
+      font-weight: 700;
+      background: linear-gradient(180deg,
+              #91e2c6, #ffab58
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 3rem;
+    }
+  }
+
+  footer {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+
+    .footer-heading {
+      font-size: 2.3rem;
+      font-weight: 700;
+      background: linear-gradient(180deg,
+              #91e2c6, #ffab58
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .contact-links {
+      svg {
+        height: 30px;
+        width: auto;
+
+        path,
+        polygon {
+          fill: #2aa876;
+        }
+      }
+    }
+  }
+}
+
+#home-page {
+  .top-cover {
+    padding: 6em 0;
+
+    .heading {
+
+      .main {
+        font-size: 2.4rem;
+      }
+
+    }
+
+    .cover-img {
+      text-align: center;
+
+      img {
+        max-width: 400px;
+      }
+    }
+  }
+
+  .list-game-border {
+    .network-info {
+      .network-icon {
+        height: 16px;
+        width: auto;
+
+        &.website-icon {
+          path {
+            fill: #91e2c6;
+          }
+        }
+      }
+    }
+
+    .game-links {
+      a {
+        color: #FFF;
+
+        &:hover {
+          color: #91e2c6;
+        }
+      }
+    }
+  }
+}
+
+#elemon-power-calculator-app {
+  .body-points {
+    img {
+      width: 40px;
+    }
+
+    .point-label {
+      width: 55px;
+    }
+
+    .point-label,
+    .text-yellow {
+      margin-top: 4px;
+    }
+
+    .power-col {
+      img {
+        width: 50px;
+      }
+    }
+  }
+}
+
+#elemon-log-page {
+  .wallet-card {
+    border-radius: 4px;
+    background: linear-gradient(0deg, rgba(10, 123, 131, 0.5) -0.6%, rgba(10, 123, 131, 0));
+    -webkit-backdrop-filter: blur(32px);
+    backdrop-filter: blur(32px);
+    border: solid 1px $dark-green;
+
+    .card-ctrls {
+      .card-ctrl-icon {
+        width: auto;
+        height: 20px;
+        cursor: pointer;
+
+        &:hover {
+          color: $light-green;
+        }
+      }
+    }
+  }
+
+  .main-app-body {
+    padding-bottom: 60px;
+  }
+
+  .bottom-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #283344;
+
+    .bottom-navigation-container {
+      height: 60px;
+    }
+
+    .navigation-btn {
+      cursor: pointer;
+
+      .btn-icon {
+        height: 20px;
+        width: auto;
+      }
+    }
+
+    .ctrls {
+      .ctrl-btn {
+        cursor: pointer;
+      }
+
+      .ctrl-icon {
+        height: 24px;
+        width: auto;
+      }
+
+      .action-type-select {
+        width: 150px;
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+$font-family-chakra: 'Chakra Petch', sans-serif;
+$font-family-oxanium: 'Oxanium', cursive;
+
+$font-family-base: $font-family-chakra;
+$font-size-base: 0.8rem;
+$line-height-base: 1.25 !default;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 600;
+$font-weight-bolder: 700;
+
+$light-blue: #95def3;
+$light-blue-2: #95bbfe;
+$blue: #2a93d5;
+$dark-blue: #145388;
+$light-green: #91e2c6;
+$green: #2aa876;
+$dark-green: #0a7b83;
+$red: #e8505b;
+$yellow: #ffc93c;
+$pink: #e5a7f2;
+$purple: #b0aefb;
+$orange: #ffab58;
+$white: #FFF;
+$gray: #6f6c7f;
+$light-gray-1: #8f8d9e;
+$light-gray-2: #f7f7f7;
+$light-gray-3: #AAAAAA;
+$light-gray-4: #ebebeb;
+$light-gray-5: #dfe3ec;
+$light-gray-6: #f7f8fa;
+$dark-gray: #575d69;
+$black: #283344;
+$body-bg: #283344;
+$body-color: $white;
+$primary: $dark-green;
+
+$form-check-input-checked-bg-color: $green;
+$component-active-bg: $green;
+
+$colors: (
+        "blue" : $blue,
+        "light-blue" : $light-blue,
+        "light-blue-2" : $light-blue-2,
+        "dark-blue" : $dark-blue,
+        "green": $green,
+        "light-green": $light-green,
+        "dark-green" : $dark-green,
+        "red" : $red,
+        "yellow" : $yellow,
+        "pink" : $pink,
+        "purple" : $purple,
+        "orange" : $orange,
+        "white" : $white,
+        "gray" : $gray,
+        "light-gray-1" : $light-gray-1,
+        "light-gray-2" : $light-gray-2,
+        "light-gray-3" : $light-gray-3,
+        "light-gray-4" : $light-gray-4,
+        "light-gray-5" : $light-gray-5,
+        "light-gray-6" : $light-gray-6,
+        "dark-gray" : $dark-gray,
+        "black" : $black,
+        "body-bg" : $body-bg
+) !default;
+
+$theme-colors: (
+        "primary": $green,
+        "secondary": $dark-green,
+        "warning" : $yellow,
+        "success" : $green,
+        "danger" : $red,
+        "muted" : $light-gray-1,
+        "blue" : $blue,
+        "light-blue" : $light-blue,
+        "light-blue-2" : $light-blue-2,
+        "dark-blue" : $dark-blue,
+        "green": $green,
+        "light-green": $light-green,
+        "dark-green" : $dark-green,
+        "red" : $red,
+        "yellow" : $yellow,
+        "pink" : $pink,
+        "purple" : $purple,
+        "orange" : $orange,
+        "white" : $white,
+        "gray" : $gray,
+        "light-gray-1" : $light-gray-1,
+        "light-gray-2" : $light-gray-2,
+        "light-gray-3" : $light-gray-3,
+        "light-gray-4" : $light-gray-4,
+        "light-gray-5" : $light-gray-5,
+        "light-gray-6" : $light-gray-6,
+        "dark-gray" : $dark-gray,
+        "black" : $black,
+        "body-bg" : $body-bg
+);
+
+$min-contrast-ratio: 3;
+
+/* Minxin */
+@mixin transition-attr($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin transform($args...) {
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  -ms-transform: $args;
+  -o-transform: $args;
+  transform: $args;
+}
+
+@mixin transform-origin($args...) {
+  -webkit-transform-origin: $args;
+  -moz-transform-origin: $args;
+  -ms-transform-origin: $args;
+  -o-transform-origin: $args;
+  transform-origin: $args;
+}
+
+@mixin transition-transform($duration, $timing, $delay:0s, $preface:webkit moz ms o spec) {
+  @each $browser in $preface {
+    @if ($browser == spec) {
+      transition: transform $duration $timing $delay;
+    } @else {
+      -#{$browser}-transition: -#{$browser}-transform $duration $timing $delay;
+    }
+  }
+}
