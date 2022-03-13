@@ -263,31 +263,38 @@ export const ElemonAuraInputs : {
 
 export const ElemonBodyPartInputs: {
   img : string,
-  id : number
+  id : number,
+  name : string
 }[] = [
   {
     img : "https://app.elemon.io/assets/images/icon_hp.png",
-    id : 1
+    id : 1,
+    name : "HP"
   },
   {
     img : "https://app.elemon.io/assets/images/icon_atk.png",
-    id : 2
+    id : 2,
+    name : "P.Atk"
   },
   {
     img : "https://app.elemon.io/assets/images/icon_spa.png",
-    id : 3
+    id : 3,
+    name : "M.Atk"
   },
   {
     img : "https://app.elemon.io/assets/images/icon_spd.png",
-    id : 4
+    id : 4,
+    name : "P.Def"
   },
   {
     img : "https://app.elemon.io/assets/images/icon_def.png",
-    id : 5
+    id : 5,
+    name : "M.Def"
   },
   {
     img : "https://app.elemon.io/assets/images/icon_speed.png",
-    id : 6
+    id : 6,
+    name : "Speed"
   }
 ]
 
@@ -299,7 +306,7 @@ export const ElemonBodyPartLevelInputs : {
   {
     id : 1,
     name : "Common",
-    color : "blue"
+    color : "green"
   },
   {
     id : 2,
@@ -309,32 +316,32 @@ export const ElemonBodyPartLevelInputs : {
   {
     id : 3,
     name : "Rare 1",
-    color : "pink"
+    color : "blue"
   },
   {
     id : 4,
     name : "Rare 2",
-    color : "warning"
+    color : "blue"
   },
   {
     id : 5,
     name : "Epic 1",
-    color : "danger"
+    color : "pink"
   },
   {
     id : 6,
     name : "Epic 2",
-    color : "danger"
+    color : "pink"
   },
   {
     id : 7,
     name : "Legend 1",
-    color : "danger"
+    color : "orange"
   },
   {
     id : 8,
     name : "Legend 2",
-    color : "danger"
+    color : "orange"
   },
   {
     id : 9,

@@ -79,6 +79,23 @@ export const getElemonNfts = async (
   };
 }
 
+export const getElemonPetInfo = async(tokenId: string) : Promise<ElemonNft | null> => {
+  try {
+    const rp = await apiInstance.request({
+      url : "/nft-info",
+      method : "get",
+      params : {
+        tokenId
+      }
+    });
+
+    return rp.data;
+  } catch(e) {
+  }
+
+  return null;
+}
+
 export const getElemonPower = async (
   star : number,
   level : number,

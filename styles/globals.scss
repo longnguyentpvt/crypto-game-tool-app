@@ -759,12 +759,28 @@ body {
       }
     }
   }
+
+  .home-spotlight-game-content {
+    .game-info-item {
+      .game-info-label {
+        width: 80px;
+      }
+    }
+  }
 }
 
 #elemon-power-calculator-app {
   .body-points {
     img {
       width: 40px;
+    }
+
+    .skill-img {
+      img {
+        border-radius: 50%;
+        overflow: hidden;
+        border: solid 6px transparent;
+      }
     }
 
     .point-label {
@@ -780,6 +796,44 @@ body {
       img {
         width: 50px;
       }
+    }
+  }
+
+  .self-nft-img {
+    .self-nft-aura {
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center 10px;
+    }
+
+    .img {
+      width: 100px;
+    }
+  }
+
+  .self-nft-common-detail {
+    .nft-class-img,
+    .nft-purity-img,
+    .nft-star-img {
+      height: 32px;
+      width: auto;
+    }
+
+    .nft-rarity-img-container {
+      margin: -6px;
+    }
+
+    .nft-rarity-img {
+      width: auto;
+      height: 40px;
+    }
+
+    .nft-level {
+      height: 32px;
+      background-color: green;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 4px;
     }
   }
 }

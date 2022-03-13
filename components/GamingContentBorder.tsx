@@ -1,10 +1,9 @@
-import { JSXElement } from "@typescript-eslint/types/dist/ast-spec";
 import { ReactElement } from "react";
 
 function GamingContentBorder(props : {
   name : string,
   subDescription : string,
-  children : ReactElement<any, any>
+  children : ReactElement | ReactElement[]
 }) {
   const {
     name,
