@@ -11,7 +11,7 @@ import {
 } from "../types/enums";
 
 const apiHost = "https://www.cryptogametool.com/apis/elemon/";
-// const apiHost = "http://localhost:8081/apis/elemon/";
+// const apiHost = "http://localhost:8080/apis/elemon/";
 const apiInstance = axios.create({
   baseURL : apiHost
 });
@@ -253,6 +253,30 @@ export const getWalletLogs = async (
 
     const rp = await apiInstance.request({
       url : "/account/records",
+      method : "get",
+      params : params
+    });
+
+    return rp.data;
+  } catch(e) {
+  }
+
+  return [];
+}
+
+export const getPetSaleStatistics = async (
+) : Promise<{
+  date : number,
+  noForSalePets : number,
+  noSoldPets : number,
+  noCancelPets : number,
+  totalVolume : number
+}[]> => {
+  try {
+    const params = {};
+
+    const rp = await apiInstance.request({
+      url : "/health/statistic",
       method : "get",
       params : params
     });
