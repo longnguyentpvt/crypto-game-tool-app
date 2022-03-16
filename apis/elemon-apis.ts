@@ -24,6 +24,7 @@ export const getElemonNfts = async (
   power : string,
   level : string,
   price : string,
+  actualCost : string | null,
   star : string,
   purity? : number,
   baseCardIds? : string,
@@ -48,6 +49,7 @@ export const getElemonNfts = async (
       asc,
       power,
       price,
+      actualCost,
       star,
       level,
       purity,
@@ -163,6 +165,8 @@ export const getElemonUpgradeCost = async (
 ) : Promise<{
   elcoinPrice : number,
   elmonPrice : number,
+  noElmon : number,
+  noElcoin : number,
   levelCost : number,
   skillCost : number,
   starCost : number,
@@ -191,6 +195,8 @@ export const getElemonUpgradeCost = async (
   return {
     elmonPrice : 0,
     elcoinPrice : 0,
+    noElmon : 0,
+    noElcoin : 0,
     levelCost : 0,
     skillCost : 0,
     starCost : 0,

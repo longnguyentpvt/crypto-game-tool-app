@@ -6,7 +6,8 @@ import {
   useState,
   KeyboardEvent,
   useMemo,
-  ReactElement
+  ReactElement,
+  useRef
 } from "react";
 
 import {
@@ -67,6 +68,7 @@ const DefaultSelfInfo : ElemonNft = {
   bodyPart6 : 0,
   lockTime : 0,
   star : 9,
+  quality : 1,
   rarity : 1,
   class : 1,
   purity : 0,
@@ -142,6 +144,8 @@ const ElemonPetPowCalculator : NextPage = () => {
     pow : number,
     elcoinPrice : number,
     elmonPrice : number,
+    noElmon : number,
+    noElcoin : number,
     levelCost : number,
     skillCost : number,
     starCost : number,
@@ -151,6 +155,8 @@ const ElemonPetPowCalculator : NextPage = () => {
     pow : 0,
     elcoinPrice : 0,
     elmonPrice : 0,
+    noElmon : 0,
+    noElcoin : 0,
     levelCost : 0,
     skillCost : 0,
     starCost : 0,
@@ -165,6 +171,8 @@ const ElemonPetPowCalculator : NextPage = () => {
     pow : number,
     elcoinPrice : number,
     elmonPrice : number,
+    noElcoin : number,
+    noElmon : number,
     levelCost : number,
     skillCost : number,
     starCost : number,
@@ -174,6 +182,8 @@ const ElemonPetPowCalculator : NextPage = () => {
     pow : 0,
     elcoinPrice : 0,
     elmonPrice : 0,
+    noElmon : 0,
+    noElcoin : 0,
     levelCost : 0,
     skillCost : 0,
     starCost : 0,
@@ -211,6 +221,8 @@ const ElemonPetPowCalculator : NextPage = () => {
       pow : -1,
       elcoinPrice : -1,
       elmonPrice : -1,
+      noElmon : 0,
+      noElcoin : 0,
       levelCost : -1,
       starCost : -1,
       skillCost : -1,
@@ -277,6 +289,8 @@ const ElemonPetPowCalculator : NextPage = () => {
     const {
       elcoinPrice,
       elmonPrice,
+      noElmon,
+      noElcoin,
       levelCost,
       starCost,
       skillCost,
@@ -287,6 +301,8 @@ const ElemonPetPowCalculator : NextPage = () => {
       pow,
       elcoinPrice,
       elmonPrice,
+      noElmon,
+      noElcoin,
       levelCost,
       starCost,
       skillCost,
@@ -300,6 +316,8 @@ const ElemonPetPowCalculator : NextPage = () => {
       pow : -1,
       elcoinPrice : -1,
       elmonPrice : -1,
+      noElmon : 0,
+      noElcoin : 0,
       levelCost : -1,
       starCost : -1,
       skillCost : -1,
@@ -391,6 +409,8 @@ const ElemonPetPowCalculator : NextPage = () => {
     const {
       elcoinPrice,
       elmonPrice,
+      noElmon,
+      noElcoin,
       levelCost,
       starCost,
       skillCost,
@@ -400,13 +420,17 @@ const ElemonPetPowCalculator : NextPage = () => {
       levelCost : selfLevelCost,
       starCost : selfStarCost,
       skillCost : selfSkillCost,
-      total : selfTotal
+      total : selfTotal,
+      noElmon : selfNoElmon,
+      noElcoin : selfNoElcoin,
     } = selfUpgradeInfo;
     setSelfPetPowInfo({
       body : bodyPoints,
       pow,
       elcoinPrice,
       elmonPrice,
+      noElmon : noElmon - selfNoElmon,
+      noElcoin : noElcoin - selfNoElcoin,
       levelCost : levelCost - selfLevelCost,
       starCost : starCost - selfStarCost,
       skillCost : skillCost - selfSkillCost,
@@ -432,6 +456,8 @@ const ElemonPetPowCalculator : NextPage = () => {
       pow : 0,
       elcoinPrice : 0,
       elmonPrice : 0,
+      noElmon : 0,
+      noElcoin : 0,
       levelCost : 0,
       skillCost : 0,
       starCost : 0,
@@ -441,6 +467,27 @@ const ElemonPetPowCalculator : NextPage = () => {
     const data = await getElemonPetInfo(tokenId);
     if (!!data) {
       setSelfNftInfo(data);
+
+      const skills = data.skills;
+      let skillLevel1 = -1,
+        skillLevel2 = -1,
+        skillLevel3 = -1,
+        skillLevel4 = -1;
+      if (!!skills) {
+         skillLevel1 = skills[0] !== undefined ? skills[0].level : -1;
+         skillLevel2 = skills[1] !== undefined ? skills[1].level : -1;
+         skillLevel3 = skills[2] !== undefined ? skills[2].level : -1;
+         skillLevel4 = skills[3] !== undefined ? skills[3].level : -1;
+      }
+
+      setSelfPetConfig({
+        level : !!data.level ? data.level : 1,
+        star : !!data.star ? data.star : 0,
+        skillLevel1,
+        skillLevel2,
+        skillLevel3,
+        skillLevel4,
+      });
     } else {
       setSelfNftInfo({
         ...DefaultSelfInfo
@@ -448,14 +495,24 @@ const ElemonPetPowCalculator : NextPage = () => {
     }
   };
 
+  const selfNftIdInputRef = useRef<HTMLInputElement>(null);
+  const findSelfNft = (tokenId : string) => {
+    const reg = new RegExp('^[0-9]+$');
+    if (reg.test(tokenId)) {
+      loadSelfNftInfo(tokenId);
+    }
+  };
+
   const onSelfNftIdInputKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const tokenId = (e.target as HTMLInputElement).value;
-      const reg = new RegExp('^[0-9]+$');
-      if (reg.test(tokenId)) {
-        loadSelfNftInfo(tokenId);
-      }
+      findSelfNft(tokenId);
     }
+  };
+
+  const onFindButtonClick = () => {
+    const tokenId = selfNftIdInputRef.current?.value;
+    !!tokenId && findSelfNft(tokenId);
   };
 
   const {
@@ -490,6 +547,7 @@ const ElemonPetPowCalculator : NextPage = () => {
     bodyPart5 : selfBodyPart5,
     bodyPart6 : selfBodyPart6,
     star : selfStar,
+    quality : selfQuality,
     rarity : selfRarity,
     class : selfClassId,
     purity : selfPurity,
@@ -529,7 +587,9 @@ const ElemonPetPowCalculator : NextPage = () => {
         const bodyLevel = !!selfBodyPart ? selfBodyPart[i].quality : 1;
         const bodyLevelInput = ElemonBodyPartLevelInputs[bodyLevel - 1];
 
-        const element : ReactElement = <div className="col-12 col-xl-4">
+        const element : ReactElement = <div
+          key={ bodyPartInput.id }
+          className="col-12 col-xl-4">
           <div className="d-flex align-items-center">
             <div>
               <div className="d-flex align-items-center">
@@ -1113,8 +1173,18 @@ const ElemonPetPowCalculator : NextPage = () => {
                                 <div className="h5 mb-0 point-label p-1">Elmon</div>
                               </div>
                               <div>
-                                <div className="ps-2 h5 mb-0 text-yellow">{ petPowInfo.elmonPrice >=
-                                0 ? displayPriceWithComma(petPowInfo.elmonPrice, 2) : "..." }</div>
+                                <div className="ps-2 h5 mb-0">
+                                  <div>
+                                    { petPowInfo.noElmon }
+                                  </div>
+                                  <div className="text-yellow">
+                                    {
+                                      petPowInfo.elmonPrice >= 0 ?
+                                        displayPriceWithComma(petPowInfo.elmonPrice, 2) + "$" :
+                                        "..."
+                                    }
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1129,12 +1199,37 @@ const ElemonPetPowCalculator : NextPage = () => {
                                 <div className="h5 mb-0 point-label">Elcoin</div>
                               </div>
                               <div>
-                                <div className="ps-2 h5 mb-0 text-yellow">{ petPowInfo.elcoinPrice >=
-                                0 ? displayPriceWithComma(petPowInfo.elcoinPrice, 4) : "..." }</div>
+                                <div className="ps-2 h5 mb-0">
+                                  <div>
+                                    { petPowInfo.noElcoin }
+                                  </div>
+                                  <div className="text-yellow">
+                                    {
+                                      petPowInfo.elcoinPrice >= 0 ?
+                                        displayPriceWithComma(petPowInfo.elcoinPrice, 4) + "$" :
+                                        "..."
+                                    }
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           <div className="col-4" />
+
+                          <div className="col-12 col-xl-4">
+                            <div className="d-flex align-items-center">
+                              <div>
+                                <img src="https://app.elemon.io/assets/images/body_part/2.png" />
+                              </div>
+                              <div>
+                                <div className="h5 mb-0 point-label">Star</div>
+                              </div>
+                              <div>
+                                <div className="ps-2 h5 mb-0 text-yellow">{ petPowInfo.starCost >=
+                                0 ? displayPriceWithComma(petPowInfo.starCost, 2) + "$" : "..." }</div>
+                              </div>
+                            </div>
+                          </div>
                           <div className="col-12 col-xl-4">
                             <div className="d-flex align-items-center">
                               <div>
@@ -1145,7 +1240,7 @@ const ElemonPetPowCalculator : NextPage = () => {
                               </div>
                               <div>
                                 <div className="ps-2 h5 mb-0 text-yellow">{ petPowInfo.levelCost >=
-                                0 ? displayPriceWithComma(petPowInfo.levelCost, 2) : "..." }</div>
+                                0 ? displayPriceWithComma(petPowInfo.levelCost, 2) + "$" : "..." }</div>
                               </div>
                             </div>
                           </div>
@@ -1159,21 +1254,7 @@ const ElemonPetPowCalculator : NextPage = () => {
                               </div>
                               <div>
                                 <div className="ps-2 h5 mb-0 text-yellow">{ petPowInfo.skillCost >=
-                                0 ? displayPriceWithComma(petPowInfo.skillCost, 2) : "..." }</div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-12 col-xl-4">
-                            <div className="d-flex align-items-center">
-                              <div>
-                                <img src="https://app.elemon.io/assets/images/body_part/2.png" />
-                              </div>
-                              <div>
-                                <div className="h5 mb-0 point-label">Star</div>
-                              </div>
-                              <div>
-                                <div className="ps-2 h5 mb-0 text-yellow">{ petPowInfo.starCost >=
-                                0 ? displayPriceWithComma(petPowInfo.starCost, 2) : "..." }</div>
+                                0 ? displayPriceWithComma(petPowInfo.skillCost, 2) + "$" : "..." }</div>
                               </div>
                             </div>
                           </div>
@@ -1225,11 +1306,24 @@ const ElemonPetPowCalculator : NextPage = () => {
                                 Enter your NFT ID to find
                               </label>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="NFT ID"
-                                  onKeyDown={ onSelfNftIdInputKeyDown } />
+                                <div className="d-flex">
+                                  <div>
+                                    <input
+                                      ref={ selfNftIdInputRef }
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="NFT ID"
+                                      onKeyDown={ onSelfNftIdInputKeyDown } />
+                                  </div>
+                                  <div>
+                                    <div className="ps-2">
+                                      <button
+                                        onClick={ onFindButtonClick }
+                                        className="btn btn-primary">Find
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
 
@@ -1242,7 +1336,10 @@ const ElemonPetPowCalculator : NextPage = () => {
                                     <div className="self-nft-img">
                                       <div
                                         className="self-nft-aura"
-                                        style={ { backgroundImage : "url(https://app.elemon.io/assets/images/aura/quality_5.png)" } }>
+                                        style={ {
+                                          backgroundImage : "url(https://app.elemon.io/assets/images/aura/quality_" +
+                                            selfQuality + ".png)"
+                                        } }>
                                         {
                                           !!selfNftImg ? (
                                             <img
@@ -1623,8 +1720,18 @@ const ElemonPetPowCalculator : NextPage = () => {
                                     <div className="h5 mb-0 point-label p-1">Elmon</div>
                                   </div>
                                   <div>
-                                    <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.elmonPrice >=
-                                    0 ? displayPriceWithComma(selfPetPowInfo.elmonPrice, 2) : "..." }</div>
+                                    <div className="ps-2 h5 mb-0">
+                                      <div>
+                                        { selfPetPowInfo.noElmon }
+                                      </div>
+                                      <div className="text-yellow">
+                                        {
+                                          selfPetPowInfo.elmonPrice >= 0 ?
+                                            displayPriceWithComma(selfPetPowInfo.elmonPrice, 2) + "$" :
+                                            "..."
+                                        }
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -1639,12 +1746,38 @@ const ElemonPetPowCalculator : NextPage = () => {
                                     <div className="h5 mb-0 point-label">Elcoin</div>
                                   </div>
                                   <div>
-                                    <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.elcoinPrice >=
-                                    0 ? displayPriceWithComma(selfPetPowInfo.elcoinPrice, 4) : "..." }</div>
+
+
+                                    <div className="ps-2 h5 mb-0">
+                                      <div>
+                                        { selfPetPowInfo.noElcoin }
+                                      </div>
+                                      <div className="text-yellow">
+                                        {
+                                          selfPetPowInfo.elcoinPrice >= 0 ?
+                                            displayPriceWithComma(selfPetPowInfo.elcoinPrice, 4) + "$" :
+                                            "..."
+                                        }
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                               <div className="col-4" />
+                              <div className="col-12 col-xl-4">
+                                <div className="d-flex align-items-center">
+                                  <div>
+                                    <img src="https://app.elemon.io/assets/images/body_part/2.png" />
+                                  </div>
+                                  <div>
+                                    <div className="h5 mb-0 point-label">Star</div>
+                                  </div>
+                                  <div>
+                                    <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.starCost >=
+                                    0 ? displayPriceWithComma(selfPetPowInfo.starCost, 2) + "$" : "..." }</div>
+                                  </div>
+                                </div>
+                              </div>
                               <div className="col-12 col-xl-4">
                                 <div className="d-flex align-items-center">
                                   <div>
@@ -1655,7 +1788,7 @@ const ElemonPetPowCalculator : NextPage = () => {
                                   </div>
                                   <div>
                                     <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.levelCost >=
-                                    0 ? displayPriceWithComma(selfPetPowInfo.levelCost, 2) : "..." }</div>
+                                    0 ? displayPriceWithComma(selfPetPowInfo.levelCost, 2) + "$" : "..." }</div>
                                   </div>
                                 </div>
                               </div>
@@ -1669,21 +1802,7 @@ const ElemonPetPowCalculator : NextPage = () => {
                                   </div>
                                   <div>
                                     <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.skillCost >=
-                                    0 ? displayPriceWithComma(selfPetPowInfo.skillCost, 2) : "..." }</div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-12 col-xl-4">
-                                <div className="d-flex align-items-center">
-                                  <div>
-                                    <img src="https://app.elemon.io/assets/images/body_part/2.png" />
-                                  </div>
-                                  <div>
-                                    <div className="h5 mb-0 point-label">Star</div>
-                                  </div>
-                                  <div>
-                                    <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.starCost >=
-                                    0 ? displayPriceWithComma(selfPetPowInfo.starCost, 2) : "..." }</div>
+                                    0 ? displayPriceWithComma(selfPetPowInfo.skillCost, 2) + "$" : "..." }</div>
                                   </div>
                                 </div>
                               </div>

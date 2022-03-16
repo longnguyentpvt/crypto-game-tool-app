@@ -55,6 +55,10 @@ const ElemonMarket : NextPage = () => {
     setFilterPrice
   ] = useState<number[]>([0, 100000]);
   const [
+    filterActualPrice,
+    setFilterActualPrice
+  ] = useState<string[]>(["0", "100000"]);
+  const [
     filterPower,
     setFilterPower
   ] = useState<number[]>([0, 10000000]);
@@ -135,6 +139,14 @@ const ElemonMarket : NextPage = () => {
 
     setFilterPrice(prevState => {
       prevState[idx] = price;
+      return [...prevState];
+    });
+  };
+
+  const onFilterActualPriceChange = (e : ChangeEvent<HTMLInputElement>, idx : number) => {
+    const val = e.target.value;
+    setFilterActualPrice(prevState => {
+      prevState[idx] = val;
       return [...prevState];
     });
   };
@@ -264,7 +276,7 @@ const ElemonMarket : NextPage = () => {
 
   const toggleThankModal = () => {
     setThankModalShow(prevState => !prevState);
-  }
+  };
 
   const apiNftLoadTimeoutFlag = useRef<NodeJS.Timeout | null>(null);
   const scheduleLoadTimeoutFlag = useRef<NodeJS.Timeout | null>(null);
@@ -294,6 +306,14 @@ const ElemonMarket : NextPage = () => {
       const level = filterLevel.toString();
       const price = filterPrice.toString();
       const star = filterStar.toString();
+
+      const minActualPrice = filterActualPrice[0];
+      const maxActualPrice = filterActualPrice[1];
+      const reg = /^-?\d+$/;
+      let actualCost : string | null = null;
+      if (reg.test(minActualPrice) && reg.test(maxActualPrice)) {
+        actualCost = minActualPrice + "," + maxActualPrice;
+      }
 
       const getParamFromArray = (inputs : boolean[]) : string | undefined => {
         let idParam : string | undefined;
@@ -325,6 +345,7 @@ const ElemonMarket : NextPage = () => {
           power,
           level,
           price,
+          actualCost,
           star,
           filterPurity,
           baseCardIdParam,
@@ -350,6 +371,7 @@ const ElemonMarket : NextPage = () => {
     filterPower,
     filterLevel,
     filterPrice,
+    filterActualPrice,
     filterStar,
     baseCardIds,
     rarityIds,
@@ -521,6 +543,35 @@ const ElemonMarket : NextPage = () => {
                                       type="text"
                                       value={ filterPrice[1] }
                                       onChange={ e => onFilterPriceChange(e, 1) }
+                                      className="form-control"
+                                      placeholder="Max" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mb-2">
+                              <div className="row g-2 align-items-center">
+                                <div className="col-2">
+                                  <div>
+                                    Actual Price
+                                  </div>
+                                </div>
+                                <div className="col-5">
+                                  <div className="d-grid">
+                                    <input
+                                      type="text"
+                                      value={ filterActualPrice[0] }
+                                      onChange={ e => onFilterActualPriceChange(e, 0) }
+                                      className="form-control"
+                                      placeholder="Min" />
+                                  </div>
+                                </div>
+                                <div className="col-5">
+                                  <div className="d-grid">
+                                    <input
+                                      type="text"
+                                      value={ filterActualPrice[1] }
+                                      onChange={ e => onFilterActualPriceChange(e, 1) }
                                       className="form-control"
                                       placeholder="Max" />
                                   </div>
@@ -997,7 +1048,8 @@ const ElemonMarket : NextPage = () => {
                                             {
                                               !!lockDateStr ? (
                                                 <>
-                                                  {" "}<span className="badge bg-danger">{ lockDateStr }</span>
+                                                  { " " }
+                                                  <span className="badge bg-danger">{ lockDateStr }</span>
                                                 </>
                                               ) : null
                                             }
