@@ -121,7 +121,7 @@ const Home : NextPage = () => {
                               },
                               {
                                 name : "Pet Calculator",
-                                url : "/elemon/market"
+                                url : "/elemon/pets/calculator"
                               },
                               {
                                 name : "Account Analysis",

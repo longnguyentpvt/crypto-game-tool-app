@@ -10,8 +10,11 @@ import {
   ElemonMarketSortCriteria
 } from "../types/enums";
 
-const apiHost = "https://www.cryptogametool.com/apis/elemon/";
-// const apiHost = "http://localhost:8080/apis/elemon/";
+let apiHost = "https://www.cryptogametool.com/apis/elemon/";
+if (process.env.NODE_ENV !== "production") {
+  apiHost = "http://localhost:8081/apis/elemon/";
+}
+
 const apiInstance = axios.create({
   baseURL : apiHost
 });
@@ -72,16 +75,16 @@ export const getElemonNfts = async (
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return {
     pets : [],
     total : 0
   };
-}
+};
 
-export const getElemonPetInfo = async(tokenId: string) : Promise<ElemonNft | null> => {
+export const getElemonPetInfo = async (tokenId : string) : Promise<ElemonNft | null> => {
   try {
     const rp = await apiInstance.request({
       url : "/nft-info",
@@ -92,11 +95,11 @@ export const getElemonPetInfo = async(tokenId: string) : Promise<ElemonNft | nul
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return null;
-}
+};
 
 export const getElemonPower = async (
   star : number,
@@ -146,14 +149,14 @@ export const getElemonPower = async (
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return {
     bodyPoints : [0, 0, 0, 0, 0, 0],
     pow : 0
   };
-}
+};
 
 export const getElemonUpgradeCost = async (
   star : number,
@@ -189,7 +192,7 @@ export const getElemonUpgradeCost = async (
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return {
@@ -202,7 +205,7 @@ export const getElemonUpgradeCost = async (
     starCost : 0,
     total : 0
   };
-}
+};
 
 export const getElemonWallets = async (
   username : string
@@ -243,11 +246,11 @@ export const getElemonWallets = async (
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return [];
-}
+};
 
 export const getWalletLogs = async (
   accountId : string | null,
@@ -281,14 +284,13 @@ export const getWalletLogs = async (
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return [];
-}
+};
 
-export const getPetSaleStatistics = async (
-) : Promise<{
+export const getPetSaleStatistics = async () : Promise<{
   date : number,
   noForSalePets : number,
   noSoldPets : number,
@@ -305,8 +307,8 @@ export const getPetSaleStatistics = async (
     });
 
     return rp.data;
-  } catch(e) {
+  } catch (e) {
   }
 
   return [];
-}
+};
