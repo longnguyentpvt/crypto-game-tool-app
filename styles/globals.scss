@@ -914,6 +914,13 @@ body {
         width: 100%;
         padding : 0 0.25rem;
       }
+
+      .vertical-label {
+        writing-mode: tb-rl;
+        text-align: center;
+        font-size : 0.9rem;
+        padding: 0 0.75rem;
+      }
     }
   }
 }

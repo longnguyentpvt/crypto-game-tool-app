@@ -93,7 +93,7 @@ const ElemonHealth : NextPage = () => {
           {
             label : "No. Created Pets",
             type : "bar",
-            yAxisID: "PET",
+            yAxisID : "PET",
             borderColor : "rgba(42, 147, 213, 0.3)",
             backgroundColor : "rgba(42, 147, 213, 1)",
             borderWidth : 1,
@@ -102,7 +102,7 @@ const ElemonHealth : NextPage = () => {
           {
             label : "No. Sold Pets",
             type : "bar",
-            yAxisID: "PET",
+            yAxisID : "PET",
             borderColor : "rgba(56, 190, 72, 0.3)",
             backgroundColor : "rgba(56, 190, 72, 1)",
             borderWidth : 1,
@@ -111,7 +111,7 @@ const ElemonHealth : NextPage = () => {
           {
             label : "No. Cancel Pets",
             type : "bar",
-            yAxisID: "PET",
+            yAxisID : "PET",
             borderColor : "rgba(107, 103, 103, 0.3)",
             backgroundColor : "rgb(107, 103, 103, 1)",
             borderWidth : 1,
@@ -120,7 +120,7 @@ const ElemonHealth : NextPage = () => {
           {
             label : "Total Volume (USD)",
             type : "line",
-            yAxisID: "VOLUME",
+            yAxisID : "VOLUME",
             borderColor : "rgb(245, 108, 95)",
             backgroundColor : "transparent",
             borderWidth : 2,
@@ -157,9 +157,9 @@ const ElemonHealth : NextPage = () => {
           bottom : 10
         }
       },
-      legend: {
-        labels: {
-          fontColor: "rgba(255, 255, 255, 0.7)",
+      legend : {
+        labels : {
+          fontColor : "rgba(255, 255, 255, 0.7)",
         }
       },
       responsive : true,
@@ -167,8 +167,8 @@ const ElemonHealth : NextPage = () => {
       scales : {
         yAxes : [
           {
-            id: 'PET',
-            position: 'left',
+            id : 'PET',
+            position : 'left',
             gridLines : {
               display : true,
               lineWidth : 1,
@@ -183,8 +183,8 @@ const ElemonHealth : NextPage = () => {
             }
           },
           {
-            id: 'VOLUME',
-            position: 'right',
+            id : 'VOLUME',
+            position : 'right',
             gridLines : {
               display : true,
               lineWidth : 1,
@@ -218,14 +218,20 @@ const ElemonHealth : NextPage = () => {
     };
 
     statisticChart = (
-      <>
-        <Bar
-          options={ OPTIONS }
-          data={ chartData } />
-        <h5 className="w-100 fw-bold text-center pt-2">
-          Label
-        </h5>
-      </>
+      <div className="statistic-chart d-flex">
+        <div className="vertical-label">No. of pets</div>
+        <div className="flex-grow-1">
+          <>
+            <Bar
+              options={ OPTIONS }
+              data={ chartData } />
+            <h5 className="w-100 fw-bold text-center pt-2">
+              Label
+            </h5>
+          </>
+        </div>
+        <div className="vertical-label">Total Volume (USD)</div>
+      </div>
     );
   }
 
@@ -284,9 +290,7 @@ const ElemonHealth : NextPage = () => {
             </div>
 
             <div className="pet-sale-statistic-section">
-              <div className="statistic-chart">
-                { statisticChart }
-              </div>
+              { statisticChart }
             </div>
           </div>
         </div>
