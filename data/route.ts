@@ -24,10 +24,5 @@ export const DefaultMenu : MainHeaderMenuItem[] = [
     id : RouteId.ElemonCalculator,
     name : "Elemon Pet Calculator",
     url : "/elemon/pets/calculator"
-  },
-  {
-    id : RouteId.ElemonHealth,
-    name : "Elemon Health",
-    url : "/elemon/health"
   }
 ]

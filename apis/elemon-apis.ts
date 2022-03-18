@@ -10,10 +10,7 @@ import {
   ElemonMarketSortCriteria
 } from "../types/enums";
 
-let apiHost = "https://www.cryptogametool.com/apis/elemon/";
-if (process.env.NODE_ENV !== "production") {
-  apiHost = "http://localhost:8081/apis/elemon/";
-}
+let apiHost = process.env.NEXT_PUBLIC_MAIN_API_HOST + "/elemon/";
 
 const apiInstance = axios.create({
   baseURL : apiHost
