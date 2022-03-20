@@ -331,6 +331,33 @@ const getOpeningBoxStatistics = async () : Promise<{
   return [];
 };
 
+const getPetCountStatistics = async () : Promise<{
+  totalPet : number,
+  noLevel1Pet : number,
+  noLevelMaxPet : number,
+  noBurnedPet : number
+}> => {
+  try {
+    const params = {};
+
+    const rp = await apiInstance.request({
+      url : "/health/pet-count",
+      method : "get",
+      params : params
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return {
+    totalPet : 0,
+    noLevel1Pet : 0,
+    noLevelMaxPet : 0,
+    noBurnedPet : 0
+  };
+};
+
 export {
   getElemonNfts,
   getElemonPetInfo,
@@ -339,5 +366,6 @@ export {
   getElemonWallets,
   getWalletLogs,
   getPetSaleStatistics,
-  getOpeningBoxStatistics
+  getOpeningBoxStatistics,
+  getPetCountStatistics
 };

@@ -964,5 +964,13 @@ body {
         }
       }
     }
+
+    .pet-count-statistic-chart {
+      height: 400px;
+
+      canvas {
+        width: 100%;
+      }
+    }
   }
 }
