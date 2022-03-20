@@ -430,7 +430,7 @@ body {
       position: fixed;
       bottom: 0;
       width: 956px;
-      background-color: #283344;
+      background-color: $black;
 
       .paging-bottom-content {
         height: 60px;
@@ -675,9 +675,7 @@ body {
     .section-heading {
       font-size: 2.3rem;
       font-weight: 700;
-      background: linear-gradient(180deg,
-              #91e2c6, #ffab58
-      );
+      background: linear-gradient(180deg, $light-green, $orange);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -692,9 +690,7 @@ body {
     .footer-heading {
       font-size: 2.3rem;
       font-weight: 700;
-      background: linear-gradient(180deg,
-              #91e2c6, #ffab58
-      );
+      background: linear-gradient(180deg, $light-green, $orange);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -707,7 +703,7 @@ body {
 
         path,
         polygon {
-          fill: #2aa876;
+          fill: $green;
         }
       }
     }
@@ -743,7 +739,7 @@ body {
 
         &.website-icon {
           path {
-            fill: #91e2c6;
+            fill: $light-green;
           }
         }
       }
@@ -754,7 +750,7 @@ body {
         color: #FFF;
 
         &:hover {
-          color: #91e2c6;
+          color: $light-green;
         }
       }
     }
@@ -868,7 +864,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #283344;
+    background-color: $black;
 
     .bottom-navigation-container {
       height: 60px;
@@ -901,25 +897,71 @@ body {
 }
 
 #elemon-health-app {
-  .pet-sale-statistic-section {
-    height: 500px;
-    background-color: #2c3c4d;
-    border-radius: 15px;
+  .statistic-section {
+    .section-title {
+      .main-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(180deg,#91e2c6,#ffab58);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
 
-    .statistic-chart {
-      height: 100%;
+    .statistic-section-card {
+      background-color: rgba($dark-green, 0.2);
+
+      &.nft-transaction-section-card {
+        .card-section-content {
+          height: 330px;
+        }
+      }
+    }
+
+    .market-statistic-chart {
+      height: 500px;
 
       canvas {
-        max-height: 90%;
         width: 100%;
-        padding : 0 0.25rem;
       }
 
       .vertical-label {
         writing-mode: tb-rl;
         text-align: center;
-        font-size : 0.9rem;
-        padding: 0 0.75rem;
+        font-size: 0.9rem;
+
+        &.inverse-label {
+         @include transform(rotate(180deg));
+        }
+      }
+    }
+
+    .elemon-pet-nft {
+      .pet-class {
+        img {
+          width: auto;
+          height: 20px;
+        }
+      }
+
+      .pet-rarity {
+        img {
+          width: auto;
+          height: 25px;
+        }
+      }
+
+      .nft-img {
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: 105% auto;
+        background-position: center 2px;
+
+        img {
+          width: auto;
+          height: 65px;
+        }
       }
     }
   }

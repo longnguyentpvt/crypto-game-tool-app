@@ -16,7 +16,7 @@ const apiInstance = axios.create({
   baseURL : apiHost
 });
 
-export const getElemonNfts = async (
+const getElemonNfts = async (
   page : number,
   pageSize : number,
   sortCri : ElemonMarketSortCriteria,
@@ -81,7 +81,8 @@ export const getElemonNfts = async (
   };
 };
 
-export const getElemonPetInfo = async (tokenId : string) : Promise<ElemonNft | null> => {
+
+const getElemonPetInfo = async (tokenId : string) : Promise<ElemonNft | null> => {
   try {
     const rp = await apiInstance.request({
       url : "/nft-info",
@@ -97,8 +98,7 @@ export const getElemonPetInfo = async (tokenId : string) : Promise<ElemonNft | n
 
   return null;
 };
-
-export const getElemonPower = async (
+const getElemonPower = async (
   star : number,
   level : number,
   baseCardId : number,
@@ -155,7 +155,7 @@ export const getElemonPower = async (
   };
 };
 
-export const getElemonUpgradeCost = async (
+const getElemonUpgradeCost = async (
   star : number,
   level : number,
   levelSkill1 : number,
@@ -204,7 +204,7 @@ export const getElemonUpgradeCost = async (
   };
 };
 
-export const getElemonWallets = async (
+const getElemonWallets = async (
   username : string
 ) : Promise<{
   walletAddress : string,
@@ -249,7 +249,7 @@ export const getElemonWallets = async (
   return [];
 };
 
-export const getWalletLogs = async (
+const getWalletLogs = async (
   accountId : string | null,
   wallet : string | null,
   actionType : ElemonLogActionType | undefined | null,
@@ -287,7 +287,7 @@ export const getWalletLogs = async (
   return [];
 };
 
-export const getPetSaleStatistics = async () : Promise<{
+const getPetSaleStatistics = async () : Promise<{
   date : number,
   noForSalePets : number,
   noSoldPets : number,
@@ -298,7 +298,7 @@ export const getPetSaleStatistics = async () : Promise<{
     const params = {};
 
     const rp = await apiInstance.request({
-      url : "/health/statistic",
+      url : "/health/market",
       method : "get",
       params : params
     });
@@ -308,4 +308,36 @@ export const getPetSaleStatistics = async () : Promise<{
   }
 
   return [];
+};
+
+const getOpeningBoxStatistics = async () : Promise<{
+  boxId : number,
+  pets : ElemonNft[],
+  openTime : string
+}[]> => {
+  try {
+    const params = {};
+
+    const rp = await apiInstance.request({
+      url : "/health/transactions/open-box",
+      method : "get",
+      params : params
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return [];
+};
+
+export {
+  getElemonNfts,
+  getElemonPetInfo,
+  getElemonPower,
+  getElemonUpgradeCost,
+  getElemonWallets,
+  getWalletLogs,
+  getPetSaleStatistics,
+  getOpeningBoxStatistics
 };

@@ -120,6 +120,10 @@ const Home : NextPage = () => {
                                 url : "/elemon/market"
                               },
                               {
+                                name : "Health Analytics",
+                                url : "/elemon/health"
+                              },
+                              {
                                 name : "Pet Calculator",
                                 url : "/elemon/pets/calculator"
                               },

@@ -467,8 +467,7 @@ const ElemonMarket : NextPage = () => {
                     <PerfectScrollbar
                       options={ {
                         suppressScrollX : true,
-                        wheelPropagation : false,
-
+                        wheelPropagation : false
                       } }>
                       <div className="bar pe-4 pb-6">
                         <div className="filter-section">
