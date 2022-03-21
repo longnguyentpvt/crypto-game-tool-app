@@ -26,7 +26,7 @@ function ElemonMarketAnalyticChart(props : React.DetailedHTMLProps<React.HTMLAtt
   ] = useState<{
     labels : string[],
     datasets : any[]
-  } | null>({
+  }>({
     labels : [],
     datasets : []
   });

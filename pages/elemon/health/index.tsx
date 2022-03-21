@@ -15,7 +15,6 @@ import ElemonPetNftStatisticChart from "../../../containers/ElemonPetNftStatisti
 import ElemonTopPowerNftStatisticChart from "../../../containers/ElemonTopPowerNftStatisticChart";
 import ElemonTopSpeedNftStatisticChart from "../../../containers/ElemonTopSpeedNftStatisticChart";
 import ElemonTopBodyPointNftStatisticChart from "../../../containers/ElemonTopBodyPointNftStatisticChart";
-import ElemonTotalPetCountChart from "../../../containers/ElemonTotalPetCountChart";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -87,26 +86,6 @@ const ElemonHealth : NextPage = () => {
 
               <div
                 className="statistic-section mb-5"
-                id="pet-count-statistic-section">
-                <div className="section-title mb-4">
-                  <h3 className="main-title">
-                    Elemon Pet Count Analytics
-                  </h3>
-                  <h5 className="h6 mt-2">
-                    Pet count by attribute
-                  </h5>
-                </div>
-                <div className="section-body">
-                  <div className="statistic-section-card card">
-                    <div className="card-body">
-                      <ElemonTotalPetCountChart />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="statistic-section mb-5"
                 id="open-box-statistic-section">
                 <div className="section-title mb-4">
                   <h3 className="main-title">
@@ -120,6 +99,10 @@ const ElemonHealth : NextPage = () => {
                 <div className="section-body">
                   <div className="row g-5">
                     <div className="col-12 col-xl-4">
+                      <ElemonPetNftStatisticChart />
+                    </div>
+
+                    <div className="col-12 col-xl-4">
                       <ElemonOpeningBoxStatisticChart />
                     </div>
 
@@ -127,9 +110,6 @@ const ElemonHealth : NextPage = () => {
                       <ElemonCombiningStatisticChart />
                     </div>
 
-                    <div className="col-12 col-xl-4">
-                      <ElemonPetNftStatisticChart />
-                    </div>
 
                     <div className="col-12 col-xl-4">
                       <ElemonTopPowerNftStatisticChart />
