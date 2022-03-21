@@ -27,7 +27,7 @@ export const DefaultMenu : MainHeaderMenuItem[] = [
   },
   {
     id : RouteId.ElemonHealth,
-    name : "Elemon Health Analtyics",
+    name : "Elemon Health Analytics",
     url : "/elemon/health"
   }
 ];
