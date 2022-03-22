@@ -411,7 +411,7 @@ const ElemonPetPowCalculator : NextPage = () => {
           skillLevel4
         ),
         getElemonUpgradeCost(
-          !!selfStar ? selfStar : 1,
+          !!selfStar ? selfStar : 0,
           !!selfLevel ? selfLevel : 1,
           selfSkillLevel1,
           selfSkillLevel2,
