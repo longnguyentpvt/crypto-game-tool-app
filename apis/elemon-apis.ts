@@ -331,6 +331,28 @@ const getOpeningBoxStatistics = async () : Promise<{
   return [];
 };
 
+const getCombiningPetStatistics = async () : Promise<{
+  pet1 : ElemonNft,
+  pet2 : ElemonNft,
+  combinedPet : ElemonNft,
+  combineTime : string
+}[]> => {
+  try {
+    const params = {};
+
+    const rp = await apiInstance.request({
+      url : "/health/transactions/combine-pet",
+      method : "get",
+      params : params
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return [];
+};
+
 const getPetCountStatistics = async () : Promise<{
   totalPet : number,
   noLevel1Pet : number,
@@ -367,5 +389,6 @@ export {
   getWalletLogs,
   getPetSaleStatistics,
   getOpeningBoxStatistics,
+  getCombiningPetStatistics,
   getPetCountStatistics
 };

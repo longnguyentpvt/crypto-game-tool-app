@@ -56,7 +56,7 @@ function ElemonOpeningBoxStatisticChart() {
                     pets,
                     openTime
                   }) => {
-                    const date = moment(openTime).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY");
+                    const date = moment(openTime).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm");
 
                     return (
                       <div
