@@ -6,6 +6,7 @@ import {
   ElemonNft
 } from "../types/service";
 import {
+  ELEMON_LEVEL_RANGE,
   ElemonLogActionType,
   ElemonMarketSortCriteria,
   ElemonTopBodyFilter
@@ -370,8 +371,7 @@ const getCombiningPetStatistics = async () : Promise<{
 
 const getPetCountStatistics = async () : Promise<{
   totalPet : number,
-  noLevel1Pet : number,
-  noLevelMaxPet : number,
+  levelRangeSortedPetMap : Record<ELEMON_LEVEL_RANGE, number>,
   noBurnedPet : number
 }> => {
   try {
@@ -389,8 +389,7 @@ const getPetCountStatistics = async () : Promise<{
 
   return {
     totalPet : 0,
-    noLevel1Pet : 0,
-    noLevelMaxPet : 0,
+    levelRangeSortedPetMap : {} as Record<ELEMON_LEVEL_RANGE, number>,
     noBurnedPet : 0
   };
 };

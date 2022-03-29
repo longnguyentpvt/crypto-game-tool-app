@@ -39,3 +39,12 @@ export enum ElemonTopBodyFilter {
   PART_5_POINT = "PART_5_POINT",
   PART_6_POINT = "PART_6_POINT"
 }
+
+export enum ELEMON_LEVEL_RANGE {
+  U10 = "U10",
+  U20 = "U20",
+  U30 = "U30",
+  U40 = "U40",
+  U50 = "U50",
+  U60 = "U60"
+}
