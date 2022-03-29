@@ -17,29 +17,28 @@ import {
   ElemonAuraInputs,
   ElemonBodyPartLevelInputs,
   ElemonBodyPartInputs
-} from "../../../data/input";
+} from "data/input";
 import {
   getElemonPetInfo,
   getElemonPower,
   getElemonUpgradeCost
-} from "../../../apis/elemon-apis";
+} from "apis/elemon-apis";
 import {
   displayPriceWithComma
-} from "../../../services/utils";
-import Script from "next/script";
-import MainHeader from "../../../components/MainHeader";
+} from "services/utils";
+import MainHeader from "components/MainHeader";
 import {
   DefaultMenu,
   RouteId
-} from "../../../data/route";
-import GamingContentBorder from "../../../components/GamingContentBorder";
-import { ElemonNft } from "../../../types/service";
+} from "data/route";
+import GamingContentBorder from "components/GamingContentBorder";
+import { ElemonNft } from "types/service";
 import {
   getClassImg,
   getElemonNftImg,
   getRarityImg,
   getSkillImg
-} from "../../../services/elemon";
+} from "services/elemon";
 
 const PetLevels : number[] = [];
 for (let i = 1; i <= 60; i++) {
@@ -501,10 +500,10 @@ const ElemonPetPowCalculator : NextPage = () => {
         skillLevel3 = -1,
         skillLevel4 = -1;
       if (!!skills) {
-         skillLevel1 = skills[0] !== undefined ? skills[0].level : -1;
-         skillLevel2 = skills[1] !== undefined ? skills[1].level : -1;
-         skillLevel3 = skills[2] !== undefined ? skills[2].level : -1;
-         skillLevel4 = skills[3] !== undefined ? skills[3].level : -1;
+        skillLevel1 = skills[0] !== undefined ? skills[0].level : -1;
+        skillLevel2 = skills[1] !== undefined ? skills[1].level : -1;
+        skillLevel3 = skills[2] !== undefined ? skills[2].level : -1;
+        skillLevel4 = skills[3] !== undefined ? skills[3].level : -1;
       }
       const level = !!data.level ? data.level : 1;
       const star = !!data.star ? data.star : 0;
@@ -528,7 +527,7 @@ const ElemonPetPowCalculator : NextPage = () => {
       );
       setSelfPetCostInfo({
         elcoinPrice : costInfo.elcoinPrice,
-        elmonPrice :  costInfo.elmonPrice,
+        elmonPrice : costInfo.elmonPrice,
         levelCost : costInfo.levelCost,
         skillCost : costInfo.skillCost,
         starCost : costInfo.starCost,
@@ -707,6 +706,14 @@ const ElemonPetPowCalculator : NextPage = () => {
                 dangerouslySetInnerHTML={ {
                   __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-DS831RKYB5');`
                 } }></script>
+              <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"
+                crossOrigin="anonymous"></script>
+              <script
+                async
+                custom-element="amp-ad"
+                src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
             </>
           ) : null
         }
@@ -993,7 +1000,8 @@ const ElemonPetPowCalculator : NextPage = () => {
                             <div className="power-col">
                               <div className="text-xl-center">
                                 <div className="text-warning h3 mb-0">
-                                  { selfPetCostInfo.total >= 0 ? displayPriceWithComma(selfPetCostInfo.total, 2) : "..." }
+                                  { selfPetCostInfo.total >=
+                                  0 ? displayPriceWithComma(selfPetCostInfo.total, 2) : "..." }
                                 </div>
                                 <div>
                                   <img src="https://app.elemon.io/assets/images/busd_ticker.png" />
@@ -1383,6 +1391,19 @@ const ElemonPetPowCalculator : NextPage = () => {
                     </div>
                   </div>
                 </GamingContentBorder>
+              </div>
+
+              <div className="mt-5">
+                <amp-ad
+                  width="100vw"
+                  height="320"
+                  type="adsense"
+                  data-ad-client="ca-pub-6796254445247606"
+                  data-ad-slot="2664487903"
+                  data-auto-format="rspv"
+                  data-full-width="">
+                  <div data-overflow=""></div>
+                </amp-ad>
               </div>
 
               <div className="mt-5">

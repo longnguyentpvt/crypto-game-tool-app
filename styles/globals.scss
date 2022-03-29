@@ -208,6 +208,17 @@ svg {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
 }
 
+.sy-svg-icon {
+  @each $color, $value in $theme-colors {
+    .svg-fill-#{$color} {
+      fill: $value;
+    }
+    .svg-stroke-#{$color} {
+      stroke: $value;
+    }
+  }
+}
+
 @each $breakpoint-name in map-keys($grid-breakpoints) {
   .grid-#{$breakpoint-name}-up {
     @include media-breakpoint-up($breakpoint-name) {
@@ -916,6 +927,127 @@ body {
         .card-section-content {
           height: 330px;
         }
+
+        .elemon-pet-nft {
+          .pet-class {
+            img {
+              width: auto;
+              height: 20px;
+            }
+          }
+
+          .pet-rarity {
+            img {
+              width: auto;
+              height: 25px;
+            }
+          }
+
+          .nft-img {
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: 105% auto;
+            background-position: center 2px;
+
+            img {
+              width: auto;
+              height: 65px;
+            }
+
+            .nft-combine-status {
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 10px;
+              right: 0px;
+
+              svg {
+                width: 100%;
+                height: auto;
+
+                path {
+                  fill: yellow;
+                }
+              }
+
+              &.removed-stt {
+                svg {
+                  path {
+                    fill: red;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.top-nft-section-card {
+        .card-section-content {
+          height: 460px;
+        }
+      }
+
+      .top-pet-list {
+        .top-pet-detail {
+          .pet-rank {
+            width: 60px;
+            position: relative;
+
+            .rank-no {
+              position: absolute;
+              top: 18px;
+              left: 0;
+              right: 0;
+              text-align: center;
+              font-size: 1rem;
+            }
+          }
+
+          .nft-img {
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: 105% auto;
+            background-position: center 2px;
+
+            img {
+              width: auto;
+              height: 65px;
+            }
+          }
+
+          .pet-class,
+          .pet-rarity {
+            img {
+              width: auto;
+              height: 30px;
+            }
+          }
+
+          .pet-rarity {
+            img {
+              height: 42px;
+            }
+          }
+
+          .pet-level {
+            .level {
+              width: 30px;
+              height: 30px;
+              line-height: 30px;
+              text-align: center;
+              background-color: $green;
+              border-radius: 50%;
+            }
+          }
+
+          .top-pet-value {
+            img {
+              width: 40px;
+              height: auto;
+            }
+          }
+        }
       }
     }
 
@@ -933,57 +1065,8 @@ body {
       }
     }
 
-    .elemon-pet-nft {
-      .pet-class {
-        img {
-          width: auto;
-          height: 20px;
-        }
-      }
 
-      .pet-rarity {
-        img {
-          width: auto;
-          height: 25px;
-        }
-      }
 
-      .nft-img {
-        text-align: center;
-        background-repeat: no-repeat;
-        background-size: 105% auto;
-        background-position: center 2px;
 
-        img {
-          width: auto;
-          height: 65px;
-        }
-
-        .nft-combine-status {
-          position: absolute;
-          width: 20px;
-          height: 20px;
-          top: 10px;
-          right: 0px;
-
-          svg {
-            width: 100%;
-            height: auto;
-
-            path {
-              fill: yellow;
-            }
-          }
-
-          &.removed-stt {
-            svg {
-              path {
-                fill: red;
-              }
-            }
-          }
-        }
-      }
-    }
   }
 }

@@ -7,7 +7,8 @@ import {
 } from "../types/service";
 import {
   ElemonLogActionType,
-  ElemonMarketSortCriteria
+  ElemonMarketSortCriteria,
+  ElemonTopBodyFilter
 } from "../types/enums";
 
 let apiHost = process.env.NEXT_PUBLIC_MAIN_API_HOST + "/elemon/";
@@ -22,9 +23,16 @@ const getElemonNfts = async (
   sortCri : ElemonMarketSortCriteria,
   asc : number,
   power : string,
+  maxPower : string,
   level : string,
   price : string,
   actualCost : string | null,
+  bodyMax1 : string | null,
+  bodyMax2 : string | null,
+  bodyMax3 : string | null,
+  bodyMax4 : string | null,
+  bodyMax5 : string | null,
+  bodyMax6 : string | null,
   star : string,
   purity? : number,
   baseCardIds? : string,
@@ -48,8 +56,15 @@ const getElemonNfts = async (
       sortCri,
       asc,
       power,
+      maxPower,
       price,
       actualCost,
+      bodyMax1,
+      bodyMax2,
+      bodyMax3,
+      bodyMax4,
+      bodyMax5,
+      bodyMax6,
       star,
       level,
       purity,
@@ -380,6 +395,25 @@ const getPetCountStatistics = async () : Promise<{
   };
 };
 
+const getTopElemonPets = async (filter : ElemonTopBodyFilter) : Promise<ElemonNft[]> => {
+  try {
+    const params = {
+      filter
+    };
+
+    const rp = await apiInstance.request({
+      url : "/pet/top-pets",
+      method : "get",
+      params : params
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return [];
+};
+
 export {
   getElemonNfts,
   getElemonPetInfo,
@@ -390,5 +424,6 @@ export {
   getPetSaleStatistics,
   getOpeningBoxStatistics,
   getCombiningPetStatistics,
-  getPetCountStatistics
+  getPetCountStatistics,
+  getTopElemonPets
 };

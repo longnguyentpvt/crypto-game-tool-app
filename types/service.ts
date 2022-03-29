@@ -17,6 +17,7 @@ export type ElemonNft = {
   tokenId : string,
   lastPrice : number,
   ownerAddress : string,
+  ownerName? : string,
   baseCardId : number,
   bodyPart1 : number,
   bodyPart2 : number,
