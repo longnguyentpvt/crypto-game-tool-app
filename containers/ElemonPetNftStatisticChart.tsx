@@ -8,10 +8,10 @@ import {
 
 import {
   getPetCountStatistics
-} from "../apis/elemon-apis";
+} from "apis/elemon-apis";
 import {
   ELEMON_LEVEL_RANGE
-} from "../types/enums";
+} from "types/enums";
 
 
 const backgroundColors = [
@@ -36,6 +36,10 @@ function ElemonPetNftStatisticChart() {
     labels : [],
     datasets : []
   });
+  const [
+    totalPets,
+    setTotalPets
+  ] = useState<number>(0);
 
   const loadChart = async () => {
     const petCounts = await getPetCountStatistics();
@@ -45,17 +49,15 @@ function ElemonPetNftStatisticChart() {
       noBurnedPet,
     } = petCounts;
 
+    setTotalPets(totalPet);
+
+    let lv10 = 0,
+      lv20 = 0,
+      lv30 = 0,
+      lv40 = 0,
+      lv50 = 0,
+      lv60 = 0;
     let totalLevelPets = 0;
-    const labels = [
-      "Level 1-10  pets",
-      "Level 11-20 pets",
-      "Level 21-30 pets",
-      "Level 31-40 pets",
-      "Level 41-50 pets",
-      "Level 51-60 pets",
-      "Burned pets",
-      "Others"
-    ];
     const levelRanges = Object.keys(ELEMON_LEVEL_RANGE);
     const data = levelRanges.map(range => {
       let levelRange = ELEMON_LEVEL_RANGE.U10;
@@ -80,12 +82,47 @@ function ElemonPetNftStatisticChart() {
           break;
       }
       const noPet = levelRangeSortedPetMap[levelRange];
+      const percentage = (noPet * 100 / totalPet);
+      console.log(levelRange, noPet, percentage)
+      switch (levelRange) {
+        case ELEMON_LEVEL_RANGE.U10:
+          lv10 = percentage;
+          break;
+        case ELEMON_LEVEL_RANGE.U20:
+          lv20 = percentage;
+          break;
+        case ELEMON_LEVEL_RANGE.U30:
+          lv30 = percentage;
+          break;
+        case ELEMON_LEVEL_RANGE.U40:
+          lv40 = percentage;
+          break;
+        case ELEMON_LEVEL_RANGE.U50:
+          lv50 = percentage;
+          break;
+        case ELEMON_LEVEL_RANGE.U60:
+          lv60 = percentage;
+          break;
+      }
       totalLevelPets += noPet;
       return noPet;
     });
     data.push(noBurnedPet);
+    const burnedPetPc = (noBurnedPet * 100 / totalPet);
     const otherPet = totalPet - totalLevelPets - noBurnedPet;
     data.push(otherPet);
+    const otherPc = 100 - lv10 - lv20 - lv30 - lv40 - lv50 - lv60 - burnedPetPc;
+
+    const labels = [
+      "Level 1-10 pets (" + lv10.toFixed(1) + "%)",
+      "Level 11-20 pets (" + lv20.toFixed(1) + "%)",
+      "Level 21-30 pets (" + lv30.toFixed(1) + "%)",
+      "Level 31-40 pets (" + lv40.toFixed(1) + "%)",
+      "Level 41-50 pets (" + lv50.toFixed(1) + "%)",
+      "Level 51-60 pets (" + lv60.toFixed(1) + "%)",
+      "Burned pets (" + burnedPetPc.toFixed(1) + "%)",
+      "Others (" + otherPc.toFixed(1) + "%)"
+    ];
 
     setChartData({
       labels,
@@ -113,7 +150,8 @@ function ElemonPetNftStatisticChart() {
     responsive : true,
     maintainAspectRatio : false,
     tooltips : {
-      enabled : false
+      mode : "index",
+      intersect : false
     }
   };
 
@@ -132,6 +170,13 @@ function ElemonPetNftStatisticChart() {
               data={ chartData } />
           </div>
         </div>
+        {
+          !!totalPets ? (
+            <div className="text-white fw-bold text-center mt-3">
+              Total pets: { totalPets }
+            </div>
+          ) : null
+        }
       </div>
     </div>
   );
