@@ -61,7 +61,11 @@ const ElemonMarket : NextPage = () => {
   const [
     filterPower,
     setFilterPower
-  ] = useState<number[]>([0, 10000000]);
+  ] = useState<number[]>([0, 20000000]);
+  const [
+    filterPowerMax,
+    setFilterPowerMax
+  ] = useState<number[]>([0, 20000000]);
   const [
     filterLevel,
     setFilterLevel
@@ -70,6 +74,35 @@ const ElemonMarket : NextPage = () => {
     filterStar,
     setFilterStar
   ] = useState<number[]>([0, 10]);
+  const [
+    filterBodyMax,
+    setFilterBodyMax
+  ] = useState<Record<number, number[]>>({
+    1 : [
+      0,
+      20000
+    ],
+    2 : [
+      0,
+      20000
+    ],
+    3 : [
+      0,
+      20000
+    ],
+    4 : [
+      0,
+      20000
+    ],
+    5 : [
+      0,
+      20000
+    ],
+    6 : [
+      0,
+      20000
+    ]
+  });
 
   const [
     baseCardIds,
@@ -161,6 +194,16 @@ const ElemonMarket : NextPage = () => {
     });
   };
 
+  const onFilterPowerMaxChange = (e : ChangeEvent<HTMLInputElement>, idx : number) => {
+    const val = e.target.value;
+    const price = !!val ? parseInt(val) : 0;
+
+    setFilterPowerMax(prevState => {
+      prevState[idx] = price;
+      return [...prevState];
+    });
+  };
+
   const onFilterLevelChange = (e : ChangeEvent<HTMLInputElement>, idx : number) => {
     const val = e.target.value;
     const price = !!val ? parseInt(val) : 0;
@@ -178,6 +221,20 @@ const ElemonMarket : NextPage = () => {
     setFilterStar(prevState => {
       prevState[idx] = price;
       return [...prevState];
+    });
+  };
+
+  const onFilterBodyMaxChange = (e : ChangeEvent<HTMLInputElement>, partNo : number, idx : number) => {
+    const val = e.target.value;
+    const point = !!val ? parseInt(val) : 0;
+
+    setFilterBodyMax(prevState => {
+      const filter = [...prevState[partNo]];
+      filter[idx] = point;
+      return {
+        ...prevState,
+        [partNo] : filter
+      };
     });
   };
 
@@ -303,9 +360,22 @@ const ElemonMarket : NextPage = () => {
       prevPageNoRef.current = pageNo;
 
       const power = filterPower.toString();
+      const powerMax = filterPowerMax.toString();
       const level = filterLevel.toString();
       const price = filterPrice.toString();
       const star = filterStar.toString();
+      const bodyMax1 = filterBodyMax[1].toString();
+      const bodyMax2 = filterBodyMax[2].toString();
+      const bodyMax3 = filterBodyMax[3].toString();
+      const bodyMax4 = filterBodyMax[4].toString();
+      const bodyMax5 = filterBodyMax[5].toString();
+      const bodyMax6 = filterBodyMax[6].toString();
+      // const bodyMax1 = null;
+      // const bodyMax2 = null;
+      // const bodyMax3 = null;
+      // const bodyMax4 = null;
+      // const bodyMax5 = null;
+      // const bodyMax6 = "5000,20000";
 
       const minActualPrice = filterActualPrice[0];
       const maxActualPrice = filterActualPrice[1];
@@ -343,9 +413,16 @@ const ElemonMarket : NextPage = () => {
           sortCriteria,
           sortType,
           power,
+          powerMax,
           level,
           price,
           actualCost,
+          bodyMax1,
+          bodyMax2,
+          bodyMax3,
+          bodyMax4,
+          bodyMax5,
+          bodyMax6,
           star,
           filterPurity,
           baseCardIdParam,
@@ -364,14 +441,26 @@ const ElemonMarket : NextPage = () => {
     };
 
     load();
+
+    return function clean() {
+      if (!!scheduleLoadTimeoutFlag.current) {
+        clearTimeout(scheduleLoadTimeoutFlag.current);
+      }
+
+      if (!!apiNftLoadTimeoutFlag.current) {
+        clearTimeout(apiNftLoadTimeoutFlag.current);
+      }
+    }
   }, [
     pageNo,
     sortCriteria,
     sortType,
     filterPower,
+    filterPowerMax,
     filterLevel,
     filterPrice,
     filterActualPrice,
+    filterBodyMax,
     filterStar,
     baseCardIds,
     rarityIds,
@@ -434,6 +523,10 @@ const ElemonMarket : NextPage = () => {
                 dangerouslySetInnerHTML={ {
                   __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-DS831RKYB5');`
                 } }></script>
+              <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"
+                crossOrigin="anonymous"></script>
             </>
           ) : null
         }
@@ -485,12 +578,19 @@ const ElemonMarket : NextPage = () => {
                                     <option value={ ElemonMarketSortCriteria.PRICE }>Selling Price</option>
                                     <option value={ ElemonMarketSortCriteria.ACTUAL_COST }>Actual Price</option>
                                     <option value={ ElemonMarketSortCriteria.POWER }>Power</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_POWER }>Max Power</option>
                                     <option value={ ElemonMarketSortCriteria.HP }>HP</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_HP }>Max HP</option>
                                     <option value={ ElemonMarketSortCriteria.PATK }>Physical Attack</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_PATK }>Max P.Attack</option>
                                     <option value={ ElemonMarketSortCriteria.MATK }>Magical Attack</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_MATK }>Max M.Attack</option>
                                     <option value={ ElemonMarketSortCriteria.PDEF }>Physical Def</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_PDEF }>Max P.Def</option>
                                     <option value={ ElemonMarketSortCriteria.MDEF }>Magical Def</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_MDEF }>Max M.Def</option>
                                     <option value={ ElemonMarketSortCriteria.SPEED }>Speed</option>
+                                    <option value={ ElemonMarketSortCriteria.MAX_SPEED }>Max Speed</option>
                                   </select>
                                 </div>
                               </div>
@@ -600,6 +700,35 @@ const ElemonMarket : NextPage = () => {
                                       type="text"
                                       value={ filterPower[1] }
                                       onChange={ e => onFilterPowerChange(e, 1) }
+                                      className="form-control"
+                                      placeholder="Max" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mb-2">
+                              <div className="row g-2 align-items-center">
+                                <div className="col-2">
+                                  <div>
+                                    Max Power
+                                  </div>
+                                </div>
+                                <div className="col-5">
+                                  <div className="d-grid">
+                                    <input
+                                      type="text"
+                                      value={ filterPowerMax[0] }
+                                      onChange={ e => onFilterPowerMaxChange(e, 0) }
+                                      className="form-control"
+                                      placeholder="Min" />
+                                  </div>
+                                </div>
+                                <div className="col-5">
+                                  <div className="d-grid">
+                                    <input
+                                      type="text"
+                                      value={ filterPowerMax[1] }
+                                      onChange={ e => onFilterPowerMaxChange(e, 1) }
                                       className="form-control"
                                       placeholder="Max" />
                                   </div>
@@ -845,6 +974,59 @@ const ElemonMarket : NextPage = () => {
                                           <option value={ 8 }>Legend 2</option>
                                           <option value={ 9 }>Mythical</option>
                                         </select>
+                                      </div>
+                                    );
+                                  })
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="filter-section body-max-filter-section">
+                          <div className="section-title mb-2">
+                            Max Body Filter
+                          </div>
+                          <div className="section-content">
+                            <div>
+                              <div className="row g-2">
+                                {
+                                  ElemonBodyPartInputs.map(({
+                                    id,
+                                    name : inputName
+                                  }) => {
+                                    return (
+                                      <div
+                                        className="col-12"
+                                        key={ id }>
+                                        <div>
+                                          <div className="row g-2 align-items-center">
+                                            <div className="col-2">
+                                              <div>
+                                                { inputName }
+                                              </div>
+                                            </div>
+                                            <div className="col-5">
+                                              <div className="d-grid">
+                                                <input
+                                                  type="text"
+                                                  value={ filterBodyMax[id][0] }
+                                                  onChange={ e => onFilterBodyMaxChange(e, id, 0) }
+                                                  className="form-control"
+                                                  placeholder="Min" />
+                                              </div>
+                                            </div>
+                                            <div className="col-5">
+                                              <div className="d-grid">
+                                                <input
+                                                  type="text"
+                                                  value={ filterBodyMax[id][1] }
+                                                  onChange={ e => onFilterBodyMaxChange(e, id, 1) }
+                                                  className="form-control"
+                                                  placeholder="Min" />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                       </div>
                                     );
                                   })

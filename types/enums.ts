@@ -1,13 +1,26 @@
+export type ComponentColor = "primary" | "secondary" | "warning" | "success" | "danger" | "muted" |
+  "blue" | "light-blue" | "light-blue-2" | "dark-blue" | "green" | "light-green" | "dark-green" | "red" | "yellow" |
+  "pink" | "purple" | "orange" | "white" | "gray" | "light-gray-1" | "light-gray-2" | "light-gray-3" | "light-gray-4" |
+  "light-gray-5" |
+  "dark-gray" | "black";
+
 export enum ElemonMarketSortCriteria {
   PRICE = "price",
   ACTUAL_COST = "actualCost",
   POWER = "power",
+  MAX_POWER = "maxPower",
   SPEED = "speed",
+  MAX_SPEED = "maxSpeed",
   PATK = "patk",
+  MAX_PATK = "maxPatk",
   MATK = "matk",
+  MAX_MATK = "maxMatk",
   PDEF = "pdef",
+  MAX_PDEF = "maxPdef",
   MDEF = "mdef",
-  HP = "hp"
+  MAX_MDEF = "maxMdef",
+  HP = "hp",
+  MAX_HP = "maxHp"
 }
 
 export enum ElemonLogActionType {
@@ -15,6 +28,16 @@ export enum ElemonLogActionType {
   PVE_FIGHT = "PVE_FIGHT",
   PVP_FIGHT = "PVP_FIGHT",
   NFT_HEAL = "NFT_HEAL",
+}
+
+export enum ElemonTopBodyFilter {
+  POWER = "POWER",
+  PART_1_POINT = "PART_1_POINT",
+  PART_2_POINT = "PART_2_POINT",
+  PART_3_POINT = "PART_3_POINT",
+  PART_4_POINT = "PART_4_POINT",
+  PART_5_POINT = "PART_5_POINT",
+  PART_6_POINT = "PART_6_POINT"
 }
 
 export enum ELEMON_LEVEL_RANGE {
