@@ -3,7 +3,7 @@ import {
   useState
 } from "react";
 import {
-  Bar
+  Pie
 } from "react-chartjs-2";
 
 import {
@@ -20,18 +20,10 @@ const backgroundColors = [
   "rgb(255, 205, 86)",
   "rgb(75, 192, 192)",
   "rgb(54, 162, 235)",
-  "rgb(102, 54, 235)",
-  "rgb(202, 202, 202)"
+  "rgb(49, 99, 176)",
+  "rgb(167, 153, 215)",
+  "rgb(113, 113, 117)"
 ];
-
-const petLevelLabels : Record<ELEMON_LEVEL_RANGE, string> = {
-  [ELEMON_LEVEL_RANGE.U10] : "Level 1-10 Pets",
-  [ELEMON_LEVEL_RANGE.U20] : "Level 11-20 Pets",
-  [ELEMON_LEVEL_RANGE.U30] : "Level 21-30 Pets",
-  [ELEMON_LEVEL_RANGE.U40] : "Level 31-40 Pets",
-  [ELEMON_LEVEL_RANGE.U50] : "Level 41-50 Pets",
-  [ELEMON_LEVEL_RANGE.U60] : "Level 51-60 Pets"
-}
 
 function ElemonPetNftStatisticChart() {
   const [
@@ -44,25 +36,28 @@ function ElemonPetNftStatisticChart() {
     labels : [],
     datasets : []
   });
-  const [
-    chartStep,
-    setChartStep
-  ] = useState<number>(1000);
 
   const loadChart = async () => {
     const petCounts = await getPetCountStatistics();
     const {
+      totalPet,
       levelRangeSortedPetMap,
       noBurnedPet,
     } = petCounts;
 
+    let totalLevelPets = 0;
     const labels = [
-      "No. pets"
+      "Level 1-10  pets",
+      "Level 11-20 pets",
+      "Level 21-30 pets",
+      "Level 31-40 pets",
+      "Level 41-50 pets",
+      "Level 51-60 pets",
+      "Burned pets",
+      "Others"
     ];
-    let maxPets = 0;
-
     const levelRanges = Object.keys(ELEMON_LEVEL_RANGE);
-    const datasets = levelRanges.map((range, index) => {
+    const data = levelRanges.map(range => {
       let levelRange = ELEMON_LEVEL_RANGE.U10;
       switch (range) {
         case "U10":
@@ -85,39 +80,23 @@ function ElemonPetNftStatisticChart() {
           break;
       }
       const noPet = levelRangeSortedPetMap[levelRange];
-      if (noPet > maxPets) {
-        maxPets = noPet;
-      }
-
-      return {
-          label : petLevelLabels[levelRange],
-          type : "bar",
-          backgroundColor : backgroundColors[index],
-          borderColor : backgroundColors[index],
-          borderWidth : 1,
-          data : [noPet]
-        };
+      totalLevelPets += noPet;
+      return noPet;
     });
-    datasets.push(
-      {
-        label : "Burned Pets",
-        type : "bar",
-        backgroundColor : backgroundColors[levelRanges.length],
-        borderColor : backgroundColors[levelRanges.length],
-        borderWidth : 1,
-        data : [noBurnedPet]
-      }
-    );
+    data.push(noBurnedPet);
+    const otherPet = totalPet - totalLevelPets - noBurnedPet;
+    data.push(otherPet);
 
     setChartData({
       labels,
-      datasets
+      datasets : [
+        {
+          backgroundColor : backgroundColors,
+          borderColor : backgroundColors,
+          data
+        }
+      ]
     });
-
-    let maxValue = Math.round(maxPets / 10000) * 10000;
-    if (maxValue < maxPets) maxValue += 10000;
-    const step = maxValue / 10;
-    setChartStep(step);
   };
 
   useEffect(() => {
@@ -130,43 +109,6 @@ function ElemonPetNftStatisticChart() {
       labels : {
         fontColor : "rgb(255, 255, 255, 0.8)",
       }
-    },
-    layout : {
-      padding : {
-        left : 5,
-        right : 5,
-        top : 10,
-        bottom : 10
-      }
-    },
-    scales : {
-      yAxes : [
-        {
-          gridLines : {
-            display : true,
-            lineWidth : 1,
-            color : "rgba(255, 255, 255, 0.1)",
-            drawBorder : false
-          },
-          ticks : {
-            beginAtZero : true,
-            padding : 20,
-            stepSize : chartStep,
-            fontColor : "rgba(255, 255, 255, 0.8)",
-          }
-        }
-      ],
-      xAxes : [
-        {
-          gridLines : {
-            display : false
-          },
-          ticks : {
-            padding : 10,
-            fontColor : "rgba(255, 255, 255, 0.8)",
-          }
-        }
-      ]
     },
     responsive : true,
     maintainAspectRatio : false,
@@ -185,7 +127,7 @@ function ElemonPetNftStatisticChart() {
         </div>
         <div className="card-section-content">
           <div className="h-100">
-            <Bar
+            <Pie
               options={ ChartOptions }
               data={ chartData } />
           </div>
