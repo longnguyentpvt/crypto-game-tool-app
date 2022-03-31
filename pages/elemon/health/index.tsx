@@ -15,6 +15,7 @@ import ElemonPetNftStatisticChart from "../../../containers/ElemonPetNftStatisti
 import ElemonTopPowerNftStatisticChart from "../../../containers/ElemonTopPowerNftStatisticChart";
 import ElemonTopSpeedNftStatisticChart from "../../../containers/ElemonTopSpeedNftStatisticChart";
 import ElemonTopBodyPointNftStatisticChart from "../../../containers/ElemonTopBodyPointNftStatisticChart";
+import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -120,6 +121,10 @@ const ElemonHealth : NextPage = () => {
 
                     <div className="col-12 col-xl-4">
                       <ElemonTopSpeedNftStatisticChart />
+                    </div>
+
+                    <div className="col-12 col-xl-4">
+                      <ElemonTopHighestPricePets />
                     </div>
                   </div>
                 </div>

@@ -3,7 +3,8 @@ import {
 } from "axios";
 
 import {
-  ElemonNft
+  ElemonNft,
+  HighestPurchasedPetInfo
 } from "../types/service";
 import {
   ELEMON_LEVEL_RANGE,
@@ -413,6 +414,21 @@ const getTopElemonPets = async (filter : ElemonTopBodyFilter) : Promise<ElemonNf
   return [];
 };
 
+const getTopHighestPricePets = async() : Promise<HighestPurchasedPetInfo[]> => {
+  try {
+
+    const rp = await apiInstance.request({
+      url : "/health/top-purchased",
+      method : "get"
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return [];
+};
+
 export {
   getElemonNfts,
   getElemonPetInfo,
@@ -424,5 +440,6 @@ export {
   getOpeningBoxStatistics,
   getCombiningPetStatistics,
   getPetCountStatistics,
-  getTopElemonPets
+  getTopElemonPets,
+  getTopHighestPricePets
 };

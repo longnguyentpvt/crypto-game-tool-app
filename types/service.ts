@@ -49,3 +49,8 @@ export type MainHeaderMenuItem = {
   name : string,
   url : string
 }
+
+export type HighestPurchasedPetInfo = {
+  price : number,
+  petInfo : ElemonNft
+}

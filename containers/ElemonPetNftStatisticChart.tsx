@@ -21,8 +21,7 @@ const backgroundColors = [
   "rgb(75, 192, 192)",
   "rgb(54, 162, 235)",
   "rgb(49, 99, 176)",
-  "rgb(167, 153, 215)",
-  "rgb(113, 113, 117)"
+  "rgb(167, 153, 215)"
 ];
 
 function ElemonPetNftStatisticChart() {
@@ -83,7 +82,6 @@ function ElemonPetNftStatisticChart() {
       }
       const noPet = levelRangeSortedPetMap[levelRange];
       const percentage = (noPet * 100 / totalPet);
-      console.log(levelRange, noPet, percentage)
       switch (levelRange) {
         case ELEMON_LEVEL_RANGE.U10:
           lv10 = percentage;
@@ -109,19 +107,15 @@ function ElemonPetNftStatisticChart() {
     });
     data.push(noBurnedPet);
     const burnedPetPc = (noBurnedPet * 100 / totalPet);
-    const otherPet = totalPet - totalLevelPets - noBurnedPet;
-    data.push(otherPet);
-    const otherPc = 100 - lv10 - lv20 - lv30 - lv40 - lv50 - lv60 - burnedPetPc;
 
     const labels = [
-      "Level 1-10 pets (" + lv10.toFixed(1) + "%)",
-      "Level 11-20 pets (" + lv20.toFixed(1) + "%)",
-      "Level 21-30 pets (" + lv30.toFixed(1) + "%)",
-      "Level 31-40 pets (" + lv40.toFixed(1) + "%)",
-      "Level 41-50 pets (" + lv50.toFixed(1) + "%)",
-      "Level 51-60 pets (" + lv60.toFixed(1) + "%)",
-      "Burned pets (" + burnedPetPc.toFixed(1) + "%)",
-      "Others (" + otherPc.toFixed(1) + "%)"
+      "Level 1-10 (" + lv10.toFixed(1) + "%)",
+      "Level 11-20 (" + lv20.toFixed(1) + "%)",
+      "Level 21-30 (" + lv30.toFixed(1) + "%)",
+      "Level 31-40 (" + lv40.toFixed(1) + "%)",
+      "Level 41-50 (" + lv50.toFixed(1) + "%)",
+      "Level 51-60 (" + lv60.toFixed(1) + "%)",
+      "Burned (" + burnedPetPc.toFixed(1) + "%)"
     ];
 
     setChartData({
@@ -158,7 +152,7 @@ function ElemonPetNftStatisticChart() {
   return (
     <div className="statistic-section-card nft-transaction-section-card card">
       <div className="card-body">
-        <div className="card-title mb-3">
+        <div className="card-title mb-1">
           <div className="h5 text-light-green">
             Elemon Pet NFT Analytics
           </div>
@@ -172,7 +166,7 @@ function ElemonPetNftStatisticChart() {
         </div>
         {
           !!totalPets ? (
-            <div className="text-white fw-bold text-center mt-3">
+            <div className="text-white fw-bold text-center mt-1">
               Total pets: { totalPets }
             </div>
           ) : null
