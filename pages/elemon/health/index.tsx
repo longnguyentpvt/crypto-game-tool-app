@@ -1,20 +1,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import MainHeader from "../../../components/MainHeader";
+import MainHeader from "components/MainHeader";
 
-import ElemonMarketAnalyticChart from "../../../containers/ElemonMarketAnalyticChart";
+import ElemonMarketAnalyticChart from "containers/ElemonMarketAnalyticChart";
 
 import {
   DefaultMenu,
   RouteId
-} from "../../../data/route";
-import ElemonOpeningBoxStatisticChart from "../../../containers/ElemonOpeningBoxStatisticChart";
-import ElemonCombiningStatisticChart from "../../../containers/ElemonCombiningStatisticChart";
-import ElemonPetNftStatisticChart from "../../../containers/ElemonPetNftStatisticChart";
-import ElemonTopPowerNftStatisticChart from "../../../containers/ElemonTopPowerNftStatisticChart";
-import ElemonTopSpeedNftStatisticChart from "../../../containers/ElemonTopSpeedNftStatisticChart";
-import ElemonTopBodyPointNftStatisticChart from "../../../containers/ElemonTopBodyPointNftStatisticChart";
+} from "data/route";
+import ElemonOpeningBoxStatisticChart from "containers/ElemonOpeningBoxStatisticChart";
+import ElemonCombiningStatisticChart from "containers/ElemonCombiningStatisticChart";
+import ElemonPetNftStatisticChart from "containers/ElemonPetNftStatisticChart";
+import ElemonTopPowerNftStatisticChart from "containers/ElemonTopPowerNftStatisticChart";
+import ElemonTopSpeedNftStatisticChart from "containers/ElemonTopSpeedNftStatisticChart";
+import ElemonTopBodyPointNftStatisticChart from "containers/ElemonTopBodyPointNftStatisticChart";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -87,6 +87,27 @@ const ElemonHealth : NextPage = () => {
                   </div>
                 </div>
               </div>
+
+              {
+                process.env.NODE_ENV === "production" ? (
+                  <div className="statistic-section mb-5">
+                    <div className="mx-auto" style={ { maxWidth : "900px" } }>
+                      <ins
+                        className="adsbygoogle"
+                        style={ { "display" : "block" } }
+                        data-ad-client="ca-pub-6796254445247606"
+                        data-ad-slot="7677566463"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+
+                      <script
+                        dangerouslySetInnerHTML={ {
+                          __html : `(adsbygoogle = window.adsbygoogle || []).push({ });`
+                        } }></script>
+                    </div>
+                  </div>
+                ) : null
+              }
 
               <div
                 className="statistic-section mb-5"
