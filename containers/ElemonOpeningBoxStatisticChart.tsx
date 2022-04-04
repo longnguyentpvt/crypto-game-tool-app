@@ -72,19 +72,21 @@ function ElemonOpeningBoxStatisticChart() {
                         <div className="pets">
                           <div className="row g-3 align-items-center">
                             {
-                              pets.map(({
-                                tokenId,
-                                rarity,
-                                class : classId,
-                                bodyPart1,
-                                bodyPart2,
-                                bodyPart3,
-                                bodyPart4,
-                                bodyPart5,
-                                bodyPart6,
-                                baseCardId,
-                                quality
-                              }) => {
+                              pets.map(pet => {
+                                const {
+                                  tokenId,
+                                  rarity,
+                                  class : classId,
+                                  bodyPart1,
+                                  bodyPart2,
+                                  bodyPart3,
+                                  bodyPart4,
+                                  bodyPart5,
+                                  bodyPart6,
+                                  baseCardId,
+                                  quality
+                                } = pet;
+
                                 const selfRarityImg = !!rarity ? getRarityImg(rarity) : "";
                                 const selfClassImg = !!classId ? getClassImg(classId) : "";
                                 const selfNftImg = !!baseCardId ? getElemonNftImg(

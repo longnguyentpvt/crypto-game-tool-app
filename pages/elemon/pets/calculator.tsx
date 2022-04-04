@@ -710,10 +710,6 @@ const ElemonPetPowCalculator : NextPage = () => {
                 async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"
                 crossOrigin="anonymous"></script>
-              <script
-                async
-                custom-element="amp-ad"
-                src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
             </>
           ) : null
         }
@@ -1392,20 +1388,26 @@ const ElemonPetPowCalculator : NextPage = () => {
                   </div>
                 </GamingContentBorder>
               </div>
+              {
+                process.env.NODE_ENV === "production" ? (
+                  <div className="mt-5">
+                    <div className="mx-auto" style={ { maxWidth : "900px" } }>
+                      <ins
+                        className="adsbygoogle"
+                        style={ { "display" : "block" } }
+                        data-ad-client="ca-pub-6796254445247606"
+                        data-ad-slot="2664487903"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
 
-              <div className="mt-5">
-                <amp-ad
-                  width="100vw"
-                  height="320"
-                  type="adsense"
-                  data-ad-client="ca-pub-6796254445247606"
-                  data-ad-slot="2664487903"
-                  data-auto-format="rspv"
-                  data-full-width="">
-                  <div data-overflow=""></div>
-                </amp-ad>
-              </div>
-
+                      <script
+                        dangerouslySetInnerHTML={ {
+                          __html : `(adsbygoogle = window.adsbygoogle || []).push({ });`
+                        } }></script>
+                    </div>
+                  </div>
+                ) : null
+              }
               <div className="mt-5">
                 <GamingContentBorder
                   name="Elemon Nft Calculator"
@@ -2008,6 +2010,27 @@ const ElemonPetPowCalculator : NextPage = () => {
                   </div>
                 </GamingContentBorder>
               </div>
+
+              {
+                process.env.NODE_ENV === "production" ? (
+                  <div className="mt-5">
+                    <div className="mx-auto" style={ { maxWidth : "900px" } }>
+                      <ins
+                        className="adsbygoogle"
+                        style={ { "display" : "block", "height" : "90px" } }
+                        data-ad-client="ca-pub-6796254445247606"
+                        data-ad-slot="7677566463"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+
+                      <script
+                        dangerouslySetInnerHTML={ {
+                          __html : `(adsbygoogle = window.adsbygoogle || []).push({ });`
+                        } }></script>
+                    </div>
+                  </div>
+                ) : null
+              }
             </div>
           </div>
         </div>
