@@ -15,6 +15,7 @@ import ElemonPetNftStatisticChart from "containers/ElemonPetNftStatisticChart";
 import ElemonTopPowerNftStatisticChart from "containers/ElemonTopPowerNftStatisticChart";
 import ElemonTopSpeedNftStatisticChart from "containers/ElemonTopSpeedNftStatisticChart";
 import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
+import ElemonPetRecentListContainer from "containers/ElemonPetRecentListContainer";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -149,6 +150,25 @@ const ElemonHealth : NextPage = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="statistic-section mb-5">
+                <div className="section-title mb-4">
+                  <h3 className="main-title">
+                    Elemon NFT Recent List
+                  </h3>
+                  <h5 className="h6 mt-2">
+                    Elemon pets that are recently sold or listed
+                  </h5>
+                </div>
+                <div className="section-body">
+                  <div className="row g-5">
+                    <div className="col-12">
+                      <ElemonPetRecentListContainer />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
