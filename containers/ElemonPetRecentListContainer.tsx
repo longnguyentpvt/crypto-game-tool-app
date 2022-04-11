@@ -24,6 +24,7 @@ import {
 import {
   ElemonNft
 } from "types/service";
+import moment from "moment-timezone";
 const NO_RECORDS = 10;
 
 function ElemonPetRecentCard(props : {
@@ -47,7 +48,8 @@ function ElemonPetRecentCard(props : {
     point,
     points,
     level,
-    lastPrice
+    lastPrice,
+    timestamp
   } = petInfo;
   const selfRarityImg = !!rarity ? getRarityImg(rarity) : "";
   const selfClassImg = !!classId ? getClassImg(classId) : "";
@@ -63,11 +65,19 @@ function ElemonPetRecentCard(props : {
   const power = !!point ? point : 0;
   const speed = !!points ? points[5] : 0;
 
+  let time = null;
+  if (!!timestamp) {
+    const timeStr = moment(timestamp).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm");
+    time = <div className="text-center text-white">
+      { timeStr }
+    </div>
+  }
+
   return (
     <div className="top-pet-detail">
       <div className="d-flex align-items-center">
         <div className="flex-fill">
-          <div className="pet-nft-info ps-3">
+          <div className="pet-nft-info ps-1">
             <div className="d-flex align-items-center">
               <div className="flex-column">
                 <div
@@ -110,13 +120,15 @@ function ElemonPetRecentCard(props : {
                 </div>
               </div>
 
-              <div style={ {
-                marginLeft : "auto",
-                marginRight : "20px"
-              } }>
-                <h4 className="text-warning">
+              <div
+                className="flex-column"
+                style={ {
+                  marginLeft : "auto"
+                } }>
+                <h4 className="text-warning text-center">
                   { lastPrice + "$" }
                 </h4>
+                { time }
               </div>
             </div>
           </div>
@@ -136,24 +148,60 @@ function ElemonPetRecentListContainer() {
     setListedPets
   ] = useState<ElemonNft[]>([]);
   const [
-    soldPage,
-    setSoldPage
-  ] = useState<number>(1);
+    soldLoading,
+    setSoldLoading
+  ] = useState<boolean>(false);
   const [
-    listedPage,
-    setListedPage
-  ] = useState<number>(1);
+    listedLoading,
+    setListedLoading
+  ] = useState<boolean>(false);
 
-  const loadPets = async () : Promise<void> => {
-    const listedPets = await getRecentPets(ElemonRecentListType.LISTED, 1, NO_RECORDS);
-    const soldPets = await getRecentPets(ElemonRecentListType.SOLD, 1, NO_RECORDS);
-    setSoldPets(soldPets);
-    setListedPets(listedPets);
+  const loadListedPets = async (firstLoad : boolean) : Promise<void> => {
+    setListedLoading(true);
+    const listedPets = await getRecentPets(ElemonRecentListType.LISTED, firstLoad, NO_RECORDS);
+    setListedPets(prevPets => {
+      prevPets.push(...listedPets);
+      return [...prevPets];
+    });
+    setListedLoading(false);
+  };
+
+  const loadSoldPets = async (firstLoad : boolean) : Promise<void> => {
+    setSoldLoading(true);
+    const soldPets = await getRecentPets(ElemonRecentListType.SOLD, firstLoad, NO_RECORDS);
+    setSoldPets(prevPets => {
+      prevPets.push(...soldPets);
+      return [...prevPets];
+    });
+    setSoldLoading(false);
   };
 
   useEffect(() => {
-    loadPets();
-  }, [])
+    loadListedPets(true);
+    loadSoldPets(true);
+  }, []);
+
+  let loadListedText = listedPets.length > 0 && listedPets.length < 200 ? <div
+    className="loading-text fw-bold"
+    onClick={ () => loadListedPets(false) }>
+    Load more
+  </div> : null;
+  if (listedLoading) {
+    loadListedText = <div className="text-center text-white">
+        Loading...
+      </div>
+  }
+
+  let loadSoldText = soldPets.length > 0 && soldPets.length < 200 ? <div
+    className="loading-text fw-bold"
+    onClick={ () => loadSoldPets(false) }>
+    Load more
+  </div> : null;
+  if (soldLoading) {
+    loadSoldText = <div className="text-center text-white">
+      Loading...
+    </div>
+  }
 
   return (
     <div className="row">
@@ -183,6 +231,7 @@ function ElemonPetRecentListContainer() {
                       );
                     }) : null
                   }
+                  { loadListedText }
                 </PerfectScrollbar>
               </div>
             </div>
@@ -216,6 +265,7 @@ function ElemonPetRecentListContainer() {
                       );
                     }) : null
                   }
+                  { loadSoldText }
                 </PerfectScrollbar>
               </div>
             </div>

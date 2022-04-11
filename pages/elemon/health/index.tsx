@@ -14,9 +14,9 @@ import ElemonCombiningStatisticChart from "containers/ElemonCombiningStatisticCh
 import ElemonPetNftStatisticChart from "containers/ElemonPetNftStatisticChart";
 import ElemonTopPowerNftStatisticChart from "containers/ElemonTopPowerNftStatisticChart";
 import ElemonTopSpeedNftStatisticChart from "containers/ElemonTopSpeedNftStatisticChart";
+import ElemonPetRecentListContainer from "containers/ElemonPetRecentListContainer";
 import ElemonTopBodyPointNftStatisticChart from "containers/ElemonTopBodyPointNftStatisticChart";
 import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
-import ElemonPetRecentListContainer from "containers/ElemonPetRecentListContainer";
 import Modal from "components/Modal";
 
 const ElemonHealth : NextPage = () => {

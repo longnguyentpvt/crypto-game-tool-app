@@ -429,11 +429,11 @@ const getTopHighestPricePets = async() : Promise<HighestPurchasedPetInfo[]> => {
   return [];
 };
 
-const getRecentPets = async(type : ElemonRecentListType, page : number, noRecords : number) : Promise<ElemonNft[]> => {
+const getRecentPets = async(type : ElemonRecentListType, firstLoad : boolean, noRecords : number) : Promise<ElemonNft[]> => {
   try {
     const params = {
       type,
-      page,
+      firstLoad,
       noRecords
     };
     const rp = await apiInstance.request({
