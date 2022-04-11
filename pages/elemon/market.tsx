@@ -8,8 +8,8 @@ import {
 } from "react";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import { ElemonMarketSortCriteria } from "../../types/enums";
-import { ElemonNft } from "../../types/service";
+import { ElemonMarketSortCriteria } from "types/enums";
+import { ElemonNft } from "types/service";
 
 import {
   ElemonBaseCardInputs,
@@ -17,11 +17,11 @@ import {
   ElemonClassInputs,
   ElemonAuraInputs,
   ElemonBodyPartInputs
-} from "../../data/input";
+} from "data/input";
 
 import {
   getElemonNfts
-} from "../../apis/elemon-apis";
+} from "apis/elemon-apis";
 import {
   getClassImg,
   getElemonNftImg,
@@ -29,14 +29,14 @@ import {
   getSkillImg,
   getStatColor,
   getStatName
-} from "../../services/elemon";
-import { displayPriceWithComma } from "../../services/utils";
-import MainHeader from "../../components/MainHeader";
+} from "services/elemon";
+import { displayPriceWithComma } from "services/utils";
+import MainHeader from "components/MainHeader";
 import {
   DefaultMenu,
   RouteId
-} from "../../data/route";
-import Modal from "../../components/Modal";
+} from "data/route";
+import Modal from "components/Modal";
 
 const PAGE_SIZE = 30;
 
@@ -1481,27 +1481,6 @@ const ElemonMarket : NextPage = () => {
           </div>
         </div>
       </div>
-
-      <Modal
-        show={ true }>
-        <div className="modal-body">
-          <div className="text-center">
-            <img
-              style={ { width : "48px" } }
-              src="/assets/images/main-logo.png"
-              alt="Crypto Game Tool Logo" />
-          </div>
-          <div className="text-black pt-3">
-            <div className="h5 text-center">
-              The website in under maintenance
-            </div>
-
-            <div className="pt-3 text-center">
-              We are sorry for this inconvenience, please comeback later. Thanks for visiting our website.
-            </div>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 };
