@@ -5,14 +5,14 @@ import {
 import {
   ElemonNft,
   HighestPurchasedPetInfo
-} from "../types/service";
+} from "types/service";
 import {
   ELEMON_LEVEL_RANGE,
   ElemonLogActionType,
   ElemonMarketSortCriteria,
   ElemonRecentListType,
   ElemonTopBodyFilter
-} from "../types/enums";
+} from "types/enums";
 
 let apiHost = process.env.NEXT_PUBLIC_MAIN_API_HOST + "/elemon/";
 
@@ -429,11 +429,11 @@ const getTopHighestPricePets = async() : Promise<HighestPurchasedPetInfo[]> => {
   return [];
 };
 
-const getRecentPets = async(type : ElemonRecentListType, page : number, noRecords : number) : Promise<ElemonNft[]> => {
+const getRecentPets = async(type : ElemonRecentListType, firstLoad : boolean, noRecords : number) : Promise<ElemonNft[]> => {
   try {
     const params = {
       type,
-      page,
+      firstLoad,
       noRecords
     };
     const rp = await apiInstance.request({

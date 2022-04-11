@@ -37,7 +37,7 @@ function ElemonTopHighestPricePets() {
       <div className="card-body">
         <div className="card-title mb-3">
           <div className="h5 text-light-green">
-            Top 10 Highest Price
+            Top 7-days Highest Price
           </div>
         </div>
         <div className="card-section-content">
@@ -85,53 +85,58 @@ function ElemonTopHighestPricePets() {
                     return (
                       <div className="col-12" key={ tokenId }>
                         <div className="top-pet-detail">
-                          <div className="d-flex align-items-center">
-                            <div>
-                              <div className="pet-rank">
-                                <MedalIcon color={ medalColor } />
-                                <div className="rank-no fw-bold">
-                                  { index + 1 }
+                          <a
+                            style={ { color : "inherit"} }
+                            href={ `https://app.elemon.io/elemon/${ tokenId }` }
+                            target="_blank">
+                            <div className="d-flex align-items-center">
+                              <div>
+                                <div className="pet-rank">
+                                  <MedalIcon color={ medalColor } />
+                                  <div className="rank-no fw-bold">
+                                    { index + 1 }
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="flex-fill">
-                              <div className="pet-nft-info ps-3">
-                                <div className="owner fw-bold">
-                                  { ownerName }
-                                </div>
-                                <div>
-                                  <div className="d-flex align-items-center">
-                                    <div
-                                      className="nft-img"
-                                      style={ { backgroundImage : `url(https://app.elemon.io/assets/images/aura/quality_${ quality }.png)` } }>
-                                      <img src={ selfNftImg } />
-                                    </div>
+                              <div className="flex-fill">
+                                <div className="pet-nft-info ps-3">
+                                  <div className="owner fw-bold">
+                                    { ownerName }
+                                  </div>
+                                  <div>
+                                    <div className="d-flex align-items-center">
+                                      <div
+                                        className="nft-img"
+                                        style={ { backgroundImage : `url(https://app.elemon.io/assets/images/aura/quality_${ quality }.png)` } }>
+                                        <img src={ selfNftImg } />
+                                      </div>
 
-                                    <div className="pet-class">
-                                      <img src={ selfClassImg } />
-                                    </div>
-                                    <div className="pet-rarity">
-                                      <img src={ selfRarityImg } />
-                                    </div>
-                                    <div className="pet-level">
-                                      <div className="level">
-                                        { level }
+                                      <div className="pet-class">
+                                        <img src={ selfClassImg } />
+                                      </div>
+                                      <div className="pet-rarity">
+                                        <img src={ selfRarityImg } />
+                                      </div>
+                                      <div className="pet-level">
+                                        <div className="level">
+                                          { level }
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div>
-                              <div className="top-pet-value">
-                                <div className="d-flex flex-column align-items-center">
-                                  <h5 className="fw-bolder text-warning">
-                                    { price.toString() + "$" }
-                                  </h5>
+                              <div>
+                                <div className="top-pet-value">
+                                  <div className="d-flex flex-column align-items-center">
+                                    <h5 className="fw-bolder text-warning">
+                                      { price.toString() + "$" }
+                                    </h5>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </a>
                         </div>
                       </div>
                     )
