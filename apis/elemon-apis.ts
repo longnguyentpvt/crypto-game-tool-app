@@ -449,6 +449,52 @@ const getRecentPets = async(type : ElemonRecentListType, firstLoad : boolean, no
   return [];
 };
 
+const getPetMarketStatusCount = async() : Promise<{
+  noSelling : number,
+  noBurned : number,
+  total : number
+} | null> => {
+  try {
+    const rp = await apiInstance.request({
+      url : "/health/pet-count/market-status",
+      method : "get"
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return null;
+};
+
+const getPetRarityCount = async() : Promise<Record<number, number> | null> => {
+  try {
+    const rp = await apiInstance.request({
+      url : "/health/pet-count/rarity",
+      method : "get"
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return null;
+};
+
+const getPetAuraCount = async() : Promise<Record<number, number> | null> => {
+  try {
+    const rp = await apiInstance.request({
+      url : "/health/pet-count/aura",
+      method : "get"
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return null;
+};
+
 export {
   getElemonNfts,
   getElemonPetInfo,
@@ -462,5 +508,8 @@ export {
   getPetCountStatistics,
   getTopElemonPets,
   getTopHighestPricePets,
-  getRecentPets
+  getRecentPets,
+  getPetMarketStatusCount,
+  getPetRarityCount,
+  getPetAuraCount
 };

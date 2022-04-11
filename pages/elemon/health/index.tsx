@@ -18,6 +18,9 @@ import ElemonPetRecentListContainer from "containers/ElemonPetRecentListContaine
 import ElemonTopBodyPointNftStatisticChart from "containers/ElemonTopBodyPointNftStatisticChart";
 import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
 import Modal from "components/Modal";
+import ElemonPetMarketStatusChart from "containers/ElemonPetMarketStatusChart";
+import ElemonPetAuraCountChart from "containers/ElemonPetAuraCountChart";
+import ElemonPetRarityCountChart from "containers/ElemonPetRarityCountChart";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -130,12 +133,18 @@ const ElemonHealth : NextPage = () => {
                 <div className="section-body">
                   <div className="row g-5">
                     <div className="col-12 col-xl-4">
-                      <ElemonPetNftStatisticChart />
+                      <ElemonPetMarketStatusChart />
                     </div>
                     <div className="col-12 col-xl-4">
+                      <ElemonPetAuraCountChart />
+                    </div>
+                    <div className="col-12 col-xl-4">
+                      <ElemonPetRarityCountChart />
+                    </div>
+                    <div className="col-12 col-xl-6">
                       <ElemonOpeningBoxStatisticChart />
                     </div>
-                    <div className="col-12 col-xl-4">
+                    <div className="col-12 col-xl-6">
                       <ElemonCombiningStatisticChart />
                     </div>
                     <div className="col-12">

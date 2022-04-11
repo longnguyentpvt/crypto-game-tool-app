@@ -25,6 +25,7 @@ import {
   ElemonNft
 } from "types/service";
 import moment from "moment-timezone";
+
 const NO_RECORDS = 10;
 
 function ElemonPetRecentCard(props : {
@@ -157,23 +158,31 @@ function ElemonPetRecentListContainer() {
   ] = useState<boolean>(false);
 
   const loadListedPets = async (firstLoad : boolean) : Promise<void> => {
-    setListedLoading(true);
+    if (firstLoad) {
+      setListedLoading(true);
+    }
     const listedPets = await getRecentPets(ElemonRecentListType.LISTED, firstLoad, NO_RECORDS);
     setListedPets(prevPets => {
       prevPets.push(...listedPets);
       return [...prevPets];
     });
-    setListedLoading(false);
+    if (firstLoad) {
+      setListedLoading(false);
+    }
   };
 
   const loadSoldPets = async (firstLoad : boolean) : Promise<void> => {
-    setSoldLoading(true);
+    if (firstLoad) {
+      setSoldLoading(true);
+    }
     const soldPets = await getRecentPets(ElemonRecentListType.SOLD, firstLoad, NO_RECORDS);
     setSoldPets(prevPets => {
       prevPets.push(...soldPets);
       return [...prevPets];
     });
-    setSoldLoading(false);
+    if (firstLoad) {
+      setSoldLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -188,8 +197,8 @@ function ElemonPetRecentListContainer() {
   </div> : null;
   if (listedLoading) {
     loadListedText = <div className="text-center text-white">
-        Loading...
-      </div>
+      Loading...
+    </div>
   }
 
   let loadSoldText = soldPets.length > 0 && soldPets.length < 200 ? <div
@@ -205,69 +214,65 @@ function ElemonPetRecentListContainer() {
 
   return (
     <div className="row">
-      <div className="col-12 col-md-6">
-        <div className="recent-nft-section-card">
-          <div className="card">
-            <div className="card-body">
-              <div className="card-title mb-1 row">
-                <div className="col-6 h5 text-light-green text-start">
-                  Recently Listed
-                </div>
+      <div className="col-12 col-xl-6">
+        <div className="recent-nft-section-card card">
+          <div className="card-body">
+            <div className="card-title mb-1 row">
+              <div className="col-6 h5 text-light-green text-start">
+                Recently Listed
               </div>
-              <div className="card-section-content">
-                <PerfectScrollbar
-                  options={ {
-                    suppressScrollX : true,
-                    wheelPropagation : false
-                  } }>
-                  {
-                    !!listedPets && listedPets.length > 0 ? listedPets.map(petInfo => {
-                      return (
-                        <div
-                          className="col-12"
-                          key={ petInfo.tokenId }>
-                          <ElemonPetRecentCard petInfo={ petInfo } />
-                        </div>
-                      );
-                    }) : null
-                  }
-                  { loadListedText }
-                </PerfectScrollbar>
-              </div>
+            </div>
+            <div className="card-section-content">
+              <PerfectScrollbar
+                options={ {
+                  suppressScrollX : true,
+                  wheelPropagation : false
+                } }>
+                {
+                  !!listedPets && listedPets.length > 0 ? listedPets.map(petInfo => {
+                    return (
+                      <div
+                        className="col-12"
+                        key={ petInfo.tokenId }>
+                        <ElemonPetRecentCard petInfo={ petInfo } />
+                      </div>
+                    );
+                  }) : null
+                }
+                { loadListedText }
+              </PerfectScrollbar>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="col-12 col-md-6">
-        <div className="recent-nft-section-card">
-          <div className="card">
-            <div className="card-body">
-              <div className="card-title mb-1 row">
-                <div className="col-6 h5 text-light-green text-start">
-                  Recently Sold
-                </div>
+      <div className="col-12 col-xl-6">
+        <div className="recent-nft-section-card card">
+          <div className="card-body">
+            <div className="card-title mb-1 row">
+              <div className="col-6 h5 text-light-green text-start">
+                Recently Sold
               </div>
-              <div className="card-section-content">
-                <PerfectScrollbar
-                  options={ {
-                    suppressScrollX : true,
-                    wheelPropagation : false
-                  } }>
-                  {
-                    !!soldPets && soldPets.length > 0 ? soldPets.map(petInfo => {
-                      return (
-                        <div
-                          className="col-12"
-                          key={ petInfo.tokenId }>
-                          <ElemonPetRecentCard petInfo={ petInfo } />
-                        </div>
-                      );
-                    }) : null
-                  }
-                  { loadSoldText }
-                </PerfectScrollbar>
-              </div>
+            </div>
+            <div className="card-section-content">
+              <PerfectScrollbar
+                options={ {
+                  suppressScrollX : true,
+                  wheelPropagation : false
+                } }>
+                {
+                  !!soldPets && soldPets.length > 0 ? soldPets.map(petInfo => {
+                    return (
+                      <div
+                        className="col-12"
+                        key={ petInfo.tokenId }>
+                        <ElemonPetRecentCard petInfo={ petInfo } />
+                      </div>
+                    );
+                  }) : null
+                }
+                { loadSoldText }
+              </PerfectScrollbar>
             </div>
           </div>
         </div>
