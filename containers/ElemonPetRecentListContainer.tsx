@@ -79,13 +79,13 @@ function ElemonPetRecentCard(props : {
         <div className="flex-fill">
           <div className="pet-nft-info ps-1">
             <div className="d-flex align-items-center">
-              <div className="flex-column">
+              <div className="d-flex flex-column align-items-center">
                 <div
                   className="nft-img"
                   style={ { backgroundImage : `url(https://app.elemon.io/assets/images/aura/quality_${ quality }.png)` } }>
                   <img src={ selfNftImg } />
                 </div>
-                <div className="text-white text-center">{ "#" + tokenId }</div>
+                <div className="badge bg-primary">{ "#" + tokenId }</div>
               </div>
 
               <div className="pet-class mx-1">
