@@ -14,6 +14,7 @@ import ElemonCombiningStatisticChart from "containers/ElemonCombiningStatisticCh
 import ElemonPetNftStatisticChart from "containers/ElemonPetNftStatisticChart";
 import ElemonTopPowerNftStatisticChart from "containers/ElemonTopPowerNftStatisticChart";
 import ElemonTopSpeedNftStatisticChart from "containers/ElemonTopSpeedNftStatisticChart";
+import ElemonPetRecentListContainer from "containers/ElemonPetRecentListContainer";
 import ElemonTopBodyPointNftStatisticChart from "containers/ElemonTopBodyPointNftStatisticChart";
 import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
 import Modal from "components/Modal";
@@ -136,6 +137,9 @@ const ElemonHealth : NextPage = () => {
                     </div>
                     <div className="col-12 col-xl-4">
                       <ElemonCombiningStatisticChart />
+                    </div>
+                    <div className="col-12">
+                      <ElemonPetRecentListContainer />
                     </div>
                   </div>
                 </div>

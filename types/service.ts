@@ -41,7 +41,8 @@ export type ElemonNft = {
   bodyPart? : ElemonBodyPart[],
   lockTime : number,
   maxPoint? : number,
-  maxBodyStat? : number[]
+  maxBodyStat? : number[],
+  timestamp ?: number
 }
 
 export type MainHeaderMenuItem = {

@@ -1065,7 +1065,70 @@ body {
       }
     }
 
+    .recent-nft-section-card {
+      background-color: rgba($dark-green, 0.2);
 
+      .card {
+        background-color: transparent;
+      }
+
+      .card-section-content {
+        height: 450px;
+        .top-pet-detail {
+
+          .nft-img {
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: 105% auto;
+            background-position: center 2px;
+
+            img {
+              width: auto;
+              height: 110px;
+            }
+          }
+
+          .pet-class {
+            img {
+              width: auto;
+              height: 50px;
+            }
+          }
+
+          .pet-rarity {
+            img {
+              min-width: 90px;
+              height: 80px;
+            }
+          }
+
+          .pet-level {
+            .level {
+              width: 50px;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+              background-color: $green;
+              border-radius: 50%;
+              font-size: 16px;
+            }
+          }
+
+          .pet-value {
+            img {
+              width: 50px;
+              height: 50px;
+            }
+          }
+        }
+
+        .loading-text {
+          cursor: pointer;
+          color: #2a93d5;
+          text-align: center;
+        }
+      }
+    }
 
 
   }

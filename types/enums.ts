@@ -48,3 +48,8 @@ export enum ELEMON_LEVEL_RANGE {
   U50 = "U50",
   U60 = "U60"
 }
+
+export enum ElemonRecentListType {
+  LISTED = "LISTED",
+  SOLD = "SOLD"
+}

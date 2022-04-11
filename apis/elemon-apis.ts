@@ -10,6 +10,7 @@ import {
   ELEMON_LEVEL_RANGE,
   ElemonLogActionType,
   ElemonMarketSortCriteria,
+  ElemonRecentListType,
   ElemonTopBodyFilter
 } from "types/enums";
 
@@ -416,10 +417,29 @@ const getTopElemonPets = async (filter : ElemonTopBodyFilter) : Promise<ElemonNf
 
 const getTopHighestPricePets = async() : Promise<HighestPurchasedPetInfo[]> => {
   try {
-
     const rp = await apiInstance.request({
       url : "/health/top-purchased",
       method : "get"
+    });
+
+    return rp.data;
+  } catch (e) {
+  }
+
+  return [];
+};
+
+const getRecentPets = async(type : ElemonRecentListType, firstLoad : boolean, noRecords : number) : Promise<ElemonNft[]> => {
+  try {
+    const params = {
+      type,
+      firstLoad,
+      noRecords
+    };
+    const rp = await apiInstance.request({
+      url : "/latest-pets",
+      method : "get",
+      params
     });
 
     return rp.data;
@@ -441,5 +461,6 @@ export {
   getCombiningPetStatistics,
   getPetCountStatistics,
   getTopElemonPets,
-  getTopHighestPricePets
+  getTopHighestPricePets,
+  getRecentPets
 };
