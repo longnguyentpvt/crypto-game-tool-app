@@ -131,6 +131,12 @@ const ElemonHealth : NextPage = () => {
                     <div className="col-12 col-xl-4">
                       <ElemonPetNftStatisticChart />
                     </div>
+                    <div className="col-12 col-xl-4">
+                      <ElemonOpeningBoxStatisticChart />
+                    </div>
+                    <div className="col-12 col-xl-4">
+                      <ElemonCombiningStatisticChart />
+                    </div>
                   </div>
                 </div>
               </div>
