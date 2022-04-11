@@ -15,6 +15,8 @@ import ElemonPetNftStatisticChart from "containers/ElemonPetNftStatisticChart";
 import ElemonTopPowerNftStatisticChart from "containers/ElemonTopPowerNftStatisticChart";
 import ElemonTopSpeedNftStatisticChart from "containers/ElemonTopSpeedNftStatisticChart";
 import ElemonTopBodyPointNftStatisticChart from "containers/ElemonTopBodyPointNftStatisticChart";
+import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
+import Modal from "components/Modal";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -91,7 +93,9 @@ const ElemonHealth : NextPage = () => {
               {
                 process.env.NODE_ENV === "production" ? (
                   <div className="statistic-section mb-5">
-                    <div className="mx-auto" style={ { maxWidth : "900px" } }>
+                    <div
+                      className="mx-auto"
+                      style={ { maxWidth : "900px" } }>
                       <ins
                         className="adsbygoogle"
                         style={ { "display" : "block" } }
@@ -117,7 +121,8 @@ const ElemonHealth : NextPage = () => {
                     Elemon NFT Analytics
                   </h3>
                   <h5 className="h6 mt-2">
-                    NFT Analytics give you the tools you need to better track all NFTs of Elemon GameFi including Pet NFTs,
+                    NFT Analytics give you the tools you need to better track all NFTs of Elemon GameFi including Pet
+                    NFTs,
                     Mystery Box NFTs and it's transactions.
                   </h5>
                 </div>
@@ -126,25 +131,32 @@ const ElemonHealth : NextPage = () => {
                     <div className="col-12 col-xl-4">
                       <ElemonPetNftStatisticChart />
                     </div>
-
-                    <div className="col-12 col-xl-4">
-                      <ElemonOpeningBoxStatisticChart />
-                    </div>
-
-                    <div className="col-12 col-xl-4">
-                      <ElemonCombiningStatisticChart />
-                    </div>
-
-                    <div className="col-12 col-xl-4">
-                      <ElemonTopPowerNftStatisticChart />
-                    </div>
-
-                    <div className="col-12 col-xl-4">
-                      <ElemonTopSpeedNftStatisticChart />
-                    </div>
                   </div>
                 </div>
               </div>
+
+              {
+                process.env.NODE_ENV === "production" ? (
+                  <div className="statistic-section mb-5">
+                    <div
+                      className="mx-auto"
+                      style={ { maxWidth : "900px" } }>
+                      <ins
+                        className="adsbygoogle"
+                        style={ { "display" : "block" } }
+                        data-ad-client="ca-pub-6796254445247606"
+                        data-ad-slot="2664487903"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+
+                      <script
+                        dangerouslySetInnerHTML={ {
+                          __html : `(adsbygoogle = window.adsbygoogle || []).push({ });`
+                        } }></script>
+                    </div>
+                  </div>
+                ) : null
+              }
             </div>
           </div>
         </div>

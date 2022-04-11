@@ -8,6 +8,7 @@ import {
 } from "../data/route";
 import GamingContentBorder from "../components/GamingContentBorder";
 import HomeGameSpotlight from "../containers/HomeGameSpotlight";
+import Modal from "components/Modal";
 
 const Home : NextPage = () => {
   return (

@@ -3,6 +3,10 @@ export const ElemonBaseCardInputs : {
   name : string
 }[] = [
   {
+    id : 1,
+    name : "DragonAska"
+  },
+  {
     id : 4,
     name : "Neikoo"
   },
@@ -77,6 +81,14 @@ export const ElemonBaseCardInputs : {
   {
     id : 28,
     name : "C.Lord"
+  },
+  {
+    id : 29,
+    name : "Hiraki"
+  },
+  {
+    id : 33,
+    name : "Panther"
   }
 ];
 

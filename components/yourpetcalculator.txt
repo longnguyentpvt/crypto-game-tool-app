@@ -1,0 +1,665 @@
+import GamingContentBorder from "components/GamingContentBorder";
+import { displayPriceWithComma } from "services/utils";
+import { getSkillImg } from "services/elemon";
+
+function YourPetCalculator() {
+  return (
+    <GamingContentBorder
+      name="Your Pet Calculator"
+      subDescription="Power & Upgrade Cost Calculator">
+      <div className="self-elemon-nft-calculator">
+        <div>
+          <div>
+            <div className="filter-line">
+              <div className="row g-2 align-items-xl-center">
+                <div className="col-12 col-xl-4">
+                  <div className="mb-3">
+                    <div className="h4 text-light-green">
+                      Your Pet Info
+                    </div>
+                  </div>
+
+                  <label
+                    className="form-label">
+                    Enter your NFT ID to find
+                  </label>
+                  <div>
+                    <div className="d-flex">
+                      <div>
+                        <input
+                          ref={ selfNftIdInputRef }
+                          type="text"
+                          className="form-control"
+                          placeholder="NFT ID"
+                          onKeyDown={ onSelfNftIdInputKeyDown } />
+                      </div>
+                      <div>
+                        <div className="ps-2">
+                          <button
+                            onClick={ onFindButtonClick }
+                            className="btn btn-primary">Find
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-auto col-xl-2">
+                </div>
+                <div className="col-12 col-xl-6 self-nft-common-detail">
+                  <div>
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <div className="self-nft-img">
+                          <div
+                            className="self-nft-aura"
+                            style={ {
+                              backgroundImage : "url(https://app.elemon.io/assets/images/aura/quality_" +
+                                selfQuality + ".png)"
+                            } }>
+                            {
+                              !!selfNftImg ? (
+                                <img
+                                  className="img"
+                                  src={ selfNftImg } />
+                              ) : (
+                                <div className="h1 p-4">
+                                  ?
+                                </div>
+                              )
+                            }
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex-fill">
+                        <div className="ps-3 pt-2">
+                          <div className="mb-2">
+                            <div className="row g-3">
+                              <div className="col-auto">
+                                <img
+                                  className="nft-class-img"
+                                  src={ selfClassImg } />
+                              </div>
+
+                              <div className="col-auto">
+                                <img
+                                  className="nft-purity-img"
+                                  src={ selfPurityImg } />
+                              </div>
+
+                              <div className="col-auto">
+                                <div className="nft-level fw-bolder px-3">
+                                  Level: { selfLevel }
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="row g-3">
+                              <div className="col-auto">
+                                <div className="nft-rarity-img-container">
+                                  <img
+                                    className="nft-rarity-img"
+                                    src={ selfRarityImg } />
+                                </div>
+
+                              </div>
+                              <div className="col-auto">
+                                <img
+                                  className="nft-star-img"
+                                  src={ selfStarImg } />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mb-4 pt-3">
+            <div className="row g-3 align-items-center body-points">
+              <div className="col-9">
+                <div className="row g-3 align-items-center">
+                  { bodyPartElements }
+                </div>
+              </div>
+              <div className="col-12 col-xl-3">
+                <div className="power-col">
+                  <div className="text-xl-center">
+                    <div className="text-danger h4 mb-0">
+                      { !!selfPoint ? displayPriceWithComma(selfPoint) : "0" }
+                    </div>
+                    <div className="text-light-green h4 mb-0">
+                      { !!selfMaxPoint ? displayPriceWithComma(selfMaxPoint) : "0" }
+                    </div>
+                    <div>
+                      <img src="https://app.elemon.io/assets/images/icon-power.png" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="row g-3 body-points">
+                {
+                  selfSkills?.map((skill, idx) => (
+                    <div
+                      key={ skill.skillId }
+                      className="col-12 col-xl-3">
+                      <div className="d-flex align-items-center">
+                        <div>
+                          <div className="skill-img">
+                            <img src={ getSkillImg(skill.skillImg) } />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="h5 mb-0 point-label">Skill { idx + 1 }</div>
+                        </div>
+                        <div>
+                          <div className="ps-2 h5 mb-0 text-yellow">{ skill.level } / 30</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div className="row g-3 align-items-center body-points mt-3">
+              <div className="col-9">
+                <div className="row g-3">
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="p-1"
+                          src="https://app.elemon.io/assets/images/icon_header.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label p-1">Elmon</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0">
+                          <div className="text-yellow">
+                            {
+                              selfPetCostInfo.elmonPrice >= 0 ?
+                                displayPriceWithComma(selfPetCostInfo.elmonPrice, 2) + "$" :
+                                "..."
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="p-1"
+                          src="https://app.elemon.io/assets/images/swap/icon_ecoin.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Elcoin</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0">
+                          <div className="text-yellow">
+                            {
+                              selfPetCostInfo.elcoinPrice >= 0 ?
+                                displayPriceWithComma(selfPetCostInfo.elcoinPrice, 4) + "$" :
+                                "..."
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-4" />
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/body_part/2.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Star</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetCostInfo.starCost >=
+                        0 ? displayPriceWithComma(selfPetCostInfo.starCost, 2) + "$" : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/body_part/4.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Level</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetCostInfo.levelCost >=
+                        0 ? displayPriceWithComma(selfPetCostInfo.levelCost, 2) + "$" : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/body_part/5.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Skill</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetCostInfo.skillCost >=
+                        0 ? displayPriceWithComma(selfPetCostInfo.skillCost, 2) + "$" : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-xl-3">
+                <div className="power-col">
+                  <div className="text-xl-center">
+                    <div className="text-warning h3 mb-0">
+                      { selfPetCostInfo.total >=
+                      0 ? displayPriceWithComma(selfPetCostInfo.total, 2) : "..." }
+                    </div>
+                    <div>
+                      <img src="https://app.elemon.io/assets/images/busd_ticker.png" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <div className="filter-line mb-4">
+              <div className="mb-3">
+                <div className="h4 text-light-green">
+                  Upgrade Calculator
+                </div>
+              </div>
+
+              <div className="row g-2">
+                <div className="col-12 col-xl-2">
+                  <label
+                    className="form-label">
+                    Level
+                  </label>
+                  <select
+                    value={ selfPetConfig.level }
+                    onChange={ e => onSelfConfigChange(e, "level") }
+                    className="form-select">
+                    {
+                      PetLevels.map(input => {
+                        return (
+                          <option
+                            key={ input }
+                            value={ input }>
+                            { input }
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+                <div className="col-12 col-xl-2">
+                  <label
+                    className="form-label">
+                    Star
+                  </label>
+                  <select
+                    value={ selfPetConfig.star }
+                    onChange={ e => onSelfConfigChange(e, "star") }
+                    className="form-select">
+                    {
+                      StarLevels.map(input => {
+                        return (
+                          <option
+                            key={ input }
+                            value={ input }>
+                            { input }
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+                <div className="col-12 col-xl-2">
+                  <label
+                    className="form-label">
+                    Skill 1
+                  </label>
+                  <select
+                    value={ selfPetConfig.skillLevel1 }
+                    onChange={ e => onSelfConfigChange(e, "skillLevel1") }
+                    className="form-select">
+                    {
+                      SkillLevels.map(input => {
+                        return (
+                          <option
+                            key={ input }
+                            value={ input }>
+                            { input >= 0 ? `Level ${ input }` : "Not Available" }
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+                <div className="col-12 col-xl-2">
+                  <label
+                    className="form-label">
+                    Skill 2
+                  </label>
+                  <select
+                    value={ selfPetConfig.skillLevel2 }
+                    onChange={ e => onSelfConfigChange(e, "skillLevel2") }
+                    className="form-select">
+                    {
+                      SkillLevels.map(input => {
+                        return (
+                          <option
+                            key={ input }
+                            value={ input }>
+                            { input >= 0 ? `Level ${ input }` : "Not Available" }
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+                <div className="col-12 col-xl-2">
+                  <label
+                    className="form-label">
+                    Skill 3
+                  </label>
+                  <select
+                    value={ selfPetConfig.skillLevel3 }
+                    onChange={ e => onSelfConfigChange(e, "skillLevel3") }
+                    className="form-select">
+                    {
+                      SkillLevels.map(input => {
+                        return (
+                          <option
+                            key={ input }
+                            value={ input }>
+                            { input >= 0 ? `Level ${ input }` : "Not Available" }
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+                <div className="col-12 col-xl-2">
+                  <label
+                    className="form-label">
+                    Skill 4
+                  </label>
+                  <select
+                    value={ selfPetConfig.skillLevel4 }
+                    onChange={ e => onSelfConfigChange(e, "skillLevel4") }
+                    className="form-select">
+                    {
+                      SkillLevels.map(input => {
+                        return (
+                          <option
+                            key={ input }
+                            value={ input }>
+                            { input >= 0 ? `Level ${ input }` : "Not Available" }
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-top mt-4 mb-4 pt-3">
+            <div className="row g-3 align-items-center body-points">
+              <div className="col-9">
+                <div className="row g-3">
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/icon_hp.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">HP</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.body[0] >=
+                        0 ? selfPetPowInfo.body[0] : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/icon_atk.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">P.Atk</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.body[1] >=
+                        0 ? selfPetPowInfo.body[1] : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/icon_spa.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">M.Atk</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.body[2] >=
+                        0 ? selfPetPowInfo.body[2] : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/icon_spd.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">P.Def</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.body[3] >=
+                        0 ? selfPetPowInfo.body[3] : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/icon_def.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">M.Def</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.body[4] >=
+                        0 ? selfPetPowInfo.body[4] : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="p-1"
+                          src="https://app.elemon.io/assets/images/icon_speed.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Speed</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.body[5] >=
+                        0 ? selfPetPowInfo.body[5] : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-xl-3">
+                <div className="power-col">
+                  <div className="text-xl-center">
+                    <div className="text-danger h3 mb-0">
+                      { selfPetPowInfo.pow >= 0 ? displayPriceWithComma(selfPetPowInfo.pow) : "..." }
+                    </div>
+                    <div>
+                      <img src="https://app.elemon.io/assets/images/icon-power.png" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row g-3 align-items-center body-points mt-3">
+              <div className="col-9">
+                <div className="row g-3">
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="p-1"
+                          src="https://app.elemon.io/assets/images/icon_header.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label p-1">Elmon</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0">
+                          <div>
+                            { selfPetPowInfo.noElmon }
+                          </div>
+                          <div className="text-yellow">
+                            {
+                              selfPetPowInfo.elmonPrice >= 0 ?
+                                displayPriceWithComma(selfPetPowInfo.elmonPrice, 2) + "$" :
+                                "..."
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img
+                          className="p-1"
+                          src="https://app.elemon.io/assets/images/swap/icon_ecoin.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Elcoin</div>
+                      </div>
+                      <div>
+
+
+                        <div className="ps-2 h5 mb-0">
+                          <div>
+                            { selfPetPowInfo.noElcoin }
+                          </div>
+                          <div className="text-yellow">
+                            {
+                              selfPetPowInfo.elcoinPrice >= 0 ?
+                                displayPriceWithComma(selfPetPowInfo.elcoinPrice, 4) + "$" :
+                                "..."
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-4" />
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/body_part/2.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Star</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.starCost >=
+                        0 ? displayPriceWithComma(selfPetPowInfo.starCost, 2) + "$" : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/body_part/4.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Level</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.levelCost >=
+                        0 ? displayPriceWithComma(selfPetPowInfo.levelCost, 2) + "$" : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-xl-4">
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <img src="https://app.elemon.io/assets/images/body_part/5.png" />
+                      </div>
+                      <div>
+                        <div className="h5 mb-0 point-label">Skill</div>
+                      </div>
+                      <div>
+                        <div className="ps-2 h5 mb-0 text-yellow">{ selfPetPowInfo.skillCost >=
+                        0 ? displayPriceWithComma(selfPetPowInfo.skillCost, 2) + "$" : "..." }</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-xl-3">
+                <div className="power-col">
+                  <div className="text-xl-center">
+                    <div className="text-warning h3 mb-0">
+                      { selfPetPowInfo.total >= 0 ? displayPriceWithComma(selfPetPowInfo.total, 2) : "..." }
+                    </div>
+                    <div>
+                      <img src="https://app.elemon.io/assets/images/busd_ticker.png" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <button
+            onClick={ calculateSelfPow }
+            type="button"
+            className="btn btn-game">
+            Calculate
+          </button>
+        </div>
+      </div>
+    </GamingContentBorder>
+  )
+}
+
+export default YourPetCalculator;

@@ -1482,10 +1482,8 @@ const ElemonMarket : NextPage = () => {
         </div>
       </div>
 
-
       <Modal
-        show={ thankModalShow }
-        close={ toggleThankModal }>
+        show={ true }>
         <div className="modal-body">
           <div className="text-center">
             <img
@@ -1495,34 +1493,12 @@ const ElemonMarket : NextPage = () => {
           </div>
           <div className="text-black pt-3">
             <div className="h5 text-center">
-              Thanks for your visiting <a href="https://www.cryptogametool.com">Crypto Game Tool</a> website
+              The website in under maintenance
             </div>
 
             <div className="pt-3 text-center">
-              <p>
-                We mainly build this platform for users can have a full functionality market
-                for <a
-                href="https://app.elemon.io/"
-                target="_blank"
-                rel="noreferrer">Elemon
-                GameFi.</a> We are so sorry that there is ads during using our application, that is just for
-                operating cost.
-              </p>
-
-              <br />
-
-              We would love to hear more from your ideas or proposals. Please contact us at
-              telegram <span className="text-danger">@CryptoGameTool</span>
+              We are sorry for this inconvenience, please comeback later. Thanks for visiting our website.
             </div>
-          </div>
-
-          <div className="text-center pt-4">
-            <button
-              onClick={ toggleThankModal }
-              type="button"
-              className="btn btn-primary">
-              Understand
-            </button>
           </div>
         </div>
       </Modal>

@@ -1,10 +1,13 @@
-import {
+import React, {
+  memo,
   useEffect,
   useState
 } from "react";
-import { ElemonNft } from "types/service";
-import { getTopElemonPets } from "apis/elemon-apis";
-import { ElemonTopBodyFilter } from "types/enums";
+import {
+  ElemonNft,
+  HighestPurchasedPetInfo
+} from "types/service";
+import { getTopHighestPricePets } from "apis/elemon-apis";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   getClassImg,
@@ -14,27 +17,29 @@ import {
 import MedalIcon from "components/icons/MedalIcon";
 import { displayPriceWithComma } from "services/utils";
 
-function ElemonTopSpeedNftStatisticChart() {
+function ElemonTopHighestPricePets() {
   const [
-    pets,
-    setPets
-  ] = useState<ElemonNft[]>([]);
+    topPets,
+    setTopPets
+  ] = useState<HighestPurchasedPetInfo[]>([]);
 
-  const loadChartData = async () => {
-    const data = await getTopElemonPets(ElemonTopBodyFilter.PART_6_POINT);
-    setPets(data);
+  const loadData = async() : Promise<void> => {
+    const topList = await getTopHighestPricePets();
+    console.log(topList);
+    setTopPets(topList);
   };
 
   useEffect(() => {
-    loadChartData();
-  }, []);
+    loadData();
+  },[]);
+
 
   return (
     <div className="statistic-section-card top-nft-section-card card">
       <div className="card-body">
         <div className="card-title mb-3">
           <div className="h5 text-light-green">
-            Top 10 Fastest Speed
+            Top 7-days Highest Price
           </div>
         </div>
         <div className="card-section-content">
@@ -46,23 +51,25 @@ function ElemonTopSpeedNftStatisticChart() {
             <div className="top-pet-list">
               <div className="row g-3">
                 {
-                  pets.map(({
-                    tokenId,
-                    rarity,
-                    class : classId,
-                    bodyPart1,
-                    bodyPart2,
-                    bodyPart3,
-                    bodyPart4,
-                    bodyPart5,
-                    bodyPart6,
-                    baseCardId,
-                    quality,
-                    point,
-                    ownerName,
-                    level,
-                    points
+                  topPets.map(({
+                    petInfo,
+                    price
                   }, index) => {
+                    const {
+                      tokenId,
+                      rarity,
+                      class : classId,
+                      bodyPart1,
+                      bodyPart2,
+                      bodyPart3,
+                      bodyPart4,
+                      bodyPart5,
+                      bodyPart6,
+                      baseCardId,
+                      quality,
+                      ownerName,
+                      level
+                    } = petInfo;
                     const selfRarityImg = !!rarity ? getRarityImg(rarity) : "";
                     const selfClassImg = !!classId ? getClassImg(classId) : "";
                     const selfNftImg = !!baseCardId ? getElemonNftImg(
@@ -75,7 +82,6 @@ function ElemonTopSpeedNftStatisticChart() {
                       bodyPart6
                     ) : "";
 
-                    let speed = !!points ? points[5] : 0;
                     const medalColor = index < 3 ? "yellow" : "green";
 
                     return (
@@ -125,12 +131,9 @@ function ElemonTopSpeedNftStatisticChart() {
                               <div>
                                 <div className="top-pet-value">
                                   <div className="d-flex flex-column align-items-center">
-                                    <div className="fw-bolder text-danger">
-                                      { speed }
-                                    </div>
-                                    <div>
-                                      <img src="https://app.elemon.io/assets/images/icon_speed.png" />
-                                    </div>
+                                    <h5 className="fw-bolder text-warning">
+                                      { price.toString() + "$" }
+                                    </h5>
                                   </div>
                                 </div>
                               </div>
@@ -141,7 +144,6 @@ function ElemonTopSpeedNftStatisticChart() {
                     )
                   })
                 }
-                =
               </div>
             </div>
           </PerfectScrollbar>
@@ -151,4 +153,4 @@ function ElemonTopSpeedNftStatisticChart() {
   );
 }
 
-export default ElemonTopSpeedNftStatisticChart;
+export default memo(ElemonTopHighestPricePets);
