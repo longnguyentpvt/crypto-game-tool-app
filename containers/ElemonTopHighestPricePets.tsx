@@ -4,10 +4,11 @@ import React, {
   useState
 } from "react";
 import {
-  ElemonNft,
   HighestPurchasedPetInfo
 } from "types/service";
-import { getTopHighestPricePets } from "apis/elemon-apis";
+import {
+  getTopHighestPricePets
+} from "apis/elemon-apis";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   getClassImg,
@@ -15,7 +16,6 @@ import {
   getRarityImg
 } from "services/elemon";
 import MedalIcon from "components/icons/MedalIcon";
-import { displayPriceWithComma } from "services/utils";
 
 function ElemonTopHighestPricePets() {
   const [
@@ -25,14 +25,12 @@ function ElemonTopHighestPricePets() {
 
   const loadData = async() : Promise<void> => {
     const topList = await getTopHighestPricePets();
-    console.log(topList);
     setTopPets(topList);
   };
 
   useEffect(() => {
     loadData();
   },[]);
-
 
   return (
     <div className="statistic-section-card top-nft-section-card card">
