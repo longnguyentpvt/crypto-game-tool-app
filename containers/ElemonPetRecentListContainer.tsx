@@ -149,6 +149,14 @@ function ElemonPetRecentListContainer() {
     setListedPets
   ] = useState<ElemonNft[]>([]);
   const [
+    soldPage,
+    setSoldPage
+  ] = useState<number>(1);
+  const [
+    listedPage,
+    setListedPage
+  ] = useState<number>(1);
+  const [
     soldLoading,
     setSoldLoading
   ] = useState<boolean>(false);
@@ -157,42 +165,45 @@ function ElemonPetRecentListContainer() {
     setListedLoading
   ] = useState<boolean>(false);
 
-  const loadListedPets = async (firstLoad : boolean) : Promise<void> => {
-    if (firstLoad) {
+  const loadListedPets = async (page : number) : Promise<void> => {
+    if (page > 1) {
       setListedLoading(true);
     }
-    const listedPets = await getRecentPets(ElemonRecentListType.LISTED, firstLoad, NO_RECORDS);
+    const listedPets = await getRecentPets(ElemonRecentListType.LISTED, page, NO_RECORDS);
     setListedPets(prevPets => {
       prevPets.push(...listedPets);
       return [...prevPets];
     });
-    if (firstLoad) {
+    if (page > 1) {
       setListedLoading(false);
     }
   };
 
-  const loadSoldPets = async (firstLoad : boolean) : Promise<void> => {
-    if (firstLoad) {
+  const loadSoldPets = async (page : number) : Promise<void> => {
+    if (page > 1) {
       setSoldLoading(true);
     }
-    const soldPets = await getRecentPets(ElemonRecentListType.SOLD, firstLoad, NO_RECORDS);
+    const soldPets = await getRecentPets(ElemonRecentListType.SOLD, page, NO_RECORDS);
     setSoldPets(prevPets => {
       prevPets.push(...soldPets);
       return [...prevPets];
     });
-    if (firstLoad) {
+    if (page > 1) {
       setSoldLoading(false);
     }
   };
 
   useEffect(() => {
-    loadListedPets(true);
-    loadSoldPets(true);
-  }, []);
+    loadListedPets(listedPage);
+  }, [listedPage]);
 
-  let loadListedText = listedPets.length > 0 && listedPets.length < 200 ? <div
+  useEffect(() => {
+    loadSoldPets(soldPage);
+  }, [soldPage]);
+
+  let loadListedText = listedPets.length > 0 && listedPets.length < 100 ? <div
     className="loading-text fw-bold"
-    onClick={ () => loadListedPets(false) }>
+    onClick={ () => setListedPage(prevPage => prevPage + 1) }>
     Load more
   </div> : null;
   if (listedLoading) {
@@ -201,9 +212,9 @@ function ElemonPetRecentListContainer() {
     </div>
   }
 
-  let loadSoldText = soldPets.length > 0 && soldPets.length < 200 ? <div
+  let loadSoldText = soldPets.length > 0 && soldPets.length < 100 ? <div
     className="loading-text fw-bold"
-    onClick={ () => loadSoldPets(false) }>
+    onClick={ () => setSoldPage(prevPage => prevPage + 1) }>
     Load more
   </div> : null;
   if (soldLoading) {
