@@ -12,9 +12,9 @@ import {
 
 
 const backgroundColors = [
-  "rgb(75, 192, 192)",
-  "rgb(173, 221, 255)",
-  "rgb(107, 107, 107)"
+  "rgb(42, 147, 213)",
+  "rgb(232, 80, 91)",
+  "rgb(145, 226, 198)"
 ];
 
 function ElemonPetMarketStatusChart() {

@@ -219,7 +219,7 @@ function ElemonPetRecentListContainer() {
           <div className="card-body">
             <div className="card-title mb-1 row">
               <div className="col-6 h5 text-light-green text-start">
-                Recently Listed
+                Recently Listed On Market
               </div>
             </div>
             <div className="card-section-content">
@@ -251,7 +251,7 @@ function ElemonPetRecentListContainer() {
           <div className="card-body">
             <div className="card-title mb-1 row">
               <div className="col-6 h5 text-light-green text-start">
-                Recently Sold
+                Recently Purchased
               </div>
             </div>
             <div className="card-section-content">

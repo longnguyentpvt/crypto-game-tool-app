@@ -12,11 +12,11 @@ import moment from "moment-timezone";
 import {
   getElemonWallets,
   getWalletLogs
-} from "../../apis/elemon-apis";
-import { displayPriceWithComma } from "../../services/utils";
+} from "apis/elemon-apis";
+import { displayPriceWithComma } from "services/utils";
 
-import MainHeader from "../../components/MainHeader";
-import GamingContentBorder from "../../components/GamingContentBorder";
+import MainHeader from "components/MainHeader";
+import GamingContentBorder from "components/GamingContentBorder";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -123,7 +123,7 @@ const ElemonAccountLog : NextPage = () => {
     const from = moment().tz("Asia/Ho_Chi_Minh").subtract(7, "day").endOf("day").toISOString();
     const to = moment().tz("Asia/Ho_Chi_Minh").endOf("day").toISOString();
 
-    const linkUrl = `https://www.cryptogametool.com/apis/elemon/account/logs/export?wallet=${ wallet }&from=${ from }&to=${ to }`;
+    const linkUrl = `https://www.cryptogametool.com/cgt/apis/elemon/account/logs/export?wallet=${ wallet }&from=${ from }&to=${ to }`;
     window.open(linkUrl);
   };
 
@@ -210,12 +210,12 @@ const ElemonAccountLog : NextPage = () => {
     let linkUrl = "";
     switch (exportType) {
       case "AccountInfo":
-        linkUrl = `https://www.cryptogametool.com/apis/elemon/account/export?username=${ username }`;
+        linkUrl = `https://www.cryptogametool.com/cgt/apis/elemon/account/export?username=${ username }`;
         break;
       case "AccountLogs":
         const from = moment().tz("Asia/Ho_Chi_Minh").subtract(7, "day").endOf("day").toISOString();
         const to = moment().tz("Asia/Ho_Chi_Minh").endOf("day").toISOString();
-        linkUrl = `https://www.cryptogametool.com/apis/elemon/account/logs/export?accountId=${ username }&from=${ from }&to=${ to }`;
+        linkUrl = `https://www.cryptogametool.com/cgt/apis/elemon/account/logs/export?accountId=${ username }&from=${ from }&to=${ to }`;
         break;
     }
 

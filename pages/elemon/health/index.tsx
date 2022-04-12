@@ -86,36 +86,21 @@ const ElemonHealth : NextPage = () => {
                   </h5>
                 </div>
                 <div className="section-body">
-                  <div className="statistic-section-card card">
-                    <div className="card-body">
-                      <ElemonMarketAnalyticChart />
+                  <div className="row g-5">
+                    <div className="col-12">
+                      <div className="statistic-section-card card">
+                        <div className="card-body">
+                          <ElemonMarketAnalyticChart />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <ElemonPetRecentListContainer />
                     </div>
                   </div>
                 </div>
               </div>
-
-              {
-                process.env.NODE_ENV === "production" ? (
-                  <div className="statistic-section mb-5">
-                    <div
-                      className="mx-auto"
-                      style={ { maxWidth : "900px" } }>
-                      <ins
-                        className="adsbygoogle"
-                        style={ { "display" : "block" } }
-                        data-ad-client="ca-pub-6796254445247606"
-                        data-ad-slot="7677566463"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-
-                      <script
-                        dangerouslySetInnerHTML={ {
-                          __html : `(adsbygoogle = window.adsbygoogle || []).push({ });`
-                        } }></script>
-                    </div>
-                  </div>
-                ) : null
-              }
 
               <div
                 className="statistic-section mb-5"
@@ -132,6 +117,13 @@ const ElemonHealth : NextPage = () => {
                 </div>
                 <div className="section-body">
                   <div className="row g-5">
+                    <div className="col-12 col-xl-6">
+                      <ElemonOpeningBoxStatisticChart />
+                    </div>
+                    <div className="col-12 col-xl-6">
+                      <ElemonCombiningStatisticChart />
+                    </div>
+
                     <div className="col-12 col-xl-4">
                       <ElemonPetMarketStatusChart />
                     </div>
@@ -141,41 +133,9 @@ const ElemonHealth : NextPage = () => {
                     <div className="col-12 col-xl-4">
                       <ElemonPetRarityCountChart />
                     </div>
-                    <div className="col-12 col-xl-6">
-                      <ElemonOpeningBoxStatisticChart />
-                    </div>
-                    <div className="col-12 col-xl-6">
-                      <ElemonCombiningStatisticChart />
-                    </div>
-                    <div className="col-12">
-                      <ElemonPetRecentListContainer />
-                    </div>
                   </div>
                 </div>
               </div>
-
-              {
-                process.env.NODE_ENV === "production" ? (
-                  <div className="statistic-section mb-5">
-                    <div
-                      className="mx-auto"
-                      style={ { maxWidth : "900px" } }>
-                      <ins
-                        className="adsbygoogle"
-                        style={ { "display" : "block" } }
-                        data-ad-client="ca-pub-6796254445247606"
-                        data-ad-slot="2664487903"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-
-                      <script
-                        dangerouslySetInnerHTML={ {
-                          __html : `(adsbygoogle = window.adsbygoogle || []).push({ });`
-                        } }></script>
-                    </div>
-                  </div>
-                ) : null
-              }
             </div>
           </div>
         </div>
