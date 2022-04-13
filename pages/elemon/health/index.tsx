@@ -90,13 +90,11 @@ const ElemonHealth : NextPage = () => {
                     <div className="col-12">
                       <div className="statistic-section-card card">
                         <div className="card-body">
-                          <ElemonMarketAnalyticChart />
                         </div>
                       </div>
                     </div>
 
                     <div className="col-12">
-                      <ElemonPetRecentListContainer />
                     </div>
                   </div>
                 </div>
@@ -118,20 +116,15 @@ const ElemonHealth : NextPage = () => {
                 <div className="section-body">
                   <div className="row g-5">
                     <div className="col-12 col-xl-6">
-                      <ElemonOpeningBoxStatisticChart />
                     </div>
                     <div className="col-12 col-xl-6">
-                      <ElemonCombiningStatisticChart />
                     </div>
 
                     <div className="col-12 col-xl-4">
-                      <ElemonPetMarketStatusChart />
                     </div>
                     <div className="col-12 col-xl-4">
-                      <ElemonPetAuraCountChart />
                     </div>
                     <div className="col-12 col-xl-4">
-                      <ElemonPetRarityCountChart />
                     </div>
                   </div>
                 </div>
@@ -140,6 +133,27 @@ const ElemonHealth : NextPage = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={ true }>
+        <div className="modal-body">
+          <div className="text-center">
+            <img
+              style={ { width : "48px" } }
+              src="/assets/images/main-logo.png"
+              alt="Crypto Game Tool Logo" />
+          </div>
+          <div className="text-black pt-3">
+            <div className="h5 text-center">
+              The website in under maintenance
+            </div>
+
+            <div className="pt-3 text-center">
+              We are sorry for this inconvenience, please comeback later. Thanks for visiting our website.
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
