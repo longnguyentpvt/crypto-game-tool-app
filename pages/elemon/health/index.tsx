@@ -3,24 +3,15 @@ import Head from "next/head";
 
 import MainHeader from "components/MainHeader";
 
-import ElemonMarketAnalyticChart from "containers/ElemonMarketAnalyticChart";
-
 import {
   DefaultMenu,
   RouteId
 } from "data/route";
-import ElemonOpeningBoxStatisticChart from "containers/ElemonOpeningBoxStatisticChart";
-import ElemonCombiningStatisticChart from "containers/ElemonCombiningStatisticChart";
-import ElemonPetNftStatisticChart from "containers/ElemonPetNftStatisticChart";
-import ElemonTopPowerNftStatisticChart from "containers/ElemonTopPowerNftStatisticChart";
-import ElemonTopSpeedNftStatisticChart from "containers/ElemonTopSpeedNftStatisticChart";
 import ElemonPetRecentListContainer from "containers/ElemonPetRecentListContainer";
-import ElemonTopBodyPointNftStatisticChart from "containers/ElemonTopBodyPointNftStatisticChart";
-import ElemonTopHighestPricePets from "containers/ElemonTopHighestPricePets";
 import Modal from "components/Modal";
-import ElemonPetMarketStatusChart from "containers/ElemonPetMarketStatusChart";
-import ElemonPetAuraCountChart from "containers/ElemonPetAuraCountChart";
-import ElemonPetRarityCountChart from "containers/ElemonPetRarityCountChart";
+import {
+  CryptoToken
+} from "types/enums";
 
 const ElemonHealth : NextPage = () => {
   return (
@@ -125,6 +116,13 @@ const ElemonHealth : NextPage = () => {
                     <div className="col-12 col-xl-4">
                     </div>
                     <div className="col-12 col-xl-4">
+                    </div>
+
+                    <div className="col-12">
+                      {/*<ElemonPetRecentListContainer token={ CryptoToken.BUSD } />*/}
+                    </div>
+                    <div className="col-12">
+                      {/*<ElemonPetRecentListContainer token={ CryptoToken.ELMON } />*/}
                     </div>
                   </div>
                 </div>

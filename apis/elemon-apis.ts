@@ -7,6 +7,7 @@ import {
   HighestPurchasedPetInfo
 } from "types/service";
 import {
+  CryptoToken,
   ELEMON_LEVEL_RANGE,
   ElemonLogActionType,
   ElemonMarketSortCriteria,
@@ -429,9 +430,10 @@ const getTopHighestPricePets = async() : Promise<HighestPurchasedPetInfo[]> => {
   return [];
 };
 
-const getRecentPets = async(type : ElemonRecentListType, page : number, noRecords : number) : Promise<ElemonNft[]> => {
+const getRecentPets = async(token : CryptoToken, type : ElemonRecentListType, page : number, noRecords : number) : Promise<ElemonNft[]> => {
   try {
     const params = {
+      token,
       type,
       page,
       noRecords

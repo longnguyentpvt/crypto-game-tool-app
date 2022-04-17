@@ -53,3 +53,8 @@ export enum ElemonRecentListType {
   LISTED = "LISTED",
   SOLD = "SOLD"
 }
+
+export enum CryptoToken {
+  BUSD = "BUSD",
+  ELMON = "ELMON"
+}

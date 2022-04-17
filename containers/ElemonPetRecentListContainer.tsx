@@ -19,6 +19,7 @@ import {
 } from "services/elemon";
 
 import {
+  CryptoToken,
   ElemonRecentListType
 } from "types/enums";
 import {
@@ -139,7 +140,9 @@ function ElemonPetRecentCard(props : {
   );
 }
 
-function ElemonPetRecentListContainer() {
+function ElemonPetRecentListContainer(props : {
+  token : CryptoToken
+}) {
   const [
     soldPets,
     setSoldPets
@@ -165,11 +168,15 @@ function ElemonPetRecentListContainer() {
     setListedLoading
   ] = useState<boolean>(false);
 
+  const {
+    token
+  } = props;
+
   const loadListedPets = async (page : number) : Promise<void> => {
     if (page > 1) {
       setListedLoading(true);
     }
-    const listedPets = await getRecentPets(ElemonRecentListType.LISTED, page, NO_RECORDS);
+    const listedPets = await getRecentPets(token, ElemonRecentListType.LISTED, page, NO_RECORDS);
     setListedPets(prevPets => {
       prevPets.push(...listedPets);
       return [...prevPets];
@@ -183,7 +190,7 @@ function ElemonPetRecentListContainer() {
     if (page > 1) {
       setSoldLoading(true);
     }
-    const soldPets = await getRecentPets(ElemonRecentListType.SOLD, page, NO_RECORDS);
+    const soldPets = await getRecentPets(token, ElemonRecentListType.SOLD, page, NO_RECORDS);
     setSoldPets(prevPets => {
       prevPets.push(...soldPets);
       return [...prevPets];
@@ -225,12 +232,12 @@ function ElemonPetRecentListContainer() {
 
   return (
     <div className="row">
-      <div className="col-12 col-xl-6">
+      <div className="col-12 col-xl-6 mb-xl-2">
         <div className="recent-nft-section-card card">
           <div className="card-body">
             <div className="card-title mb-1 row">
               <div className="col-6 h5 text-light-green text-start">
-                Recently Listed On Market
+                { "Recently Listed On Market (" + token + ")" }
               </div>
             </div>
             <div className="card-section-content">
@@ -257,12 +264,12 @@ function ElemonPetRecentListContainer() {
         </div>
       </div>
 
-      <div className="col-12 col-xl-6">
+      <div className="col-12 col-xl-6 mb-xl-2">
         <div className="recent-nft-section-card card">
           <div className="card-body">
             <div className="card-title mb-1 row">
               <div className="col-6 h5 text-light-green text-start">
-                Recently Purchased
+                { "Recently Purchased (" + token + ")" }
               </div>
             </div>
             <div className="card-section-content">
