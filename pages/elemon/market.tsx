@@ -49,6 +49,10 @@ const ElemonMarket : NextPage = () => {
     sortCriteria,
     setSortCriteria
   ] = useState<ElemonMarketSortCriteria>(ElemonMarketSortCriteria.PRICE);
+  const [
+    paymentType,
+    setPaymentType
+  ] = useState<"BUSD" | "ELMON">("BUSD");
 
   const [
     filterPrice,
@@ -164,6 +168,11 @@ const ElemonMarket : NextPage = () => {
 
   const toggleSortType = () => {
     setSortType(prevType => prevType === 0 ? 1 : 0);
+  };
+
+  const onPaymentTypeChange = (e : ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value as ("BUSD" | "ELMON");
+    setPaymentType(val);
   };
 
   const onFilterPriceChange = (e : ChangeEvent<HTMLInputElement>, idx : number) => {
@@ -410,6 +419,7 @@ const ElemonMarket : NextPage = () => {
         getElemonNfts(
           pageNo,
           PAGE_SIZE,
+          paymentType,
           sortCriteria,
           sortType,
           power,
@@ -453,6 +463,7 @@ const ElemonMarket : NextPage = () => {
     }
   }, [
     pageNo,
+    paymentType,
     sortCriteria,
     sortType,
     filterPower,
@@ -619,6 +630,25 @@ const ElemonMarket : NextPage = () => {
                             Filter
                           </div>
                           <div className="section-content">
+                            <div className="mb-2">
+                              <div className="row g-2 align-items-center">
+                                <div className="col-2">
+                                  <div>
+                                    Payment type
+                                  </div>
+                                </div>
+
+                                <div className="col-10">
+                                  <select
+                                    value={ paymentType }
+                                    onChange={ onPaymentTypeChange }
+                                    className="form-select">
+                                    <option value="BUSD">BUSD</option>
+                                    <option value="ELMON">ELMON</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
                             <div className="mb-2">
                               <div className="row g-2 align-items-center">
                                 <div className="col-2">
@@ -1123,7 +1153,8 @@ const ElemonMarket : NextPage = () => {
                             points,
                             maxBodyStat,
                             skills,
-                            lockTime
+                            lockTime,
+                            paymentSymbol
                           } = nft;
 
                           const nftImg = getElemonNftImg(baseCardId, bodyPart1, bodyPart2, bodyPart3, bodyPart4, bodyPart5, bodyPart6);
@@ -1137,6 +1168,11 @@ const ElemonMarket : NextPage = () => {
                           const priceStr = displayPriceWithComma(!!price ? price : 0, 2);
                           const upgradeCostStr = displayPriceWithComma(!!upgradeCost ? upgradeCost : 0, 2);
                           const actualCostStr = displayPriceWithComma(!!actualCost ? actualCost : 0, 2);
+                          const paymentTicker = paymentSymbol !== "ELMON" ?
+                            "https://app.elemon.io/assets/images/busd_ticker.png" :
+                            "https://app.elemon.io/assets/images/elmon_ticker.png";
+                          const paddingTicker = paymentSymbol !== "ELMON" ? "2px" : "4px";
+
                           let lockDateStr = "";
                           if (!!lockTime) {
                             const noHours = lockTime / (60 * 60);
@@ -1382,8 +1418,8 @@ const ElemonMarket : NextPage = () => {
                                               <div className="d-flex align-items-center">
                                                 <div className="img">
                                                   <img
-                                                    style={ { padding : "2px" } }
-                                                    src="https://app.elemon.io/assets/images/busd_ticker.png" />
+                                                    style={ { padding : paddingTicker } }
+                                                    src={ paymentTicker } />
                                                 </div>
 
                                                 <div className="stat-info">
@@ -1399,8 +1435,8 @@ const ElemonMarket : NextPage = () => {
                                               <div className="d-flex align-items-center">
                                                 <div className="img">
                                                   <img
-                                                    style={ { padding : "2px" } }
-                                                    src="https://app.elemon.io/assets/images/busd_ticker.png" />
+                                                    style={ { padding : paddingTicker } }
+                                                    src={ paymentTicker } />
                                                 </div>
 
                                                 <div className="stat-info">
@@ -1416,8 +1452,8 @@ const ElemonMarket : NextPage = () => {
                                               <div className="d-flex align-items-center">
                                                 <div className="img">
                                                   <img
-                                                    style={ { padding : "2px" } }
-                                                    src="https://app.elemon.io/assets/images/busd_ticker.png" />
+                                                    style={ { padding : paddingTicker } }
+                                                    src={ paymentTicker } />
                                                 </div>
 
                                                 <div className="stat-info">

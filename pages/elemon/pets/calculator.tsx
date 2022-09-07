@@ -74,7 +74,8 @@ const DefaultSelfInfo : ElemonNft = {
   purity : 0,
   level : 0,
   points : [0, 0, 0, 0, 0, 0],
-  skills : []
+  skills : [],
+  paymentSymbol : "BUSD"
 };
 
 const ElemonPetPowCalculator : NextPage = () => {

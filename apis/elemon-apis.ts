@@ -23,6 +23,7 @@ const apiInstance = axios.create({
 const getElemonNfts = async (
   page : number,
   pageSize : number,
+  paymentType : "BUSD" | "ELMON",
   sortCri : ElemonMarketSortCriteria,
   asc : number,
   power : string,
@@ -56,6 +57,7 @@ const getElemonNfts = async (
     const params = {
       page,
       pageSize,
+      paymentCurrency : paymentType,
       sortCri,
       asc,
       power,
@@ -244,6 +246,9 @@ const getElemonWallets = async (
   lastPvpPower : number,
   lastPvpElcoin : number,
   lastPvpDateTime : Date,
+  lastWorldBossDateTime : Date,
+  lastWorldBossElcoin : number,
+  lastWorldBossCraft : number,
   lastHealedDateTime : Date,
   lastHealedElcoin : string,
   pveQuestClaimed : number,

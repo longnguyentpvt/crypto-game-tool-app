@@ -28,6 +28,7 @@ export enum ElemonLogActionType {
   PVE_FIGHT = "PVE_FIGHT",
   PVP_FIGHT = "PVP_FIGHT",
   NFT_HEAL = "NFT_HEAL",
+  WORLDBOSS_FIGHT = "WORLDBOSS_FIGHT"
 }
 
 export enum ElemonTopBodyFilter {

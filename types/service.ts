@@ -42,7 +42,8 @@ export type ElemonNft = {
   lockTime : number,
   maxPoint? : number,
   maxBodyStat? : number[],
-  timestamp ?: number
+  timestamp ?: number,
+  paymentSymbol : "BUSD" | "ELMON"
 }
 
 export type MainHeaderMenuItem = {

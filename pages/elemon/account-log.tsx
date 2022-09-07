@@ -76,6 +76,9 @@ const ElemonAccountLog : NextPage = () => {
     lastPvpPower : number,
     lastPvpElcoin : number,
     lastPvpDateTime : Date,
+    lastWorldBossDateTime : Date,
+    lastWorldBossElcoin : number,
+    lastWorldBossCraft : number,
     lastHealedDateTime : Date,
     lastHealedElcoin : string,
     pveQuestClaimed : number,
@@ -98,7 +101,7 @@ const ElemonAccountLog : NextPage = () => {
 
   const [
     exportType,
-    setExportType,
+    setExportType
   ] = useState<string | undefined>(undefined);
 
   const usernameInputRef = useRef<HTMLInputElement | null>(null);
@@ -349,6 +352,9 @@ const ElemonAccountLog : NextPage = () => {
                               lastPvpElcoin,
                               lastPvpDateTime,
                               lastHealedDateTime,
+                              lastWorldBossDateTime,
+                              lastWorldBossElcoin,
+                              lastWorldBossCraft,
                               lastHealedElcoin,
                               pveQuestClaimed,
                               pvpQuestClaimed
@@ -371,16 +377,25 @@ const ElemonAccountLog : NextPage = () => {
                               pvpStatus = "";
                             if (!!lastPvpDateTime) {
                               pvpTimeStr = moment(lastPvpDateTime).fromNow();
-                              pvpStatus = lastPvpElcoin >= 0 ? "Win" : (lastPvpElcoin === -1 ? "Lost" : "Failed");
-
-                              if (lastPvpElcoin < 0) {
+                              if (lastPvpElcoin === -1) {
+                                pvpStatus = "Lost";
                                 lastPvpElcoin = 0;
+                              } else if (lastPvpElcoin === -2) {
+                                pvpStatus = "Failed";
+                                lastPvpElcoin = 0;
+                              } else {
+                                pvpStatus = "Win";
                               }
                             }
 
                             let lastHealedTimeStr = "";
                             if (!!lastHealedDateTime) {
                               lastHealedTimeStr = moment(lastHealedDateTime).fromNow();
+                            }
+
+                            let lastWorldBossTimeStr = "";
+                            if (!!lastWorldBossDateTime) {
+                              lastWorldBossTimeStr = moment(lastWorldBossDateTime).fromNow();
                             }
 
                             return (
@@ -555,6 +570,30 @@ const ElemonAccountLog : NextPage = () => {
                                                   </div>
                                                 </div>
                                               </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    Last WorldBoss
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      !!lastWorldBossTimeStr ? (
+                                                        <>
+                                                          {
+                                                            !!lastWorldBossElcoin ?
+                                                              <span className="text-yellow">{ lastWorldBossElcoin } elcoin</span> : null
+                                                          }
+                                                          {
+                                                            !!lastWorldBossCraft ?
+                                                              <span className="text-yellow">{ lastWorldBossCraft } craft</span> : null
+                                                          }
+                                                          <span className="text-white"> - { lastWorldBossTimeStr }</span>
+                                                        </>
+                                                      ) : "No Records"
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
@@ -629,8 +668,21 @@ const ElemonAccountLog : NextPage = () => {
                                 const logDetail : {
                                   power : number
                                 } = JSON.parse(logData);
+
                                 actionTypeName = "PVP - " + displayPriceWithComma(logDetail.power);
-                                detailLog = <>{ earnElcoin }</>;
+                                let pvpStatus = "";
+                                let pvpElcoin = earnElcoin;
+                                if (earnElcoin === -1) {
+                                  pvpStatus = "Lost";
+                                  pvpElcoin = 0;
+                                } else if (earnElcoin === -2) {
+                                  pvpStatus = "Failed";
+                                  pvpElcoin = 0;
+                                } else {
+                                  pvpStatus = "Win";
+                                }
+
+                                detailLog = <>{ pvpStatus } - { pvpElcoin }</>;
                                 break;
 
                               }
@@ -646,6 +698,23 @@ const ElemonAccountLog : NextPage = () => {
                                 ));
 
                                 detailLog = <>{ detailElemons }</>;
+                                break;
+                              }
+                              case ElemonLogActionType.WORLDBOSS_FIGHT: {
+                                const {
+                                  wordBossElcoin,
+                                  wordBossCraft
+                                } : {
+                                  wordBossElcoin : number,
+                                  wordBossCraft : number
+                                } = JSON.parse(logData);
+                                actionTypeName = "World Boss";
+
+                                if (!!wordBossCraft) {
+                                  detailLog = <>{ wordBossCraft } Crafts</>;
+                                } else {
+                                  detailLog = <>{ wordBossElcoin } Elcoin</>;
+                                }
                                 break;
                               }
                             }
@@ -780,6 +849,7 @@ const ElemonAccountLog : NextPage = () => {
                                   <option value={ ElemonLogActionType.PVE_FIGHT }>PVE Fight</option>
                                   <option value={ ElemonLogActionType.PVP_FIGHT }>PVP Fight</option>
                                   <option value={ ElemonLogActionType.NFT_HEAL }>Stamina Heal</option>
+                                  <option value={ ElemonLogActionType.WORLDBOSS_FIGHT }>WorldBoss</option>
                                 </select>
                               </div>
                             ) : null
