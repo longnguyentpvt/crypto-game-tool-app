@@ -3,14 +3,150 @@ import Head from "next/head";
 import MainHeader from "../components/MainHeader";
 
 import {
+  onLCP,
+  onINP,
+  LCPMetricWithAttribution,
+  INPMetricWithAttribution,
+  LCPReportCallbackWithAttribution,
+  INPReportCallbackWithAttribution
+} from "web-vitals/attribution";
+
+import {
   RouteId,
   DefaultMenu
 } from "../data/route";
 import GamingContentBorder from "../components/GamingContentBorder";
 import HomeGameSpotlight from "../containers/HomeGameSpotlight";
 import Modal from "components/Modal";
+import { useEffect } from "react";
+
+type MetricDebugInfo = {
+  debugTarget : string | undefined,
+  eventTime : number | undefined,
+  renderTime? : number,
+  loadTime? : number,
+  size? : number,
+  eventType? : string,
+  processingStart? : number,
+  processingEnd? : number,
+  debugDuration? : number
+};
+
+const getSelector = (node : any, maxLen = 100) : string => {
+  let sel = "";
+  try {
+    while (node && node.nodeType !== 9) {
+      const part = node.id ? "#" + node.id : node.nodeName.toLowerCase() + (
+        (node.className && node.className.length) ?
+          "." + Array.from(node.classList.values()).join(".") : "");
+      if (sel.length + part.length > maxLen - 1) return sel || part;
+      sel = sel ? part + ">" + sel : part;
+      if (node.id) break;
+      node = node.parentNode;
+    }
+  } catch (err) {
+  }
+  return sel;
+};
 
 const Home : NextPage = () => {
+
+  const sendToAnalytics = (data : any) : void => {
+    const w = window.innerWidth;
+    data["debugWidth"] = w;
+
+    if (process.env.NODE_ENV === "production") {
+      // @ts-ignore
+      ga("send", "event", data);
+      console.log(data);
+    } else {
+      console.log("dev", data);
+    }
+  };
+
+  // @ts-ignore
+  const debugLcpInfo : LCPReportCallbackWithAttribution = (metric : LCPMetricWithAttribution) : void => {
+    const {
+      name,
+      id,
+      delta,
+      value,
+      entries,
+      rating
+    } = metric;
+
+    const lastEntry = entries[entries.length - 1];
+    const debugInfo : MetricDebugInfo = {
+      debugTarget : getSelector(lastEntry.element),
+      eventTime : lastEntry.startTime,
+      renderTime : lastEntry.renderTime,
+      loadTime : lastEntry.loadTime,
+      size : lastEntry.size
+    };
+
+    const data = {
+      eventCategory : "Web Vitals",
+      eventAction : name,
+      eventLabel : id,
+      eventDelta : delta,
+      eventValue : value,
+      eventRating : rating,
+      nonInteraction : true,
+      transport : "beacon",
+      ...debugInfo
+    };
+
+    sendToAnalytics(data);
+  };
+
+  // @ts-ignore
+  const debugInpInfo : INPReportCallbackWithAttribution = (metric : INPMetricWithAttribution) : void => {
+    const {
+      name,
+      id,
+      delta,
+      value,
+      entries,
+      rating,
+      attribution
+    } = metric;
+
+    const {
+      eventTarget,
+      eventType,
+      eventTime,
+      eventEntry
+    } = attribution;
+
+    const debugInfo : MetricDebugInfo = {
+      debugTarget : eventTarget,
+      eventType,
+      eventTime,
+      processingStart : eventEntry?.processingStart,
+      processingEnd : eventEntry?.processingEnd,
+      debugDuration : eventEntry?.duration
+    };
+
+    const data = {
+      eventCategory : "Web Vitals",
+      eventAction : name,
+      eventLabel : id,
+      eventDelta : delta,
+      eventValue : value,
+      eventRating : rating,
+      nonInteraction : true,
+      transport : "beacon",
+      ...debugInfo
+    };
+
+    sendToAnalytics(data);
+  };
+
+  useEffect(() => {
+    onLCP(debugLcpInfo);
+    onINP(debugInpInfo);
+  }, []);
+
   return (
     <div id="main-app">
       <Head>
