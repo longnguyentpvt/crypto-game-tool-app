@@ -51,13 +51,13 @@ const getSelector = (node : any, maxLen = 100) : string => {
 
 const Home : NextPage = () => {
 
-  const sendToAnalytics = (data : any) : void => {
+  const sendToAnalytics = (data : any, name: string) : void => {
     const w = window.innerWidth;
     data["debugWidth"] = w;
 
     if (process.env.NODE_ENV === "production") {
       // @ts-ignore
-      ga("send", "event", data);
+      gtag("event", name, data);
       console.log(data);
     } else {
       console.log("dev", data);
@@ -85,8 +85,8 @@ const Home : NextPage = () => {
     };
 
     const data = {
-      eventName : "debugLcpInfo",
       eventCategory : "debugLcpInfo",
+      eventName : "debugLcpInfo",
       eventAction : name,
       eventLabel : id,
       eventDelta : delta,
@@ -97,7 +97,7 @@ const Home : NextPage = () => {
       ...debugInfo
     };
 
-    sendToAnalytics(data);
+    sendToAnalytics(data, 'debugLcpInfo');
   };
 
   // @ts-ignore
@@ -129,8 +129,8 @@ const Home : NextPage = () => {
     };
 
     const data = {
-      eventName : "debugInpInfo",
       eventCategory : "debugInpInfo",
+      eventName : "debugInpInfo",
       eventAction : name,
       eventLabel : id,
       eventDelta : delta,
@@ -141,7 +141,7 @@ const Home : NextPage = () => {
       ...debugInfo
     };
 
-    sendToAnalytics(data);
+    sendToAnalytics(data, 'debugInpInfo');
   };
 
   useEffect(() => {
