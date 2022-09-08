@@ -66,6 +66,15 @@ const Home : NextPage = () => {
 
   // @ts-ignore
   const debugLcpInfo : LCPReportCallbackWithAttribution = (metric : LCPMetricWithAttribution) : void => {
+    if (process.env.NODE_ENV === "production") {
+      console.log("send screen vital");
+      // @ts-ignore
+      gtag('event', 'screen_vital', {
+        'screen_name': 'homepage',
+        'vital_name' : 'lcp'
+      });
+    }
+    
     const {
       name,
       id,
