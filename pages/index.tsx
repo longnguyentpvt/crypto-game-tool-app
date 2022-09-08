@@ -86,6 +86,7 @@ const Home : NextPage = () => {
 
     const data = {
       eventName : "debugLcpInfo",
+      eventCategory : "debugLcpInfo",
       eventAction : name,
       eventLabel : id,
       eventDelta : delta,
@@ -129,6 +130,7 @@ const Home : NextPage = () => {
 
     const data = {
       eventName : "debugInpInfo",
+      eventCategory : "debugInpInfo",
       eventAction : name,
       eventLabel : id,
       eventDelta : delta,
