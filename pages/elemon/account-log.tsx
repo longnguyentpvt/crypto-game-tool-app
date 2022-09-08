@@ -272,9 +272,9 @@ const ElemonAccountLog : NextPage = () => {
     if (process.env.NODE_ENV === "production") {
       // @ts-ignore
       gtag("event", name, data);
-      console.log(data);
+      console.log(name, data);
     } else {
-      console.log("dev", data);
+      console.log("dev", name, data);
     }
   };
 
