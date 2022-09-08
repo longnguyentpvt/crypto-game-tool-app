@@ -8,6 +8,14 @@ import {
   useState
 } from "react";
 import moment from "moment-timezone";
+import {
+  INPMetricWithAttribution,
+  INPReportCallbackWithAttribution,
+  LCPMetricWithAttribution,
+  LCPReportCallbackWithAttribution,
+  onINP,
+  onLCP
+} from "web-vitals/attribution";
 
 import {
   getElemonWallets,
@@ -33,11 +41,41 @@ import {
 import { ElemonLogActionType } from "../../types/enums";
 import Modal from "../../components/Modal";
 
+
 enum LogView {
   LOGIN,
   WALLETS,
   LOGS
 }
+
+type MetricDebugInfo = {
+  debugTarget : string | undefined,
+  eventTime : number | undefined,
+  renderTime? : number,
+  loadTime? : number,
+  size? : number,
+  eventType? : string,
+  processingStart? : number,
+  processingEnd? : number,
+  debugDuration? : number
+};
+
+const getSelector = (node : any, maxLen = 100) : string => {
+  let sel = "";
+  try {
+    while (node && node.nodeType !== 9) {
+      const part = node.id ? "#" + node.id : node.nodeName.toLowerCase() + (
+        (node.className && node.className.length) ?
+          "." + Array.from(node.classList.values()).join(".") : "");
+      if (sel.length + part.length > maxLen - 1) return sel || part;
+      sel = sel ? part + ">" + sel : part;
+      if (node.id) break;
+      node = node.parentNode;
+    }
+  } catch (err) {
+  }
+  return sel;
+};
 
 const ElemonAccountLog : NextPage = () => {
   const [
@@ -226,6 +264,92 @@ const ElemonAccountLog : NextPage = () => {
     closeExportModal();
   };
 
+
+  const sendToAnalytics = (data : any, name: string) : void => {
+    const w = window.innerWidth;
+    data["debugWidth"] = w;
+
+    if (process.env.NODE_ENV === "production") {
+      // @ts-ignore
+      gtag("event", name, data);
+      console.log(data);
+    } else {
+      console.log("dev", data);
+    }
+  };
+
+  // @ts-ignore
+  const debugLcpInfo : LCPReportCallbackWithAttribution = (metric : LCPMetricWithAttribution) : void => {
+    const {
+      name,
+      id,
+      delta,
+      value,
+      entries,
+      rating
+    } = metric;
+
+    const lastEntry = entries[entries.length - 1];
+    const debugInfo : MetricDebugInfo = {
+      debugTarget : getSelector(lastEntry.element),
+      eventTime : lastEntry.startTime,
+      renderTime : lastEntry.renderTime,
+      loadTime : lastEntry.loadTime,
+      size : lastEntry.size
+    };
+
+    const data = {
+      value : delta,
+      metric_id : id,
+      metric_value : value,
+      metric_data : delta,
+      metric_rating : rating,
+      ...debugInfo
+    };
+
+    sendToAnalytics(data, name);
+  };
+
+  // @ts-ignore
+  const debugInpInfo : INPReportCallbackWithAttribution = (metric : INPMetricWithAttribution) : void => {
+    const {
+      name,
+      id,
+      delta,
+      value,
+      entries,
+      rating,
+      attribution
+    } = metric;
+
+    const {
+      eventTarget,
+      eventType,
+      eventTime,
+      eventEntry
+    } = attribution;
+
+    const debugInfo : MetricDebugInfo = {
+      debugTarget : eventTarget,
+      eventType,
+      eventTime,
+      processingStart : eventEntry?.processingStart,
+      processingEnd : eventEntry?.processingEnd,
+      debugDuration : eventEntry?.duration
+    };
+
+    const data = {
+      value : delta,
+      metric_id : id,
+      metric_value : value,
+      metric_data : delta,
+      metric_rating : rating,
+      ...debugInfo
+    };
+
+    sendToAnalytics(data, name);
+  };
+
   useEffect(() => {
     if (!!logWallet) {
       loadWalletLog(logWallet);
@@ -238,6 +362,11 @@ const ElemonAccountLog : NextPage = () => {
     logWallet,
     username
   ]);
+
+  useEffect(() => {
+    onLCP(debugLcpInfo);
+    onINP(debugInpInfo);
+  }, []);
 
   return (
     <div id="main-app">
