@@ -85,7 +85,7 @@ const Home : NextPage = () => {
     };
 
     const data = {
-      eventCategory : "Web Vitals",
+      eventCategory : "debugLcpInfo",
       eventAction : name,
       eventLabel : id,
       eventDelta : delta,
@@ -128,7 +128,7 @@ const Home : NextPage = () => {
     };
 
     const data = {
-      eventCategory : "Web Vitals",
+      eventCategory : "debugInpInfo",
       eventAction : name,
       eventLabel : id,
       eventDelta : delta,
