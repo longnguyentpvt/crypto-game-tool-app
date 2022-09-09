@@ -48,17 +48,34 @@ enum LogView {
   LOGS
 }
 
+// type MetricDebugInfo = {
+//   debugTarget : string | undefined,
+//   eventTime : number | undefined,
+//   renderTime? : number,
+//   loadTime? : number,
+//   size? : number,
+//   eventType? : string,
+//   processingStart? : number,
+//   processingEnd? : number,
+//   debugDuration? : number
+// };
+
 type MetricDebugInfo = {
-  debugTarget : string | undefined,
-  eventTime : number | undefined,
-  renderTime? : number,
-  loadTime? : number,
-  size? : number,
-  eventType? : string,
-  processingStart? : number,
-  processingEnd? : number,
-  debugDuration? : number
+  debug_target : string,
+  debug_event? : string,
+  event_time? : number,
+  event_render_time? : number,
+  event_load_time? : number,
+  event_end_time? : number
 };
+
+type MetricData = {
+  event_label : string,
+  value : number,
+  metric_value : number,
+  metric_delta : number,
+  metric_rating : "good" | "needs-improvement" | "poor"
+}
 
 const getSelector = (node : any, maxLen = 100) : string => {
   let sel = "";
@@ -265,18 +282,121 @@ const ElemonAccountLog : NextPage = () => {
   };
 
 
-  const sendToAnalytics = (data : any, name: string) : void => {
+  // const sendToAnalytics = (data : any, name: string) : void => {
+  //   const w = window.innerWidth;
+  //   data["debugWidth"] = w;
+  //
+  //   if (process.env.NODE_ENV === "production") {
+  //     // @ts-ignore
+  //     gtag("event", name, data);
+  //     console.log(name, data);
+  //   } else {
+  //     console.log("dev", name, data);
+  //   }
+  // };
+
+  const sendToAnalytics = (data : MetricData, debugInfo : MetricDebugInfo | undefined, name : string) : void => {
     const w = window.innerWidth;
-    data["debugWidth"] = w;
+
+    let eventData = {
+      ...data,
+      event_category : "Web Vitals",
+      non_interaction : true,
+      page_path : location.pathname,
+      page_width : w
+    };
+
+    if (!debugInfo) {
+      debugInfo = {
+        debug_target : "(not set)"
+      };
+    }
+
+    eventData = {
+      ...eventData,
+      ...debugInfo
+    };
 
     if (process.env.NODE_ENV === "production") {
       // @ts-ignore
-      gtag("event", name, data);
-      console.log(name, data);
+      gtag("event", name, eventData);
+      console.log("prod", name, eventData);
     } else {
-      console.log("dev", name, data);
+      console.log("dev", name, eventData);
     }
   };
+
+  // // @ts-ignore
+  // const debugLcpInfo : LCPReportCallbackWithAttribution = (metric : LCPMetricWithAttribution) : void => {
+  //   const {
+  //     name,
+  //     id,
+  //     delta,
+  //     value,
+  //     entries,
+  //     rating
+  //   } = metric;
+  //
+  //   const lastEntry = entries[entries.length - 1];
+  //   const debugInfo : MetricDebugInfo = {
+  //     debugTarget : getSelector(lastEntry.element),
+  //     eventTime : lastEntry.startTime,
+  //     renderTime : lastEntry.renderTime,
+  //     loadTime : lastEntry.loadTime,
+  //     size : lastEntry.size
+  //   };
+  //
+  //   const data = {
+  //     value : delta,
+  //     metric_id : id,
+  //     metric_value : value,
+  //     metric_data : delta,
+  //     metric_rating : rating,
+  //     ...debugInfo
+  //   };
+  //
+  //   sendToAnalytics(data, name);
+  // };
+  //
+  // // @ts-ignore
+  // const debugInpInfo : INPReportCallbackWithAttribution = (metric : INPMetricWithAttribution) : void => {
+  //   const {
+  //     name,
+  //     id,
+  //     delta,
+  //     value,
+  //     entries,
+  //     rating,
+  //     attribution
+  //   } = metric;
+  //
+  //   const {
+  //     eventTarget,
+  //     eventType,
+  //     eventTime,
+  //     eventEntry
+  //   } = attribution;
+  //
+  //   const debugInfo : MetricDebugInfo = {
+  //     debugTarget : eventTarget,
+  //     eventType,
+  //     eventTime,
+  //     processingStart : eventEntry?.processingStart,
+  //     processingEnd : eventEntry?.processingEnd,
+  //     debugDuration : eventEntry?.duration
+  //   };
+  //
+  //   const data = {
+  //     value : delta,
+  //     metric_id : id,
+  //     metric_value : value,
+  //     metric_data : delta,
+  //     metric_rating : rating,
+  //     ...debugInfo
+  //   };
+  //
+  //   sendToAnalytics(data, name);
+  // };
 
   // @ts-ignore
   const debugLcpInfo : LCPReportCallbackWithAttribution = (metric : LCPMetricWithAttribution) : void => {
@@ -289,25 +409,27 @@ const ElemonAccountLog : NextPage = () => {
       rating
     } = metric;
 
-    const lastEntry = entries[entries.length - 1];
-    const debugInfo : MetricDebugInfo = {
-      debugTarget : getSelector(lastEntry.element),
-      eventTime : lastEntry.startTime,
-      renderTime : lastEntry.renderTime,
-      loadTime : lastEntry.loadTime,
-      size : lastEntry.size
-    };
+    let debugInfo : MetricDebugInfo | undefined = undefined;
+    if (!!entries && entries.length) {
+      const lastEntry = entries[entries.length - 1];
 
-    const data = {
-      value : delta,
-      metric_id : id,
+      debugInfo = {
+        debug_target : getSelector(lastEntry.element),
+        event_time : lastEntry.startTime,
+        event_render_time : lastEntry.renderTime,
+        event_load_time : lastEntry.loadTime
+      };
+    }
+
+    const data : MetricData = {
+      value : Math.round(value),
+      event_label : id,
       metric_value : value,
-      metric_data : delta,
-      metric_rating : rating,
-      ...debugInfo
+      metric_delta : delta,
+      metric_rating : rating
     };
 
-    sendToAnalytics(data, name);
+    sendToAnalytics(data, debugInfo, name);
   };
 
   // @ts-ignore
@@ -317,7 +439,6 @@ const ElemonAccountLog : NextPage = () => {
       id,
       delta,
       value,
-      entries,
       rating,
       attribution
     } = metric;
@@ -329,25 +450,23 @@ const ElemonAccountLog : NextPage = () => {
       eventEntry
     } = attribution;
 
-    const debugInfo : MetricDebugInfo = {
-      debugTarget : eventTarget,
-      eventType,
-      eventTime,
-      processingStart : eventEntry?.processingStart,
-      processingEnd : eventEntry?.processingEnd,
-      debugDuration : eventEntry?.duration
+    const debugInfo : MetricDebugInfo  = {
+      debug_target : !!eventTarget ? eventTarget : '(not set)',
+      debug_event : eventType,
+      event_time : eventTime,
+      event_end_time : eventEntry?.processingEnd,
+      event_load_time : eventEntry?.duration
     };
 
-    const data = {
-      value : delta,
-      metric_id : id,
+    const data : MetricData = {
+      value : Math.round(value),
+      event_label : id,
       metric_value : value,
-      metric_data : delta,
-      metric_rating : rating,
-      ...debugInfo
+      metric_delta : delta,
+      metric_rating : rating
     };
 
-    sendToAnalytics(data, name);
+    sendToAnalytics(data, debugInfo, name);
   };
 
   useEffect(() => {
@@ -393,17 +512,24 @@ const ElemonAccountLog : NextPage = () => {
         {
           process.env.NODE_ENV === "production" ? (
             <>
+              {/*<script*/}
+              {/*  async*/}
+              {/*  src={ `https://www.googletagmanager.com/gtag/js?id=G-DS831RKYB5` } />*/}
+              {/*<script*/}
+              {/*  dangerouslySetInnerHTML={ {*/}
+              {/*    __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-DS831RKYB5');`*/}
+              {/*  } }></script>*/}
+              {/*<script*/}
+              {/*  async*/}
+              {/*  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"*/}
+              {/*  crossOrigin="anonymous"></script>*/}
               <script
                 async
-                src={ `https://www.googletagmanager.com/gtag/js?id=G-DS831RKYB5` } />
+                src={ `https://www.googletagmanager.com/gtag/js?id=UA-221423293-1` } />
               <script
                 dangerouslySetInnerHTML={ {
-                  __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-DS831RKYB5');`
+                  __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'UA-221423293-1', { 'transport_type': 'beacon'});`
                 } }></script>
-              <script
-                async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"
-                crossOrigin="anonymous"></script>
             </>
           ) : null
         }
