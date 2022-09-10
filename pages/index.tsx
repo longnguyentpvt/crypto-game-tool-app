@@ -216,7 +216,7 @@ const Home : NextPage = () => {
                 src={ `https://www.googletagmanager.com/gtag/js?id=UA-221423293-1` } />
               <script
                 dangerouslySetInnerHTML={ {
-                  __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'UA-221423293-1', { 'transport_type': 'beacon'});`
+                  __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'UA-221423293-1', { 'transport_type': 'beacon', custom_map: { 'dimension1' : 'metric_rating', 'dimension2' : 'debug_target' } });`
                 } }></script>
             </>
           ) : null
