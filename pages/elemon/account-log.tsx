@@ -134,6 +134,14 @@ const ElemonAccountLog : NextPage = () => {
     lastWorldBossDateTime : Date,
     lastWorldBossElcoin : number,
     lastWorldBossCraft : number,
+    lastWorldBossRank : number,
+    lastWorldBossHp : number,
+    lastWorldBossClaimedDateTime : Date,
+    lastGuildBosDateTime : Date,
+    lastGuildBossHp : number,
+    lastGuildBossRank : number,
+    lastGuildBossLastKill : string,
+    lastGuildBossClaimedDateTime : Date,
     lastHealedDateTime : Date,
     lastHealedElcoin : string,
     pveQuestClaimed : number,
@@ -450,8 +458,8 @@ const ElemonAccountLog : NextPage = () => {
       eventEntry
     } = attribution;
 
-    const debugInfo : MetricDebugInfo  = {
-      debug_target : !!eventTarget ? eventTarget : '(not set)',
+    const debugInfo : MetricDebugInfo = {
+      debug_target : !!eventTarget ? eventTarget : "(not set)",
       debug_event : eventType,
       event_time : eventTime,
       event_end_time : eventEntry?.processingEnd,
@@ -512,17 +520,17 @@ const ElemonAccountLog : NextPage = () => {
         {
           process.env.NODE_ENV === "production" ? (
             <>
-              {/*<script*/}
-              {/*  async*/}
-              {/*  src={ `https://www.googletagmanager.com/gtag/js?id=G-DS831RKYB5` } />*/}
-              {/*<script*/}
-              {/*  dangerouslySetInnerHTML={ {*/}
-              {/*    __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-DS831RKYB5');`*/}
-              {/*  } }></script>*/}
-              {/*<script*/}
-              {/*  async*/}
-              {/*  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"*/}
-              {/*  crossOrigin="anonymous"></script>*/}
+              {/*<script*/ }
+              {/*  async*/ }
+              {/*  src={ `https://www.googletagmanager.com/gtag/js?id=G-DS831RKYB5` } />*/ }
+              {/*<script*/ }
+              {/*  dangerouslySetInnerHTML={ {*/ }
+              {/*    __html : `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-DS831RKYB5');`*/ }
+              {/*  } }></script>*/ }
+              {/*<script*/ }
+              {/*  async*/ }
+              {/*  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796254445247606"*/ }
+              {/*  crossOrigin="anonymous"></script>*/ }
               <script
                 async
                 src={ `https://www.googletagmanager.com/gtag/js?id=UA-221423293-1` } />
@@ -610,12 +618,23 @@ const ElemonAccountLog : NextPage = () => {
                               lastWorldBossDateTime,
                               lastWorldBossElcoin,
                               lastWorldBossCraft,
+                              lastWorldBossRank,
+                              lastWorldBossHp,
+                              lastWorldBossClaimedDateTime,
+                              lastGuildBosDateTime,
+                              lastGuildBossHp,
+                              lastGuildBossRank,
+                              lastGuildBossLastKill,
+                              lastGuildBossClaimedDateTime,
                               lastHealedElcoin,
                               pveQuestClaimed,
                               pvpQuestClaimed
                             } = wallet;
 
                             const lastClaimedIdleTimeStr = !!lastClaimedIdleDateTime ? moment(lastClaimedIdleDateTime).fromNow() : "";
+                            const lastClaimedWbStr = !!lastWorldBossClaimedDateTime ? moment(lastWorldBossClaimedDateTime).fromNow() : "-";
+                            const lastGuildBossTimeStr = !!lastGuildBosDateTime ? moment(lastGuildBosDateTime).fromNow() : "-";
+                            const lastClaimedGuildBossTimeStr = !!lastGuildBossClaimedDateTime ? moment(lastGuildBossClaimedDateTime).fromNow() : "-";
 
                             let pveTimeStr = "",
                               pveStatus = "";
@@ -845,6 +864,112 @@ const ElemonAccountLog : NextPage = () => {
                                                           <span className="text-white"> - { lastWorldBossTimeStr }</span>
                                                         </>
                                                       ) : "No Records"
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    WorldBoss HP
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <>
+                                                        {
+                                                          !!lastWorldBossHp ?
+                                                            <span className="text-yellow">{ lastWorldBossHp }</span> : 0
+                                                        }
+                                                      </>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    WorldBoss Rank
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <>
+                                                        {
+                                                          !!lastWorldBossRank ?
+                                                            <span className="text-yellow">{ lastWorldBossRank }</span> : 0
+                                                        }
+                                                      </>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    WorldBoss Reward Claimed
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <span className="text-yellow">{ lastClaimedWbStr }</span>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    Last GuildBoss Attack
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <span className="text-yellow">{ lastGuildBossTimeStr }</span>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    GuildBoss HP
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <span className="text-yellow">{ !!lastGuildBossHp ? lastGuildBossHp : 0 }</span>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    GuildBoss Rank
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <span className="text-yellow">{ !!lastGuildBossRank ? lastGuildBossRank : 0 }</span>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    GuildBoss Last Kill
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <span className="text-yellow">{ !!lastGuildBossLastKill ? lastGuildBossLastKill : "-" }</span>
+                                                    }
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div className="col-12 col-xl-3">
+                                                <div className="card-info-col">
+                                                  <div className="label fw-bold">
+                                                    GuildBoss Claimed Time
+                                                  </div>
+                                                  <div className="val">
+                                                    {
+                                                      <span className="text-yellow">{ lastClaimedGuildBossTimeStr }</span>
                                                     }
                                                   </div>
                                                 </div>
